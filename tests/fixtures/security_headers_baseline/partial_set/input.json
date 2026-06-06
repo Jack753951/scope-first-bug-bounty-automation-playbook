@@ -1,0 +1,22 @@
+{
+  "fixture_version": "security_headers_baseline_input/1",
+  "target": {
+    "type": "domain",
+    "value": "lab.local"
+  },
+  "status_code": 200,
+  "headers": [
+    {
+      "name": "Content-Security-Policy",
+      "value": "default-src 'self'"
+    },
+    {
+      "name": "X-Content-Type-Options",
+      "value": "nosniff"
+    },
+    {
+      "name": "Strict-Transport-Security",
+      "value": "max-age=15552000; includeSubDomains"
+    }
+  ]
+}

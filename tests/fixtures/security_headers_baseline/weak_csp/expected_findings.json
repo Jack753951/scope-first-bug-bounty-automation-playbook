@@ -1,0 +1,40 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.csp.unsafe_inline",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Tighten the Content-Security-Policy policy to remove the weak directive where application design permits. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.csp.unsafe_inline observed that the Content-Security-Policy header includes a directive that weakens script protections. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://example.test/"
+    },
+    "title": "Content-Security-Policy header includes a weak directive",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Content-Security-Policy behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  }
+]

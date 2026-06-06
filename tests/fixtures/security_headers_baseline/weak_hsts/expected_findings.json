@@ -1,0 +1,78 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.hsts.max_age_too_low",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Update the Strict-Transport-Security header to match the application-approved duration baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.hsts.max_age_too_low observed that the Strict-Transport-Security header does not meet the approved duration baseline. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "domain",
+      "value": "invalid."
+    },
+    "title": "Strict-Transport-Security header does not meet the baseline",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Strict-Transport-Security behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.hsts.include_subdomains_missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Update the Strict-Transport-Security header to match the application-approved subdomain baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.hsts.include_subdomains_missing observed that the Strict-Transport-Security header does not apply the approved subdomain baseline. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "domain",
+      "value": "invalid."
+    },
+    "title": "Strict-Transport-Security header does not meet the baseline",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Strict-Transport-Security behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  }
+]

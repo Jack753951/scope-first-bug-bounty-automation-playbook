@@ -1,0 +1,13 @@
+{
+  "candidate_count": 2,
+  "candidate_flag": "picoCTF{one}",
+  "candidate_sources": [
+    "solver"
+  ],
+  "claimed_confidence": "medium",
+  "expected_format_regex": "^picoCTF\\{.+\\}$",
+  "multiple_candidates": [
+    "picoCTF{one}",
+    "picoCTF{two}"
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": "platform_policy_normalization/0.1",
+  "program_slug": "<program-slug>",
+  "program": "<program-slug>",
+  "platform": "<bug-bounty-platform>",
+  "source_url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+  "observed_at": "2026-05-29",
+  "source_kind": "passive_policy_intake_json",
+  "safety_boundary": "Candidate-only passive normalization. No live target testing, scope authorization, or report-ready claim is created by this file.",
+  "in_scope_assets": [
+    {
+      "asset": "us.identity.<program-redacted>.com",
+      "source_line": "us.identity.<program-redacted>.com OAuth/OIDC endpoints; critical eligible; 0 resolved reports",
+      "scope_hint": "in_scope_context",
+      "evidence_context": "us.identity.<program-redacted>.com OAuth/OIDC endpoints; critical eligible; 0 resolved reports"
+    },
+    {
+      "asset": "app.<program-redacted>",
+      "source_line": "app.<program-redacted> web app; critical eligible; 15 resolved reports",
+      "scope_hint": "in_scope_context",
+      "evidence_context": "app.<program-redacted> web app; critical eligible; 15 resolved reports"
+    },
+    {
+      "asset": "*.api.<program-redacted>.com",
+      "source_line": "*.api.<program-redacted>.com Konnect APIs; critical eligible; 0 resolved reports",
+      "scope_hint": "in_scope_context",
+      "evidence_context": "*.api.<program-redacted>.com Konnect APIs; critical eligible; 0 resolved reports"
+    },
+    {
+      "asset": "cloud.<program-redacted>.com",
+      "source_line": "cloud.<program-redacted>.com Konnect management console; critical eligible; 4 resolved reports",
+      "scope_hint": "in_scope_context",
+      "evidence_context": "cloud.<program-redacted>.com Konnect management console; critical eligible; 4 resolved reports"
+    },
+    {
+      "asset": "*.<program-redacted>.com",
+      "source_line": "subdomain takeover on *.<program-redacted>.com; high eligible but requires successful control and explicit boundary",
+      "scope_hint": "in_scope_context",
+      "evidence_context": "subdomain takeover on *.<program-redacted>.com; high eligible but requires successful control and explicit boundary"
+    }
+  ],
+  "out_of_scope_rules": [
+    "Customer data planes such as *.edge.gateways.<program-redacted>.com, *.kongcloud.io, customer proxy instances",
+    "Marketing/docs/support limits and conflicting <program-redacted>.com entries require careful exact asset normalization before any live action",
+    "DoS/volumetric/rate-limit/bruteforce/social engineering",
+    "Non-<program-slug> plugins and non-<program-slug> GitHub repositories",
+    "Sandbox functionality listed out of scope",
+    "kuma.io out of scope"
+  ],
+  "bounty_risk_notes": [
+    "<program-slug> Mesh executable; critical eligible; 0 resolved reports",
+    "<program-slug>-supported Gateway Plugins executable; critical eligible; 0 resolved reports",
+    "<program-slug> Gateway Enterprise executable; critical eligible; 0 resolved reports",
+    "Insomnia Desktop Client executable; critical eligible; 2 resolved reports",
+    "Insomnia CLI/inso executable; critical eligible; 0 resolved reports",
+    "us.identity.<program-redacted>.com OAuth/OIDC endpoints; critical eligible; 0 resolved reports",
+    "app.<program-redacted> web app; critical eligible; 15 resolved reports",
+    "*.api.<program-redacted>.com Konnect APIs; critical eligible; 0 resolved reports",
+    "cloud.<program-redacted>.com Konnect management console; critical eligible; 4 resolved reports",
+    "subdomain takeover on *.<program-redacted>.com; high eligible but requires successful control and explicit boundary",
+    "Multi-tenancy and authorization: cross-tenant config access, IDOR on services/routes/plugins/certs/runtime_groups, read-only to admin privilege escalation",
+    "Identity/session: SSO/MFA/OAuth/OIDC flaws, state/redirect/token leakage",
+    "Stored XSS in developer portal/shared fields",
+    "Sensitive data exposure: client secrets/API keys/RBAC tokens; cross-organization PII only",
+    "SQL injection is qualifying, but live login/API probing is not authorized until exact scope and proof boundary are approved"
+  ],
+  "auth_gates": [
+    "2fa"
+  ],
+  "candidate_classes": [
+    "org_role_invite_authz",
+    "oauth_oidc",
+    "api_direct_object_authz",
+    "source_or_plugin_review"
+  ],
+  "lane_split": [
+    {
+      "id": "local_source_gateway_plugins",
+      "mode": "local/source",
+      "why": "Executable/source-like components can be reviewed or locally reproduced without live target contact first."
+    },
+    {
+      "id": "insomnia_desktop_cli_local",
+      "mode": "local/source",
+      "why": "Electron/Node CLI surfaces may allow dependency/source review and local marker proofs."
+    },
+    {
+      "id": "konnect_api_access_control",
+      "mode": "future_live_owned_account",
+      "why": "High bounty SaaS access-control target, but requires exact scope approval, account boundary, and no token generation without approval."
+    },
+    {
+      "id": "identity_oidc_passive_then_bounded",
+      "mode": "future_live_owned_account",
+      "why": "OIDC/OAuth focus is high-value but must stop before auth abuse/token handling."
+    }
+  ],
+  "stop_before": [
+    "config/scope.txt change or programs/<slug>/scope.json creation/broadening",
+    "account signup/login/OTP/CAPTCHA/password/phone/payment/KYC",
+    "api token, OAuth app, webhook, integration, or scarce-resource creation",
+    "customer or non-owned data access",
+    "scanner_fuzzer_dast_or_large_scale_discovery",
+    "SSRF/OAST/callback/exploit attempts",
+    "any live target testing beyond passive policy/public-doc reading"
+  ],
+  "raw_text_stats": {
+    "line_count": 21,
+    "char_count": 2171
+  }
+}

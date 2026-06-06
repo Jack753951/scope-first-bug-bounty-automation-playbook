@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "kong_source_policy_passive_intake",
+  "lane_title": "<program-slug> passive policy/scope intake and source/local proof triage",
+  "autonomy_level": "A0",
+  "operator_decision": "PASSIVE_ONLY",
+  "machine_state": "A2_EMAIL_VERIFICATION_GATE",
+  "state": "A2_EMAIL_VERIFICATION_GATE",
+  "status": "blocked_operator_action",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "global_scope_entries": [
+      "us.identity.<program-redacted>.com",
+      "app.<program-redacted>",
+      "cloud.<program-redacted>.com"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "passive_program_policy_and_scope_review",
+      "public_docs_reading",
+      "local_source_or_executable_research_without_live_target_contact",
+      "candidate_packet_drafting"
+    ],
+    "blocked_actions": [
+      "adding_or_broadening_config_scope_without_operator_approval",
+      "testing_kong_live_assets",
+      "scanner_fuzzer_dast_or_large_scale_discovery",
+      "subdomain_takeover_attempt_without_operator_approval_and_boundary",
+      "ssrf_testing",
+      "oauth_oidc_flow_testing_without_owned_account_boundary",
+      "customer_or_non_owned_data_access",
+      "api_token_creation_or_storage",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "No <program-slug> account/auth flow yet. Do not create accounts or touch in-scope assets until a bounded lane is approved."
+  },
+  "operator_gates": [
+    "any config/scope.txt change for <program-slug> assets",
+    "any account signup/login/OTP/CAPTCHA/password/phone/payment/KYC",
+    "any live asset first-contact beyond H1/public policy pages",
+    "any takeover proof, OAuth flow, SSRF, scanner/fuzzer/DAST, token/API use, or report promotion"
+  ],
+  "stop_conditions": [
+    "scope_or_policy_ambiguity",
+    "auth_or_secret_gate_appears",
+    "live_target_contact_would_be_needed",
+    "candidate_requires_A3_or_A4_technique"
+  ],
+  "next_autonomous_action": "Paused at Konnect email-verification gate after successful owned-account signup. Do not proceed until operator handles verification email/link/code; after verification, continue only with bounded surface mapping and stop at CAPTCHA/OTP/phone/payment/KYC/API-token/OAuth/webhook/integration/customer-data gates.",
+  "next_operator_action": "Verify the <program-slug> Konnect signup email for the owned H1 alias, or manually continue in noVNC. OTP/CAPTCHA/final submit remain human-gated.",
+  "artifacts": {
+    "dry_run_packet": "program_policy_check dry-run passed for us.identity.<program-redacted>.com, app.<program-redacted>, cloud.<program-redacted>.com; api.<program-redacted>.com denied fail-closed",
+    "evidence_dir": "programs/<program-slug>/notes/",
+    "policy_intake": "programs/<program-slug>/notes/policy_intake_20260529.json",
+    "latest_policy_screenshot": "<artifact-output-dir>/browser_state/platform-login_20260529T133902Z.png",
+    "policy_normalized": "programs/<program-slug>/notes/policy_normalized_20260529.json",
+    "scope_approval_packet": "programs/<program-slug>/notes/scope_approval_packet_20260529.md",
+    "scope_approval_packet_json": "programs/<program-slug>/notes/scope_approval_packet_20260529.json",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "run_card": "programs/<program-slug>/notes/run_card_20260529_owned_account_surface_mapping.md",
+    "surface_map": "programs/<program-slug>/notes/surface_map_20260529.md",
+    "latest_evidence": "<artifact-output-dir>/browser_state/<program-slug>-email-verification-gate_20260529T181037Z.png"
+  },
+  "learning": {
+    "preview_references": [
+      "handoff/pending_intake.json",
+      "programs/<program-slug>/notes/policy_intake_20260529.json"
+    ],
+    "next_preview_seed": "<program-slug> has strong local/source/executable surfaces and explicit Konnect SaaS access-control targets, but live testing requires exact scope approval and owned-account boundary."
+  },
+  "updated_at": "2026-05-29"
+}

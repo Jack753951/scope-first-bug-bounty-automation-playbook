@@ -1,0 +1,2123 @@
+{
+  "generated_at": "2026-05-27",
+  "moves": [
+    {
+      "action": "copy_snapshot",
+      "category": "nav_snapshot",
+      "from": "handoff\\current_navigation.md",
+      "to": "handoff\\archive\\nav_snapshots\\current_navigation_pre_cleanup_20260527.md"
+    },
+    {
+      "action": "copy_snapshot",
+      "category": "nav_snapshot",
+      "from": "handoff\\active_strategy_queue.md",
+      "to": "handoff\\archive\\nav_snapshots\\active_strategy_queue_pre_cleanup_20260527.md"
+    },
+    {
+      "action": "copy_snapshot",
+      "category": "nav_snapshot",
+      "from": "handoff\\current_artifact_index.md",
+      "to": "handoff\\archive\\nav_snapshots\\current_artifact_index_pre_cleanup_20260527.md"
+    },
+    {
+      "action": "move",
+      "category": "target_coupang",
+      "from": "handoff\\account_b_phone_gate_status_20260526.md",
+      "to": "programs\\<program-slug>\\notes\\account_b_phone_gate_status_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\active_testing_policy.md",
+      "to": "docs\\policy\\active_testing_policy.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\aggressive_lab_inaccessible_forensics_20260522.md",
+      "to": "labs\\proofs\\aggressive_lab_inaccessible_forensics_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\arcane_global_variables_bootstrap_precheck_run_card_20260525.md",
+      "to": "labs\\proofs\\arcane_global_variables_bootstrap_precheck_run_card_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\arcane_global_variables_precheck_posture_20260525.md",
+      "to": "labs\\proofs\\arcane_global_variables_precheck_posture_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\architecture_review_next_schema_contracts_20260526.md",
+      "to": "docs\\policy\\architecture_review_next_schema_contracts_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\bundle_freshness_automation_plan_20260526.md",
+      "to": "docs\\strategy\\platform\\bundle_freshness_automation_plan_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\bundle_inventory_20260522.md",
+      "to": "docs\\strategy\\cleanup\\bundle_inventory_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "intelligence",
+      "from": "handoff\\cisa_kev_owasp_cve_lab_mapping_20260522.md",
+      "to": "intelligence\\cisa_kev_owasp_cve_lab_mapping_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_aggressive_slice_plan_20260521.json",
+      "to": "handoff\\archive\\phase_history\\claude_aggressive_slice_plan_20260521.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260518_205542.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260518_205542.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_114055.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_114055.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_114840.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_114840.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_115858.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_115858.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_121430.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_121430.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_151657.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_151657.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_163456.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_163456.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_182706.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_182706.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260519_183403.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260519_183403.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260520_131507.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260520_131507.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_impl_run_20260520_140850.json",
+      "to": "logs\\runs\\claude_code_impl_run_20260520_140850.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_17_direction_review_notools.txt",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_17_direction_review_notools.txt"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_p2_17_direction_review_run.json",
+      "to": "logs\\runs\\claude_code_p2_17_direction_review_run.json"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_p2_17_implementation_run.json",
+      "to": "logs\\runs\\claude_code_p2_17_implementation_run.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_17_implementation_task.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_17_implementation_task.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_18_direction_review_notools.txt",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_18_direction_review_notools.txt"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_p2_18_implementation_run.json",
+      "to": "logs\\runs\\claude_code_p2_18_implementation_run.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_18_implementation_task.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_18_implementation_task.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_19_direction_review_notools.txt",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_19_direction_review_notools.txt"
+    },
+    {
+      "action": "move",
+      "category": "run_receipt",
+      "from": "handoff\\claude_code_p2_19_implementation_run.json",
+      "to": "logs\\runs\\claude_code_p2_19_implementation_run.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_code_p2_19_implementation_task.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_p2_19_implementation_task.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_11.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_11.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_12.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_12.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_6.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_6.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_7.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_7.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_8.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_8.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_result_p3_9.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_result_p3_9.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_12.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_12.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_6.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_6.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_7.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_7.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_8.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_8.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_9.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_9.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\claude_code_task_p3_9_impl.md",
+      "to": "handoff\\archive\\phase_history\\claude_code_task_p3_9_impl.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\CLAUDE_CODEX_ROUTING_POLICY.md",
+      "to": "docs\\policy\\CLAUDE_CODEX_ROUTING_POLICY.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_program-redacted_tactical_boundary_evidence_review_20260526.json",
+      "to": "handoff\\archive\\phase_history\\claude_program-redacted_tactical_boundary_evidence_review_20260526.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_program-redacted_tactical_boundary_evidence_review_20260526.raw.txt",
+      "to": "handoff\\archive\\phase_history\\claude_program-redacted_tactical_boundary_evidence_review_20260526.raw.txt"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_10_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_10_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_10_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_10_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_11_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_11_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_11_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_11_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_12_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_12_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_12_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_12_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_13_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_13_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_13_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_13_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_14_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_14_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_14_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_14_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_14_implementation_review_prompt.md",
+      "to": "handoff\\archive\\phase_history\\claude_p2_14_implementation_review_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_15_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_15_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_15_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_15_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_15_implementation_review_prompt.md",
+      "to": "handoff\\archive\\phase_history\\claude_p2_15_implementation_review_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_16_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_16_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_16_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_16_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_16_implementation_review_prompt.md",
+      "to": "handoff\\archive\\phase_history\\claude_p2_16_implementation_review_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_7_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_7_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_7_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_7_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_8_direction_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_8_direction_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_8_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_8_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_p2_9_implementation_review.json",
+      "to": "handoff\\archive\\phase_history\\claude_p2_9_implementation_review.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_post_revision_gate_review_20260521.json",
+      "to": "handoff\\archive\\phase_history\\claude_post_revision_gate_review_20260521.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_post_revision_gate_review_20260521.md",
+      "to": "handoff\\archive\\phase_history\\claude_post_revision_gate_review_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_report_revision_and_aggressive_slice_20260521.json",
+      "to": "handoff\\archive\\phase_history\\claude_report_revision_and_aggressive_slice_20260521.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_report_third_party_review_20260521.json",
+      "to": "handoff\\archive\\phase_history\\claude_report_third_party_review_20260521.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_report_third_party_review_20260521.md",
+      "to": "handoff\\archive\\phase_history\\claude_report_third_party_review_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_review_deser_preview_test_20260523.json",
+      "to": "handoff\\archive\\phase_history\\claude_review_deser_preview_test_20260523.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_review_deser_preview_test_20260523.md",
+      "to": "handoff\\archive\\phase_history\\claude_review_deser_preview_test_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_review_modern_api_path_traversal_file_read_20260523.md",
+      "to": "handoff\\archive\\phase_history\\claude_review_modern_api_path_traversal_file_read_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_review_multi_agent_tactical_review_memory_sync_20260526.json",
+      "to": "handoff\\archive\\phase_history\\claude_review_multi_agent_tactical_review_memory_sync_20260526.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_review_packet_deser_preview_test_20260523.md",
+      "to": "handoff\\archive\\phase_history\\claude_review_packet_deser_preview_test_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_strict_review_multi_agent_tactical_review_memory_sync_20260526.json",
+      "to": "handoff\\archive\\phase_history\\claude_strict_review_multi_agent_tactical_review_memory_sync_20260526.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\claude_strict_review_multi_agent_tactical_review_memory_sync_20260526.md",
+      "to": "handoff\\archive\\phase_history\\claude_strict_review_multi_agent_tactical_review_memory_sync_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_program-redacted_deterministic_review_20260526.md",
+      "to": "handoff\\archive\\phase_history\\codex_program-redacted_deterministic_review_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_p1_4_proposal_review.md",
+      "to": "handoff\\archive\\phase_history\\codex_p1_4_proposal_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_p2_14_task.md",
+      "to": "handoff\\archive\\phase_history\\codex_p2_14_task.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_p2_15_task.md",
+      "to": "handoff\\archive\\phase_history\\codex_p2_15_task.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_p2_16_task.md",
+      "to": "handoff\\archive\\phase_history\\codex_p2_16_task.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_review_multi_agent_tactical_review_memory_sync_20260526.md",
+      "to": "handoff\\archive\\phase_history\\codex_review_multi_agent_tactical_review_memory_sync_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\CODEX_REVIEW_PROMPT.md",
+      "to": "handoff\\archive\\phase_history\\CODEX_REVIEW_PROMPT.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\codex_strict_review_multi_agent_tactical_review_memory_sync_20260526.md",
+      "to": "handoff\\archive\\phase_history\\codex_strict_review_multi_agent_tactical_review_memory_sync_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\codex_task_b_exec_result.md",
+      "to": "handoff\\archive\\phase_history\\codex_task_b_exec_result.md"
+    },
+    {
+      "action": "move",
+      "category": "intelligence",
+      "from": "handoff\\compact_status_and_vuln_source_test_20260522.md",
+      "to": "intelligence\\compact_status_and_vuln_source_test_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "target_coupang",
+      "from": "handoff\\coupang_tw_phase5a_dry_run_packet_20260525.md",
+      "to": "programs\\<program-slug>\\notes\\coupang_tw_phase5a_dry_run_packet_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "target_coupang",
+      "from": "handoff\\coupang_tw_pre_second_phone_single_account_auth_boundary_20260525.md",
+      "to": "programs\\<program-slug>\\notes\\coupang_tw_pre_second_phone_single_account_auth_boundary_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "target_coupang",
+      "from": "handoff\\coupang_tw_single_account_surface_map_20260525.md",
+      "to": "programs\\<program-slug>\\notes\\coupang_tw_single_account_surface_map_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_proposal.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_proposal.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_runtime_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_runtime_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_task_a_final_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_task_a_final_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_task_a_rereview.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_task_a_rereview.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_task_a_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_task_a_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_task_a_review_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_task_a_review_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_4_task_b_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_4_task_b_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_5_artifact_validation_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_5_artifact_validation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p1_6_evidence_integrity_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p1_6_evidence_integrity_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_14_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_14_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_15_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_15_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_16_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_16_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_17_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_17_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_17_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_17_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_18_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_18_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_18_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_18_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_19_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_19_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_19_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_19_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_1_finding_evidence_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_1_finding_evidence_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_20_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_20_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_20_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_20_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_21_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_21_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_21_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_21_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_24_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_24_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_24_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_24_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_25_closeout_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_25_closeout_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_25_closeout_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_25_closeout_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_2_run_manifest_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_2_run_manifest_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_3_module_manifest_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_3_module_manifest_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_4_module_runner_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_4_module_runner_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_5_level1_fixture_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_5_level1_fixture_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p2_6_module_discovery_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p2_6_module_discovery_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_10_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_10_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_10_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_10_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_13_module_risk_tier_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_13_module_risk_tier_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_13_module_risk_tier_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_13_module_risk_tier_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_14_module_field_promotion_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_14_module_field_promotion_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_14_module_field_promotion_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_14_module_field_promotion_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_1_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_1_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_1_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_1_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_3_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_3_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_3_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_3_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_4_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_4_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_4_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_4_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_5_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_5_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_5_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_5_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_6_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_6_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_6_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_6_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_7_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_7_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_7_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_7_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_8_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_8_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_8_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_8_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_9_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_9_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_p3_9_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_p3_9_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase0_1_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase0_1_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase0_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase0_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase1_p1_1_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase1_p1_1_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase1_p1_2_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase1_p1_2_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase1_p1_3_1_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase1_p1_3_1_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase1_p1_3_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase1_p1_3_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_phase1_proposal.md",
+      "to": "handoff\\archive\\phase_history\\cowork_phase1_proposal.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_soc_evidence_bucket_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_soc_evidence_bucket_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_soc_evidence_bucket_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_soc_evidence_bucket_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_soc_reviewer_gap_catalog_direction_prompt.md",
+      "to": "handoff\\archive\\phase_history\\cowork_soc_reviewer_gap_catalog_direction_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\cowork_soc_reviewer_gap_catalog_direction_review.md",
+      "to": "handoff\\archive\\phase_history\\cowork_soc_reviewer_gap_catalog_direction_review.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\ctf_tooling_backlog.md",
+      "to": "docs\\strategy\\platform\\ctf_tooling_backlog.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\ctf_workflow_validation_and_escalation.md",
+      "to": "docs\\strategy\\platform\\ctf_workflow_validation_and_escalation.md"
+    },
+    {
+      "action": "move",
+      "category": "intelligence",
+      "from": "handoff\\cve_2026_43494_kernel_lane_triage_20260522.md",
+      "to": "intelligence\\cve_2026_43494_kernel_lane_triage_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\deser_operator_run_card_20260523.md",
+      "to": "labs\\proofs\\deser_operator_run_card_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\destructive_lab_auto_recovery_runbook_20260521.md",
+      "to": "labs\\proofs\\destructive_lab_auto_recovery_runbook_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\dirty_tree_checkpoint_audit_20260526.md",
+      "to": "docs\\strategy\\platform\\dirty_tree_checkpoint_audit_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\dvwa_attacker_callback_evidence_packet_standard_20260523.md",
+      "to": "labs\\proofs\\dvwa_attacker_callback_evidence_packet_standard_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\dvwa_command_injection_callback_wave2_20260522.md",
+      "to": "labs\\proofs\\dvwa_command_injection_callback_wave2_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\dvwa_command_injection_impact_wave1_20260522.md",
+      "to": "labs\\proofs\\dvwa_command_injection_impact_wave1_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\dvwa_command_injection_true_attacker_callback_20260522.md",
+      "to": "labs\\proofs\\dvwa_command_injection_true_attacker_callback_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\extensible_architecture_direction.md",
+      "to": "docs\\strategy\\platform\\extensible_architecture_direction.md"
+    },
+    {
+      "action": "move",
+      "category": "intelligence",
+      "from": "handoff\\external_vuln_intel_sources_20260522.md",
+      "to": "intelligence\\external_vuln_intel_sources_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\first_bounty_readiness_checkpoint_20260520.md",
+      "to": "docs\\strategy\\platform\\first_bounty_readiness_checkpoint_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_account_b_passive_surface_map_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_account_b_passive_surface_map_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_authorized_attacker_flow_packet_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_authorized_attacker_flow_packet_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_claude_tactical_boundary_evidence_prompt_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_claude_tactical_boundary_evidence_prompt_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_claude_tactical_boundary_evidence_prompt_retry_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_claude_tactical_boundary_evidence_prompt_retry_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_codex_deterministic_review_prompt_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_codex_deterministic_review_prompt_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_first_contact_scope_and_signup_gate_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_first_contact_scope_and_signup_gate_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_multi_agent_memory_sync_packet_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_multi_agent_memory_sync_packet_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_multi_agent_review_synthesis_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_multi_agent_review_synthesis_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_passive_docs_bundle_map_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_passive_docs_bundle_map_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_pre_contact_ready_checkpoint_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_pre_contact_ready_checkpoint_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_pre_contact_verification_summary_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_pre_contact_verification_summary_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_reviewer_advisory_correction_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_reviewer_advisory_correction_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_safe_flow_research_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_safe_flow_research_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\program-redacted_target_selection_preview_20260526.md",
+      "to": "programs\\<program-redacted>\\notes\\program-redacted_target_selection_preview_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\hackerone_first_scope_intake_20260525.md",
+      "to": "docs\\strategy\\live_bounty\\hackerone_first_scope_intake_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\hermes_p3_6_synthesis.md",
+      "to": "handoff\\archive\\phase_history\\hermes_p3_6_synthesis.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\juice_q_sqli_bounded_wave_20260522.md",
+      "to": "labs\\proofs\\juice_q_sqli_bounded_wave_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\kali_intel_wave3_20260522.md",
+      "to": "labs\\proofs\\kali_intel_wave3_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\kali_tool_lab_default.md",
+      "to": "labs\\proofs\\kali_tool_lab_default.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\kali_verified_flow_wave2_20260522.md",
+      "to": "labs\\proofs\\kali_verified_flow_wave2_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\lab_safety_contract.md",
+      "to": "docs\\policy\\lab_safety_contract.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_account_ab_operator_action_card_20260526.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_account_ab_operator_action_card_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_attack_class_matrix_20260526.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_attack_class_matrix_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_automation_engineering_slice_20260525.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_automation_engineering_slice_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_automation_substrate_closeout_20260525.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_automation_substrate_closeout_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\live_bounty_autonomous_workflow_policy_20260525.md",
+      "to": "docs\\policy\\live_bounty_autonomous_workflow_policy_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_high_hit_rate_target_filter_20260526.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_high_hit_rate_target_filter_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_no_finding_feedback_log.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_no_finding_feedback_log.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\live_bounty_tactical_preview_template_20260526.md",
+      "to": "docs\\strategy\\live_bounty\\live_bounty_tactical_preview_template_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "intelligence",
+      "from": "handoff\\llm_wiki_assessment_20260521.md",
+      "to": "intelligence\\llm_wiki_assessment_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\memory_and_strategy_routing.md",
+      "to": "docs\\policy\\memory_and_strategy_routing.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\memory_coexistence_policy.md",
+      "to": "docs\\policy\\memory_coexistence_policy.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\model_usage_routing_policy.md",
+      "to": "docs\\policy\\model_usage_routing_policy.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_auth_role_separation_wave1_20260523.md",
+      "to": "labs\\proofs\\modern_api_auth_role_separation_wave1_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_deserialization_bounded_marker_operator_verified_20260523.md",
+      "to": "labs\\proofs\\modern_api_deserialization_bounded_marker_operator_verified_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_deserialization_preview_20260523.md",
+      "to": "labs\\proofs\\modern_api_deserialization_preview_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_deserialization_preview_review_process_test_20260523.md",
+      "to": "labs\\proofs\\modern_api_deserialization_preview_review_process_test_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_deserialization_preview_test_blocked_20260523.md",
+      "to": "labs\\proofs\\modern_api_deserialization_preview_test_blocked_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_lab_wave1_20260522.md",
+      "to": "labs\\proofs\\modern_api_lab_wave1_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_lab_wave2_20260522.md",
+      "to": "labs\\proofs\\modern_api_lab_wave2_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_path_traversal_file_read_preview_20260523.md",
+      "to": "labs\\proofs\\modern_api_path_traversal_file_read_preview_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_path_traversal_file_read_wave1_20260523.md",
+      "to": "labs\\proofs\\modern_api_path_traversal_file_read_wave1_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_ssrf_attacker_callback_attempt_20260523.md",
+      "to": "labs\\proofs\\modern_api_ssrf_attacker_callback_attempt_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_ssrf_true_attacker_callback_evidence_packet_20260523.md",
+      "to": "labs\\proofs\\modern_api_ssrf_true_attacker_callback_evidence_packet_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_ssrf_true_attacker_callback_verified_20260523.md",
+      "to": "labs\\proofs\\modern_api_ssrf_true_attacker_callback_verified_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\modern_api_xxe_safe_marker_wave1_20260523.md",
+      "to": "labs\\proofs\\modern_api_xxe_safe_marker_wave1_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\module_bundle_distinction_direction_20260521.md",
+      "to": "docs\\strategy\\platform\\module_bundle_distinction_direction_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\module_system_architecture_notes.md",
+      "to": "docs\\strategy\\platform\\module_system_architecture_notes.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\multi_agent_bug_hunting_engineering_plan_20260526.md",
+      "to": "docs\\strategy\\platform\\multi_agent_bug_hunting_engineering_plan_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\multi_agent_bug_hunting_operating_model_20260526.md",
+      "to": "docs\\strategy\\platform\\multi_agent_bug_hunting_operating_model_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\multi_agent_tactical_review_memory_sync_review_prompt_20260526.md",
+      "to": "docs\\strategy\\platform\\multi_agent_tactical_review_memory_sync_review_prompt_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\multi_agent_tactical_review_memory_sync_rule_20260526.md",
+      "to": "docs\\policy\\multi_agent_tactical_review_memory_sync_rule_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\multi_agent_tactical_review_memory_sync_strict_attestation_prompt_20260526.md",
+      "to": "docs\\strategy\\platform\\multi_agent_tactical_review_memory_sync_strict_attestation_prompt_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\multi_party_review_decision_policy.md",
+      "to": "docs\\policy\\multi_party_review_decision_policy.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\nat_docker_attempt_and_source_wrapper_wave1_20260522.md",
+      "to": "labs\\proofs\\nat_docker_attempt_and_source_wrapper_wave1_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\next_live_bounty_shortlist_20260526.md",
+      "to": "docs\\strategy\\live_bounty\\next_live_bounty_shortlist_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\operator_tool_references_20260521.md",
+      "to": "docs\\strategy\\platform\\operator_tool_references_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\oss_recon_gate.md",
+      "to": "docs\\policy\\oss_recon_gate.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\owasp_2017_2021_2025_single_vuln_modularization_tracker_20260521.md",
+      "to": "docs\\strategy\\platform\\owasp_2017_2021_2025_single_vuln_modularization_tracker_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\owasp_three_class_trial_split_plan_20260521.md",
+      "to": "docs\\strategy\\platform\\owasp_three_class_trial_split_plan_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\p2_24_core_extraction_scope.md",
+      "to": "handoff\\archive\\phase_history\\p2_24_core_extraction_scope.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\p3_12_closeout_current_thread_pause_20260520.md",
+      "to": "handoff\\archive\\phase_history\\p3_12_closeout_current_thread_pause_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\p3_13_module_risk_tier_policy_result.md",
+      "to": "docs\\policy\\p3_13_module_risk_tier_policy_result.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\p3_14_module_field_promotion_direction_result.md",
+      "to": "handoff\\archive\\phase_history\\p3_14_module_field_promotion_direction_result.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\p3_15_manifest_profile_policy_crosswalk_20260520.md",
+      "to": "docs\\policy\\p3_15_manifest_profile_policy_crosswalk_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\p3_9_closeout_next_direction_20260520.md",
+      "to": "handoff\\archive\\phase_history\\p3_9_closeout_next_direction_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\periodic_third_party_review_process.md",
+      "to": "docs\\policy\\periodic_third_party_review_process.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase0_1_full_audit_rows.md",
+      "to": "handoff\\archive\\phase_history\\phase0_1_full_audit_rows.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase0_1_validation_evidence.md",
+      "to": "handoff\\archive\\phase_history\\phase0_1_validation_evidence.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase0_claude_review_summary.md",
+      "to": "handoff\\archive\\phase_history\\phase0_claude_review_summary.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase3_cleanup_debt_deferred_register_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase3_cleanup_debt_deferred_register_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase3_dry_run_local_mvp_closeout_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase3_dry_run_local_mvp_closeout_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase3_remaining_and_review_plain_language_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase3_remaining_and_review_plain_language_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4_closeout_phase5_entry_20260523.md",
+      "to": "handoff\\archive\\phase_history\\phase4_closeout_phase5_entry_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4_exit_assessment_20260523.md",
+      "to": "handoff\\archive\\phase_history\\phase4_exit_assessment_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_1_bounded_content_discovery_output_review_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_1_bounded_content_discovery_output_review_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_1_bounded_content_discovery_run_card_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_1_bounded_content_discovery_run_card_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_1_bounded_content_discovery_safety_review_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_1_bounded_content_discovery_safety_review_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_1_content_class_verification_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_1_content_class_verification_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_controlled_lab_calibration_plan_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_controlled_lab_calibration_plan_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_external_tool_adapter_oss_recon_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_external_tool_adapter_oss_recon_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_external_tool_adapter_result_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_external_tool_adapter_result_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_ftp_report_independent_review_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_ftp_report_independent_review_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_isolated_aggressive_lab_gate_status_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_isolated_aggressive_lab_gate_status_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_isolated_aggressive_lab_slice_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_isolated_aggressive_lab_slice_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_juice_review1_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_juice_review1_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_juice_review2_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_juice_review2_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_juice_review2_candidate_packet_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_juice_review2_candidate_packet_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_juice_shop_active_script_run_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_juice_shop_active_script_run_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_juice_shop_calibration_run_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_juice_shop_calibration_run_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_lab_workflow_runner_result_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_lab_workflow_runner_result_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_nuclei_ffuf_lab_plan_20260520.json",
+      "to": "handoff\\archive\\phase_history\\phase4a_nuclei_ffuf_lab_plan_20260520.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_nuclei_ffuf_spike_result_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_nuclei_ffuf_spike_result_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4a_post_scan_model_review_flow_assessment_20260520.md",
+      "to": "handoff\\archive\\phase_history\\phase4a_post_scan_model_review_flow_assessment_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_bundle_and_service_scanner_direction_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_bundle_and_service_scanner_direction_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_fast_lane_get_only_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_fast_lane_get_only_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_headers_cors_learning_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_headers_cors_learning_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\phase4b_lab_fast_lane_policy_20260521.md",
+      "to": "docs\\policy\\phase4b_lab_fast_lane_policy_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_lab_tooling_authorization_update_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_lab_tooling_authorization_update_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_learning_stage_safety_pause_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_learning_stage_safety_pause_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_2025_migration_review_notes_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_2025_migration_review_notes_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_2025_script_gap_and_ftp_wave_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_2025_script_gap_and_ftp_wave_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_cve_continuation_run_20260522.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_cve_continuation_run_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_lab_probe_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_lab_probe_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_module_collection_direction_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_module_collection_direction_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_script_collection_and_target_plan_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_script_collection_and_target_plan_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_script_inventory_20260521.json",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_script_inventory_20260521.json"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_owasp_three_class_trial_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_owasp_three_class_trial_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_script_first_architecture_reset_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_script_first_architecture_reset_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_single_vuln_three_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_single_vuln_three_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_sqli_acquisition_learning_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_sqli_acquisition_learning_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_three_exposure_bundles_run_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_three_exposure_bundles_run_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_tool_wrapper_three_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_tool_wrapper_three_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_wave1a_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_wave1a_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_wave2_benign_params_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_wave2_benign_params_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_wave2_benign_probe_direction_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_wave2_benign_probe_direction_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase4b_wave2_benign_reflection_redirect_rerun_result_20260521.md",
+      "to": "handoff\\archive\\phase_history\\phase4b_wave2_benign_reflection_redirect_rerun_result_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase5a_arcane_global_variables_bootstrap_plan_20260523.md",
+      "to": "handoff\\archive\\phase_history\\phase5a_arcane_global_variables_bootstrap_plan_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase5a_arcane_global_variables_feasibility_review_20260525.md",
+      "to": "handoff\\archive\\phase_history\\phase5a_arcane_global_variables_feasibility_review_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase5a_authorized_live_target_dry_run_template.md",
+      "to": "handoff\\archive\\phase_history\\phase5a_authorized_live_target_dry_run_template.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\phase5a_report_readiness_checklist.md",
+      "to": "handoff\\archive\\phase_history\\phase5a_report_readiness_checklist.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\post_scan_agent_review_workflow.md",
+      "to": "handoff\\archive\\phase_history\\post_scan_agent_review_workflow.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\program_policy_dry_run_closeout_20260519.md",
+      "to": "docs\\policy\\program_policy_dry_run_closeout_20260519.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\project_disclosure_note_20260521.md",
+      "to": "handoff\\archive\\phase_history\\project_disclosure_note_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\project_launch_estimate_20260519.md",
+      "to": "docs\\strategy\\cleanup\\project_launch_estimate_20260519.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\project_phase_summary_before_phase4a_lab_20260520.md",
+      "to": "docs\\strategy\\cleanup\\project_phase_summary_before_phase4a_lab_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\proof_library_index_20260523.md",
+      "to": "docs\\strategy\\live_bounty\\proof_library_index_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\proof_library_live_bounty_bridge_20260525.md",
+      "to": "docs\\strategy\\live_bounty\\proof_library_live_bounty_bridge_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\redundant_file_inventory_20260526.md",
+      "to": "docs\\strategy\\cleanup\\redundant_file_inventory_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\repo_cleanup_plan_2026-05-19.md",
+      "to": "docs\\strategy\\cleanup\\repo_cleanup_plan_2026-05-19.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\restart_checkpoint_20260521_hermes_reopen.md",
+      "to": "docs\\strategy\\platform\\restart_checkpoint_20260521_hermes_reopen.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\restart_checkpoint_20260525_hackerone_coupang_guidance.md",
+      "to": "docs\\strategy\\platform\\restart_checkpoint_20260525_hackerone_coupang_guidance.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\restart_checkpoint_20260526_front_signup_phone_gate.md",
+      "to": "docs\\strategy\\platform\\restart_checkpoint_20260526_front_signup_phone_gate.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\restart_checkpoint_20260526_tines_closeout_validation_followup.md",
+      "to": "docs\\strategy\\platform\\restart_checkpoint_20260526_tines_closeout_validation_followup.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\review_tiering_policy.md",
+      "to": "docs\\policy\\review_tiering_policy.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\script_acquisition_wave2_20260522.md",
+      "to": "labs\\proofs\\script_acquisition_wave2_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\service_baseline_targets_run_20260521.md",
+      "to": "labs\\proofs\\service_baseline_targets_run_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\ssrf_operator_run_card_20260523.md",
+      "to": "labs\\proofs\\ssrf_operator_run_card_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\sustained_review_loop.md",
+      "to": "docs\\strategy\\platform\\sustained_review_loop.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\systematization_extension_plan.md",
+      "to": "docs\\strategy\\platform\\systematization_extension_plan.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\tactical_freedom_platform_direction_20260526.md",
+      "to": "docs\\policy\\tactical_freedom_platform_direction_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\tactical_risk_rebalance_20260526.md",
+      "to": "docs\\policy\\tactical_risk_rebalance_20260526.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\thanks_only_vdp_shortlist_20260525.md",
+      "to": "docs\\strategy\\live_bounty\\thanks_only_vdp_shortlist_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p2_18_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p2_18_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p2_19_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p2_19_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p2_20_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p2_20_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p2_21_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p2_21_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p2_22_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p2_22_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_10_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_10_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_11_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_11_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_12_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_12_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_1_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_1_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_5_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_5_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_5_implementation_review_prompt.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_5_implementation_review_prompt.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_6_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_6_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_7_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_7_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "phase_history",
+      "from": "handoff\\third_party_p3_9_implementation_review.md",
+      "to": "handoff\\archive\\phase_history\\third_party_p3_9_implementation_review.md"
+    },
+    {
+      "action": "move",
+      "category": "target_program-redacted",
+      "from": "handoff\\third_target_contact_checkpoint_20260526.json",
+      "to": "programs\\<program-redacted>\\notes\\third_target_contact_checkpoint_20260526.json"
+    },
+    {
+      "action": "move",
+      "category": "target_tines",
+      "from": "handoff\\tines_automation_vdp_owned_account_surface_map_20260525.md",
+      "to": "programs\\<program-slug>\\notes\\tines_automation_vdp_owned_account_surface_map_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "target_tines",
+      "from": "handoff\\tines_automation_vdp_phase5a_dry_run_packet_20260525.md",
+      "to": "programs\\<program-slug>\\notes\\tines_automation_vdp_phase5a_dry_run_packet_20260525.md"
+    },
+    {
+      "action": "move",
+      "category": "target_tines",
+      "from": "handoff\\tines_surface_learning_seed_20260526.json",
+      "to": "programs\\<program-slug>\\notes\\tines_surface_learning_seed_20260526.json"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\tool_acquisition_wave1_20260521.md",
+      "to": "labs\\proofs\\tool_acquisition_wave1_20260521.md"
+    },
+    {
+      "action": "move",
+      "category": "archive_other",
+      "from": "handoff\\trygovme_soc_sim_lessons_20260520.md",
+      "to": "handoff\\archive\\phase_history\\trygovme_soc_sim_lessons_20260520.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\verified_flow_wave1_20260521T235533Z_summary.md",
+      "to": "labs\\proofs\\verified_flow_wave1_20260521T235533Z_summary.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\vulnerability_material_coverage_estimate_20260523.md",
+      "to": "docs\\strategy\\cleanup\\vulnerability_material_coverage_estimate_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\vulnerability_source_coverage_inventory_20260522.md",
+      "to": "docs\\strategy\\cleanup\\vulnerability_source_coverage_inventory_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "cleanup_reference",
+      "from": "handoff\\vulnerability_test_inventory_20260523.md",
+      "to": "docs\\strategy\\cleanup\\vulnerability_test_inventory_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_authenticated_wave2_20260522.md",
+      "to": "labs\\proofs\\webgoat_authenticated_wave2_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_browser_runtime_xss_evidence_packet_20260523.md",
+      "to": "labs\\proofs\\webgoat_browser_runtime_xss_evidence_packet_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_browser_runtime_xss_rerun_20260523.md",
+      "to": "labs\\proofs\\webgoat_browser_runtime_xss_rerun_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_browser_runtime_xss_wave1_20260523.md",
+      "to": "labs\\proofs\\webgoat_browser_runtime_xss_wave1_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_docker_wave1_20260522.md",
+      "to": "labs\\proofs\\webgoat_docker_wave1_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_jwt_wave3_20260522.md",
+      "to": "labs\\proofs\\webgoat_jwt_wave3_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_pathtraversal_file_read_retry_20260523.md",
+      "to": "labs\\proofs\\webgoat_pathtraversal_file_read_retry_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_pathtraversal_upload_write_20260523.md",
+      "to": "labs\\proofs\\webgoat_pathtraversal_upload_write_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_required_capability_lanes_20260522.md",
+      "to": "labs\\proofs\\webgoat_required_capability_lanes_20260522.md"
+    },
+    {
+      "action": "move",
+      "category": "lab_proof",
+      "from": "handoff\\webgoat_zipslip_overwrite_20260523.md",
+      "to": "labs\\proofs\\webgoat_zipslip_overwrite_20260523.md"
+    },
+    {
+      "action": "move",
+      "category": "policy",
+      "from": "handoff\\WORKER_PROMPT_TEMPLATES.md",
+      "to": "docs\\policy\\WORKER_PROMPT_TEMPLATES.md"
+    },
+    {
+      "action": "move",
+      "category": "strategy",
+      "from": "handoff\\workflow_build_history_and_reusable_blueprint.md",
+      "to": "docs\\strategy\\platform\\workflow_build_history_and_reusable_blueprint.md"
+    }
+  ]
+}

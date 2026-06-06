@@ -1,0 +1,1 @@
+{"template-id":"local-juice-shop-security-headers","info":{"name":"Local Juice Shop Security Header Observation","severity":"info","tags":["local-lab","headers"]},"type":"http","host":"http://<lab-ip>:3000","matched-at":"http://<lab-ip>:3000","timestamp":"2026-05-20T12:30:00Z","matcher-status":true}

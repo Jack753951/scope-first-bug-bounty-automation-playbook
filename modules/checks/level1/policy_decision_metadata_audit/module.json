@@ -1,0 +1,56 @@
+{
+  "schema_version": "module_manifest/1.0",
+  "module_id": "level1.policy_decision_metadata_audit",
+  "version": "0.1.0",
+  "name": "Level 1 Policy Decision Metadata Audit",
+  "description": "Offline Level 1 audit fixture that validates the module manifest and runner planning path without touching targets, opening network connections, or emitting findings/evidence.",
+  "risk_level": "info",
+  "target_types": [
+    "url",
+    "domain",
+    "ip",
+    "cidr"
+  ],
+  "technique_tags": [
+    "passive.content_metadata"
+  ],
+  "execution": {
+    "supports_dry_run": true,
+    "requires_network": false,
+    "network_access": "none",
+    "target_touching": false,
+    "destructive": false,
+    "intrusive": false,
+    "default_profile": "audit-baseline"
+  },
+  "external_tools": [
+    {
+      "name": "python-stdlib",
+      "required": true,
+      "version_constraint": ">=3.11"
+    }
+  ],
+  "output_contracts": {
+    "run_schema": "run/1.0",
+    "finding_schema": "finding/1.0",
+    "evidence_schema": "evidence/1.0",
+    "emits_findings": false,
+    "emits_evidence": false
+  },
+  "safety_gates": {
+    "require_policy_decision": true,
+    "require_scope_match": true,
+    "manual_verification_required": true,
+    "scanner_output_only": true,
+    "store_redacted_evidence_only": true,
+    "stores_raw_secrets": false,
+    "writes_to_loot": false,
+    "allows_destructive_actions": false,
+    "allows_oast_callbacks": false
+  },
+  "references": [
+    "https://docs.oasis-open.org/sarif/sarif/v2.1.0/sarif-v2.1.0.html",
+    "https://github.com/projectdiscovery/nuclei-templates",
+    "https://github.com/zaproxy/zap-extensions"
+  ]
+}

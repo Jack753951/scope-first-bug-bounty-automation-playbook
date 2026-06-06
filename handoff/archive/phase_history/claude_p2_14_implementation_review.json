@@ -1,0 +1,89 @@
+{
+  "phase": "P2-14 preview_manifest schema and validator",
+  "verdict": "PASS",
+  "review_tier_confirmed": "T3",
+  "blocking_issues": [],
+  "non_blocking_recommendations": [
+    {
+      "id": "NB1",
+      "area": "schema/regex",
+      "recommendation": "The schema's run_id pattern requires length 3-128 (^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$), which would reject very short but otherwise safe run IDs (e.g. 2-char). Confirm this matches the P2-13 safe-run-id regex used by module_runner; if module_runner permits shorter run IDs, the schema will diverge silently. Document the rationale or align ranges explicitly."
+    },
+    {
+      "id": "NB2",
+      "area": "schema/path-not",
+      "recommendation": "The 'not' pattern in artifact_path is partially redundant with the main anchored pattern (which already excludes '..', '\\\\', and '//'). Leaving it in is fine defense-in-depth, but the '(^|/)\\.(/|$)' branch can never match given the strict main pattern - consider a brief comment or simplification to avoid future maintainer confusion."
+    },
+    {
+      "id": "NB3",
+      "area": "validator/path-check",
+      "recommendation": "_safe_relative_path rejects 'aa/./bb' via '/./' but the equivalent leading './' is caught separately; consider consolidating into a single canonicalization step (e.g. PurePosixPath parts containing '.' or '..') to reduce duplicated rules. Behavior is correct; this is readability only."
+    },
+    {
+      "id": "NB4",
+      "area": "semantics/coverage",
+      "recommendation": "_validate_semantics checks run_id and timestamp order against run.json, but does not assert that producer.version in the manifest matches any field recorded in run.json (recon-gate item: 'producer.name/version are consistent with the module_runner version that wrote the bundle'). If run.json carries a producer/version field today, add a cross-check; if not, document the deferral explicitly so the consistency claim isn't aspirational."
+    },
+    {
+      "id": "NB5",
+      "area": "tests/coverage",
+      "recommendation": "Direction doc lists 'non-UTF-8 -> rejection with typed error' and 'non-UTC or non-RFC3339 timestamp -> rejection' as required test cases. The suite covers malformed JSON and future/order timestamps, but does not appear to exercise a non-UTF-8 manifest body or a non-Z-suffixed timestamp string explicitly. Add focused cases to lock in those branches."
+    },
+    {
+      "id": "NB6",
+      "area": "tests/coverage",
+      "recommendation": "Add a test that exercises a symlinked preview directory and a symlinked run directory (not just a symlinked artifact file) to fully cover the 'symlinks anywhere in the bundle path chain' requirement."
+    },
+    {
+      "id": "NB7",
+      "area": "docs",
+      "recommendation": "Direction non-blocker explicitly asked for a contracts/CHANGELOG.md policy entry and a one-paragraph 1.0 compatibility rule. Codex review notes README updates but the packet does not show them; ensure those landed (or schedule them) so the strict-equal versioning rule is documented alongside the schema."
+    },
+    {
+      "id": "NB8",
+      "area": "fixtures",
+      "recommendation": "Direction recommended co-locating fixtures under tests/fixtures/preview_manifest/1.0/{valid,invalid_*}/ for reuse by future ledger/agent-review consumers. The current tests build fixtures programmatically in tmp dirs, which is fine for this phase but means future consumers will re-derive them. Consider materializing at least the golden valid fixture."
+    }
+  ],
+  "safety_boundary_assessment": {
+    "status": "PASS",
+    "notes": [
+      "Validator is read-only: no write/create/delete/rename calls in the module. Confirmed via inspection - only Path.read_bytes, Path.exists, Path.is_file, Path.is_symlink, stat are used against bundle files.",
+      "No network or subprocess surface: validator imports are argparse, dataclasses, datetime, hashlib, json, pathlib, re, sys, typing. Static import test in scripts/test_preview_manifest.py asserts socket/urllib/http/subprocess are absent.",
+      "Symlink rejection covers the manifest path chain, preview_dir chain, and each artifact's absolute path chain (_chain_has_symlink walks candidate and all parents and treats OSError as denial - fail-closed).",
+      "Closed schema (additionalProperties:false at every object) plus fixed 4-artifact allowlist plus explicit rejection of preview_manifest.json as an artifact prevents the manifest being used as a generic write/output mechanism.",
+      "Fail-closed semantics: PreviewManifestValidation defaults verdict='deny', flips to 'allow' only when errors list is empty; main() exits nonzero on any deny.",
+      "No module execution, scanner adapters, findings/evidence/report code, scope/config writes, or target-touching surfaces introduced. module_runner write-path is data-shape-only per the codex notes and not wired to invoke the validator.",
+      "Error payloads carry codes, field paths, and short messages - they do not echo raw file contents, targets, or environment values. _type_name() is used for 'observed' so raw values are not leaked."
+    ]
+  },
+  "validation_assessment": {
+    "status": "PASS_WITH_MINOR_GAPS",
+    "schema_checks": [
+      "schema_version const enforced both at schema and validator layers.",
+      "Closed objects with additionalProperties:false at top level, producer, preview_mode, bundle_consistency, and artifact item.",
+      "Artifacts array fixed to minItems/maxItems 4 and constrained to the allowlist enum; validator additionally enforces uniqueness, allowlist membership, and explicit self-listing rejection.",
+      "relative_path constrained by anchored regex plus belt-and-suspenders 'not' pattern at schema layer; validator independently enforces _safe_relative_path against the expected runs/<run_id>/preview/<name> tuple, which is stricter than the schema alone.",
+      "UTC timestamp enforced via regex plus strptime; semantic checks reject future timestamps and ordering before run.json's created_at_utc.",
+      "SHA-256 enforced as 64-char lowercase hex; recomputed digest compared per artifact; bundle_consistency.sha256 cross-checked against the bundle_consistency.json artifact digest.",
+      "Strict JSON parse: object_pairs_hook rejects duplicate keys; raw_decode + trailing-whitespace check rejects trailing data; UnicodeDecodeError yields typed error."
+    ],
+    "observed_gaps_minor": [
+      "producer.version cross-consistency with run.json is not validated (see NB4).",
+      "Non-UTF-8 manifest body and non-Z-suffixed/non-RFC3339 timestamp branches are reachable in code but not explicitly covered by tests (see NB5).",
+      "Symlinked preview_dir / run_dir branches are reachable via _chain_has_symlink but not directly exercised by tests (see NB6)."
+    ],
+    "test_results_reported": "Codex reports: focused preview manifest 15 OK + 1 skipped; module_runner 32 OK + 1 skipped; full scripts discovery 164 OK + 4 skipped. Not independently re-executed (read-only review)."
+  },
+  "architecture_fit": {
+    "status": "PASS",
+    "notes": [
+      "Contract-only, consumer-side validator with its own CLI entrypoint and no wiring into the module_runner write-path - matches the direction's 'standalone consumer-side check' constraint.",
+      "Schema is closed and strict-equal to preview_manifest/1.0; forward compatibility is deferred to a future minor as required.",
+      "Artifact allowlist is hard-coded and excludes preview_manifest.json itself, preserving the contract as a binding manifest rather than a generic file index.",
+      "Stdlib-only implementation (json/re/hashlib/pathlib/datetime/argparse/dataclasses) matches the offline, data-only constraint. No third-party schema libs introduced.",
+      "Validator output is a single-line JSON document with its own schema_version (preview_manifest_validation/1.0), consistent with the non-blocker about machine-readable CLI output.",
+      "module_runner change is described as data-shape-only on the persisted manifest; review packet shows the validator file but not the runner diff, so this assessment relies on the codex_review.md attestation. Reviewer should spot-check the runner diff before merge to confirm no new write/exec surface was added there."
+    ]
+  }
+}

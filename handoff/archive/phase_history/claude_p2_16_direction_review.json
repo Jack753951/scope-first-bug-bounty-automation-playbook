@@ -1,0 +1,180 @@
+{
+  "phase": "P2-16 Workflow Validation Sprint",
+  "verdict": "PROCEED",
+  "review_tier_confirmed": "T3",
+  "overengineering_assessment": {
+    "should_pause_new_platform_layers": true,
+    "rationale": [
+      "Recent phases shipped schemas (module_manifest, module_input, module_result, finding, evidence, preview_manifest/1.0, preview_ledger/1.0) and their read-only validators, but no Level 1 module actually produces output that travels the chain end-to-end. The next concrete value is proving the chain works, not extending it.",
+      "module_result/1.0 explicitly forbids runtime finding/evidence emission (findings: maxItems 0, evidence: maxItems 0, status enum excludes anything finding-bearing). The candidate direction's phrase 'produce candidate-only finding/evidence fixtures or previews if existing contracts support it' must therefore resolve to the fixtures path; bumping module_result to 1.1 to allow emission is itself a new platform layer and should be rejected here.",
+      "preview_manifest/1.0 hard-codes a fixed four-artifact allowlist (run.json, module_inputs.json, module_results.json, bundle_consistency.json). Adding a new artifact for candidate findings would require preview_manifest/1.1 plus a parallel validator change — another platform-layer expansion P2-16 must avoid.",
+      "preview_ledger/1.0 is a binding index of preview manifests, not a findings index; expanding it now would compound the over-engineering risk before any module has actually emitted into the preview path.",
+      "Workflow validation is best served by a thin, pure-function Level 1 check whose committed golden outputs prove the contracts are coherent, plus committed triage drafts that prove the human/agent review step is real. That validates the chain without touching any 1.0 contract."
+    ]
+  },
+  "recommended_scope": {
+    "module_id": "level1.security_headers_baseline",
+    "workflow_goal": "Validate the end-to-end Level 1 workflow chain (committed input fixture -> deterministic offline check function -> committed candidate-finding golden fixture conforming to finding/1.0 -> committed Claude/Cowork triage markdown draft) for a single low-risk, well-understood header-baseline check, without bumping any 1.0 contract, without runtime finding emission, and without any network or target-touching surface. The deliverable is proof that the contracts and review steps line up coherently, not a new generic platform layer.",
+    "allowed_inputs": [
+      "Committed offline header fixtures at tests/fixtures/security_headers_baseline/<scenario>/input.json, each conforming to a small closed JSON shape documented in the module README (fixture_version literal, target.type in {url, domain}, target.value as a placeholder like 'lab.local' or 'example.test', status_code int, headers as a closed list of {name, value} pairs).",
+      "A required --run-id CLI argument matching the existing safe-run-id regex used by module_runner.",
+      "A required --policy-decision-sha256 CLI argument (64 lowercase hex) supplied by the caller so emitted candidate findings satisfy finding/1.0.source.policy_decision_sha256 without the module synthesizing it.",
+      "Read-only access to the per-header check registry committed inside the module (header_slug -> rule_id -> severity_hint, fixed lookup table, no computed scoring)."
+    ],
+    "forbidden_behavior": [
+      "No imports of socket, urllib, urllib2, urllib3, http, http.client, httplib, ssl, ftplib, smtplib, telnetlib, xmlrpc, asyncio, subprocess, threading, multiprocessing, selectors, asyncore, requests, httpx, aiohttp.",
+      "No DNS resolution, no name resolution, no environment variable reads beyond a small explicit allowlist (none required for v1; reads should be zero).",
+      "No filesystem writes anywhere in the runtime path: no open(..., 'w'), no Path.write_text/write_bytes, no os.makedirs/os.mkdir/os.rename/os.unlink/os.remove, no shutil copy/move/rmtree. CLI is stdout-only.",
+      "No runtime emission into module_result.json, preview bundle artifacts, runs/, loot/, evidence/, reports/, config/scope.txt, or .hermes.md. v1 emits to stdout only and is reconciled against committed golden fixtures in tests.",
+      "No wiring into module_runner write-path, recon.sh, schedulers, CI, pre-commit, hooks, or any external publishing surface in P2-16.",
+      "No new schema files in modules/_schema/, no bump to any 1.0 contract, no new artifact in preview_manifest's allowlist, no new entry shape in preview_ledger, no new validator script.",
+      "No acceptance of url/domain/ip/cidr targets from CLI beyond what the committed fixture's placeholder target.value already contains; explicit --target/--url/--host flags are not implemented and not accepted.",
+      "No Mozilla-Observatory-style numeric scoring, no aggregate grade, no severity computation; severity_hint per emitted finding comes from a fixed per-rule lookup table only.",
+      "No echoing of raw header VALUES into finding.title/summary/remediation/verification_guidance; values may not appear in v1 outputs at all (evidence ref array stays empty in v1).",
+      "No live live-mode toggle, no opt-in network flag, no 'just for testing' egress path; the module's network surface is permanently zero in v1."
+    ]
+  },
+  "oss_recon_gate": [
+    {
+      "source": "OWASP Secure Headers Project (header categories and recommended values for CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Strict-Transport-Security, Permissions-Policy)",
+      "decision": "adapt",
+      "rationale": "Adopt the header taxonomy and the recommended-value guidance as the authoritative reference for the per-rule lookup table. Do not adopt their server-side scanner code, any HTTP fetching, or any live deployment behavior. The module's per-header rule set should be a small, hand-curated subset (5 headers in v1) drawn from this taxonomy, not a wholesale import."
+    },
+    {
+      "source": "OWASP ASVS v4 V14.4 HTTP Security Headers requirements",
+      "decision": "adapt",
+      "rationale": "Use ASVS V14.4 wording as the canonical reference for each rule's verification_guidance text. Do not adopt the broader ASVS taxonomy (V1-V13, V15+) or any ASVS-level assessment scaffolding; v1 is one narrow check, not an ASVS verification harness."
+    },
+    {
+      "source": "OWASP ZAP passive scanner header rules (alert IDs for missing/weak headers)",
+      "decision": "adapt",
+      "rationale": "Borrow the per-header rule IDEAS (presence, absence, weak-value categories) and use them as inspiration for the local rule_id namespace (security_headers_baseline.<header_slug>.<rule>). Do not import ZAP code, ZAP alert IDs verbatim, or any ZAP active-scan / live-spidering behavior. ZAP integration as a runtime is explicitly out of scope."
+    },
+    {
+      "source": "Mozilla Observatory (mozilla/http-observatory) numeric scoring and live HTTP scanning",
+      "decision": "ignore",
+      "rationale": "Observatory performs live HTTPS requests and computes a numeric grade. Both are out of scope and would normalize target-touching defaults and scoring algorithms the project has explicitly deferred. Do not adopt the grading model, the scoring weights, or the scan loop."
+    },
+    {
+      "source": "SecurityHeaders.com (Scott Helme's hosted scanner)",
+      "decision": "ignore",
+      "rationale": "Hosted live scanner against external targets; adopting any of its behavior risks blurring the offline-only boundary and implicitly endorsing third-party target-touching tooling. Reference only as a comparison point in the module README if at all."
+    },
+    {
+      "source": "SARIF v2.1.0 results/runs/tool shape",
+      "decision": "ignore",
+      "rationale": "finding/1.0 and evidence/1.0 already define the project's candidate-output shape. Pulling in SARIF result/run semantics would create a parallel shape and pressure to add a SARIF importer/exporter — exactly the platform-layer expansion P2-16 is meant to pause."
+    },
+    {
+      "source": "DefectDojo importer / engagement metadata",
+      "decision": "ignore",
+      "rationale": "Tightly coupled to a remote service, engagement/test lifecycle, and finding ingestion. Any adoption implies an upload or tracking surface, which violates the offline/data-only boundary."
+    },
+    {
+      "source": "Nuclei templates for header checks",
+      "decision": "ignore",
+      "rationale": "Template format is driven by live scanning, request templating, and severity heuristics. Embedding it normalizes target-touching defaults and would pull in a templating engine v1 has no use for."
+    }
+  ],
+  "implementation_requirements": [
+    "Place the module at modules/checks/level1/security_headers_baseline/check.py alongside the existing module.json pattern; if a module.json is added, set requires_network=false, network_access='none', target_touching=false, intrusive=false, destructive=false, and emits_findings=false (true emission lands later in a phase with its own T3 review).",
+    "Stdlib-only: json, re, hashlib, pathlib, datetime, argparse, dataclasses, sys, typing. No third-party deps. No optional fall-through imports (no try/except ImportError of forbidden modules).",
+    "Pure-function core: evaluate(fixture: dict, *, run_id: str, policy_decision_sha256: str) -> list[dict] returning a list of finding/1.0-shaped dicts (status='candidate', triage.scanner_output_only=true, triage.manual_verification_required=true). Deterministic over input; same input -> byte-identical canonical JSON output every run.",
+    "Closed input fixture shape, validated at the top of evaluate(): required keys exactly {fixture_version, target, status_code, headers}; fixture_version is the exact literal 'security_headers_baseline_input/1'; target is {type in {'url','domain'}, value: string <=500 chars}; status_code is int 100..599; headers is a list of {name: string matching ^[A-Za-z0-9!#$%&'*+\\-.^_`|~]{1,80}$, value: string <=4096 chars}. Unknown top-level or nested keys are a hard reject (FixtureShapeError) with field path.",
+    "Per-rule lookup table committed inline in check.py: header_slug -> rule_id -> {severity_hint, title_template, summary_template, remediation_template, verification_guidance_template, owasp_ref, cwe_ref}. Templates render with header NAME only (no header VALUE), the rule_id, and the static OWASP/CWE references; no value interpolation, no host/IP/URL interpolation.",
+    "v1 header coverage set is exactly five headers: Content-Security-Policy (presence + 'unsafe-inline' presence as separate rule), X-Frame-Options (presence + DENY/SAMEORIGIN), X-Content-Type-Options (presence + nosniff literal), Strict-Transport-Security (presence + max-age>=15552000 + includeSubDomains literal), Referrer-Policy (presence + value in a fixed allowlist). Permissions-Policy, COOP/COEP/CORP, NEL, Report-To, Cache-Control, and Set-Cookie flag checks are deferred.",
+    "Emitted candidate findings populate source.module_id='level1.security_headers_baseline', source.run_id from the CLI argument, source.policy_decision_sha256 from the CLI argument; the module does not synthesize a run_id or a policy_decision_sha256 (no implicit defaults).",
+    "Emitted candidate findings have evidence=[] in v1 (finding/1.0 allows an empty array). Evidence emission is deferred to a future phase that justifies the runs/<run_id>/evidence/ write surface explicitly.",
+    "CLI: python check.py --fixture <path> --run-id <run_id> --policy-decision-sha256 <64-hex>; missing/invalid args fail-closed with nonzero exit and a typed error to stderr. On success, prints a single-line JSON array of candidate findings to stdout and exits 0. No stderr noise on success.",
+    "Static no-network test: assert the source of check.py does not contain any of the forbidden import names listed under forbidden_behavior.",
+    "Static no-write test: assert the source does not contain any of the forbidden write call patterns listed under forbidden_behavior.",
+    "Redaction-safe output: assert post-render that no emitted finding string field contains the literal target.value or any header VALUE from the input fixture; only header NAMES and rule IDs may appear.",
+    "Each emitted candidate finding is validated against modules/_schema/finding.schema.json using a stdlib-only walker (since the project has no jsonschema dep). The validation step is internal to the test suite, not a runtime gate.",
+    "No integration into module_runner, no entry in modules/profiles/*, no new validator script, no preview bundle generation, no preview_ledger entry, no contract bump."
+  ],
+  "test_requirements": [
+    "Commit 6 input fixtures under tests/fixtures/security_headers_baseline/<scenario>/input.json covering: all-headers-present (clean), all-headers-absent, weak-csp (header present with 'unsafe-inline'), weak-hsts (max-age too low, no includeSubDomains), partial-set (3 of 5 headers present), non-200-status (e.g., 301 redirect, to confirm rules apply uniformly).",
+    "Commit 6 matching golden candidate-finding fixtures under tests/fixtures/security_headers_baseline/<scenario>/expected_findings.json. Each is the canonical-JSON output of evaluate() on the matching input.",
+    "Test: for every scenario, evaluate(input, run_id='p2-16.fixture', policy_decision_sha256='<64-hex committed in the fixture>') produces canonical-JSON output equal to expected_findings.json.",
+    "Test: each finding in expected_findings.json validates against modules/_schema/finding.schema.json (stdlib walker).",
+    "Test: each finding's status='candidate', triage.scanner_output_only=true, triage.manual_verification_required=true.",
+    "Test: each finding's source.module_id='level1.security_headers_baseline', source.run_id matches the committed value, source.policy_decision_sha256 matches the committed value.",
+    "Test: each finding's title, summary, remediation, verification_guidance fields contain no host, IP, URL, header value, or environment value (assert via a redaction regex pass over the rendered strings).",
+    "Test: missing required input key (each of fixture_version, target, status_code, headers in turn) -> FixtureShapeError with the missing field path.",
+    "Test: unknown extra top-level key in input fixture -> FixtureShapeError (closed shape).",
+    "Test: fixture_version drift ('security_headers_baseline_input/1.0', '/2', missing, non-string) -> FixtureShapeError.",
+    "Test: target.type not in {'url','domain'} -> FixtureShapeError.",
+    "Test: header name not matching the safe-header-name regex -> FixtureShapeError.",
+    "Test: determinism: evaluate() called twice on the same input produces byte-identical canonical JSON.",
+    "Test: pure-function guarantee: snapshot mtimes/sizes/contents of tests/fixtures/security_headers_baseline/ before and after the full test suite; no changes.",
+    "Test: static import test asserts check.py does not import any of the forbidden net/IPC modules listed in forbidden_behavior.",
+    "Test: static no-write test asserts check.py does not call any of the forbidden write functions listed in forbidden_behavior.",
+    "Test: CLI smoke (subprocess.run is acceptable in the TEST file, not in the module) — missing --run-id -> nonzero exit; invalid --policy-decision-sha256 (not 64 hex) -> nonzero exit; valid run -> stdout is a single-line JSON array, stderr empty, exit 0.",
+    "Test: header name and value matching are case-insensitive for name (per RFC 7230) but verbatim for value comparisons in CSP/HSTS sub-token checks; assert both behaviors explicitly with a fixture pair.",
+    "Test: no fixture's target.value resolves to a real address — committed values are restricted to 'lab.local', '*.example.test', 'invalid.', or RFC 2606 reserved names; assert this with a regex over all committed input fixtures."
+  ],
+  "triage_review_requirements": [
+    "For each of the 6 committed scenarios, commit a Claude/Cowork triage draft at handoff/p2_16_triage/<scenario>.md. The draft cites each candidate finding by rule_id, names the header by NAME only, references the OWASP Secure Headers Project section and ASVS V14.4 requirement number, and proposes a 2-4 sentence remediation that a human reviewer can accept verbatim into a report.",
+    "Triage drafts MUST NOT contain any host name, IP address, URL, header value, environment value, or any string that appears in the input fixture's headers[*].value or target.value field. Drafts may name the rule_id, header name, severity_hint, and the OWASP/ASVS/CWE references.",
+    "Triage drafts are markdown only — they are not findings, not evidence, not reports, not published artifacts. They live in handoff/ where the rest of the agent-review traffic lives.",
+    "The workflow validation passes when, for every committed scenario, all three of (input fixture, golden candidate-finding JSON, triage markdown draft) exist in git and are mutually consistent (rule_ids in the triage draft match rule_ids in the golden JSON, which match rule_ids in evaluate()'s output).",
+    "Triage authoring is performed without touching the network, scope, runs/, loot/, evidence/, reports/, or any production setting. No git push, no PR open from the triage step.",
+    "Add a one-page handoff/p2_16_triage/README.md documenting the triage cadence (draft -> human-reviewer approval -> only then any report draft) so future agents do not collapse the review step."
+  ],
+  "blocking_concerns": [
+    {
+      "id": "finding-emission-path-undefined",
+      "summary": "The candidate direction's phrase 'produce candidate-only finding/evidence fixtures or previews if existing contracts support it' is ambiguous. module_result/1.0 explicitly forbids findings (maxItems: 0) and evidence (maxItems: 0), and its status enum has no finding-bearing value. preview_manifest/1.0 hard-codes a four-artifact allowlist that does not include a findings artifact. Therefore live runtime emission via the existing chain is not possible without a contract bump, and the strategy review's 'pause platform layers' guidance argues against that bump.",
+      "required_change": "Lock the P2-16 sprint to the fixtures path: the module is a pure function whose committed golden outputs ARE the workflow-validation artifact. Defer runtime emission (and any module_result/1.1 or preview_manifest/1.1 bump that would enable it) to a future T3 phase that justifies the new write surface explicitly. The implementation review must reject any PR that bumps a 1.0 contract under cover of P2-16."
+    },
+    {
+      "id": "fixture-shape-needs-pinning",
+      "summary": "'Committed sanitized HTTP response/header fixtures' is too loose. A free-form .http or raw HTTP wire-format file invites future drift toward live HTTP parsing, header normalization corner cases, and eventually a real HTTP client.",
+      "required_change": "Pin the input fixture as a closed JSON document with the literal fixture_version 'security_headers_baseline_input/1' and the exact key set {fixture_version, target, status_code, headers}; reject unknown keys with a FixtureShapeError. Document the shape in modules/checks/level1/security_headers_baseline/README.md. No separate schema file in modules/_schema/ (that would be the platform-layer expansion this phase is meant to avoid)."
+    },
+    {
+      "id": "target-input-must-be-rejected",
+      "summary": "The check function and CLI must not accept a live target (url/domain/ip/cidr) even though module.json's target_types field permits them at the manifest level. Any --target/--url/--host flag, even unimplemented but reserved, creates a slippery slope toward live-mode toggles.",
+      "required_change": "v1 CLI accepts only --fixture <path>, --run-id <id>, --policy-decision-sha256 <hex>. No --target/--url/--host/--scope/--live flag exists. Committed input fixtures use only RFC 2606 reserved names ('lab.local', '*.example.test', 'invalid.') as target.value; add a test that asserts this over the entire tests/fixtures/security_headers_baseline/ tree."
+    },
+    {
+      "id": "no-severity-scoring",
+      "summary": "Mozilla Observatory and SecurityHeaders.com both compute numeric grades. Adopting any scoring would import live-scanner DNA the project has explicitly pushed away from, and would invite future 'why does our grade differ from theirs?' pressure.",
+      "required_change": "severity_hint per rule is a fixed lookup committed inline in check.py. No numeric score, no aggregate grade, no computed weight. Module README must explicitly state that severity assignment is per-rule static and that any future scoring must go through its own T3 review."
+    },
+    {
+      "id": "no-new-write-surface",
+      "summary": "Any os.makedirs, open(..., 'w'), Path.write_text/write_bytes, or shutil copy/move/rmtree call in check.py creates a new persistence surface and pressures the project to define a new artifact layout — exactly the kind of platform-layer growth that should be paused.",
+      "required_change": "check.py performs zero filesystem writes at runtime. CLI prints to stdout only. Tests assert this statically by scanning the source for forbidden write call patterns. If a future phase needs disk output, it justifies the write surface in its own T3 review."
+    }
+  ],
+  "non_blocking_recommendations": [
+    "Keep v1 to exactly the 5 headers listed in implementation_requirements; defer Permissions-Policy, COOP/COEP/CORP, NEL, Report-To, Cache-Control, and Set-Cookie flag checks to a future phase. Resist the temptation to ship 'while we are in here' because that is the exact failure mode the strategy review flagged.",
+    "Commit a short modules/checks/level1/security_headers_baseline/README.md documenting (a) the closed input fixture shape, (b) the per-rule lookup table, (c) the redaction guarantee, (d) the no-network/no-write boundary, and (e) the OWASP Secure Headers Project and ASVS V14.4 references. Do not reference Mozilla Observatory or SecurityHeaders.com in the README to avoid normalizing live-scanner inspiration in future contributors' minds.",
+    "Name rule IDs as security_headers_baseline.<header_slug>.<rule> (e.g., security_headers_baseline.csp.missing, security_headers_baseline.csp.unsafe_inline, security_headers_baseline.hsts.max_age_too_low). This keeps future header additions namespaced and grep-friendly without requiring a registry file.",
+    "Use canonical JSON output (sorted keys, no trailing whitespace, ensure_ascii=False) for both stdout and the committed expected_findings.json files so diffs in CI are minimal and reviewable.",
+    "When defining the per-rule remediation_template strings, draft them as if they will be quoted verbatim into a human-authored report; this <program-name>-loads the triage step's review and reduces churn.",
+    "Add a one-line entry to modules/_schema/README.md (or a sibling doc) noting that P2-16 deliberately did NOT bump any 1.0 contract and that future runtime-emission work must be reviewed as its own T3 phase. This protects the boundary for the next agent.",
+    "Reserve (but do not implement in P2-16) the naming for a future evidence emission path: runs/<run_id>/evidence/security_headers_baseline/<rule_id>/<sha256>.json. Document the deferral so the future phase does not collide with another module's evidence layout.",
+    "Reserve (but do not implement) a future module_result/1.1 that relaxes findings to maxItems > 0 only when emits_findings=true in module.json, gated behind a per-module manifest flag. Document the deferral; do not write the schema now.",
+    "Consider committing a tiny CHANGELOG.md fragment for the module that records 'v0.1.0 — workflow validation, fixture-driven, no runtime emission' so the intentional scoping is preserved across future contributors.",
+    "If a future phase wants to wire this module into module_runner's dry-run path, that work must add explicit tests that the module continues to perform zero writes and zero network calls even when invoked under module_runner. Capture this as a deferred requirement so it is not forgotten."
+  ],
+  "explicit_non_goals": [
+    "No new schema files in modules/_schema/.",
+    "No bump to module_manifest/1.0, module_input/1.0, module_result/1.0, run/1.0, finding/1.0, evidence/1.0, preview_manifest/1.0, or preview_ledger/1.0.",
+    "No new artifact added to the preview_manifest/1.0 four-artifact allowlist.",
+    "No new entry in preview_ledger and no preview_ledger builder/indexer.",
+    "No HTTP requests, no DNS, no socket, no IPC, no subprocess, no threads, no async, no SSL/TLS code path, no third-party deps.",
+    "No Mozilla-Observatory-style numeric scoring, no aggregate grade, no computed severity, no scan loop.",
+    "No live targets, no live-mode toggle, no --target/--url/--host CLI flag, no scope expansion, no edit to config/scope.txt or .hermes.md.",
+    "No runtime emission of findings or evidence into runs/, loot/, evidence/, reports/, or anywhere on disk.",
+    "No wiring into module_runner write-path, recon.sh, schedulers, CI workflows, pre-commit hooks, post-commit hooks, or deployment.",
+    "No automated triage that publishes anything; triage drafts are markdown reviewed by humans and never auto-promoted.",
+    "No agent-assisted live HTTP fetching 'just to populate fixtures'; all fixtures are hand-authored against RFC 2606 reserved names.",
+    "No SARIF, DefectDojo, ZAP, or Nuclei integration code in P2-16 (references in documentation are fine; runtime adoption is not).",
+    "No new validator script; existing preview_manifest and preview_ledger validators are not modified.",
+    "No git push, no PR open, no remote-tracking field, no notification surface, no remote_id, no upload semantics.",
+    "No expansion to a second module, second profile, or second header set in P2-16 — one module, five headers, six fixtures, six triage drafts, then stop."
+  ]
+}

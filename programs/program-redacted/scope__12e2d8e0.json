@@ -1,0 +1,98 @@
+{
+  "schema_version": "1.0",
+  "program": {
+    "slug": "<program-slug>",
+    "name": "<program-slug>",
+    "platform": "<bug-bounty-platform>",
+    "url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "authorization_reference": "<bug-bounty-platform> <program-slug> policy/scope page; operator approved exact hosts on 2026-05-29: us.identity.<program-redacted>.com, app.<program-redacted>, cloud.<program-redacted>.com.",
+    "policy_version": "2026-05-29",
+    "policy_acknowledged_at": "2026-05-29T00:00:00Z"
+  },
+  "scope": {
+    "in_scope": [
+      {
+        "type": "domain",
+        "value": "us.identity.<program-redacted>.com",
+        "notes": "<program-slug> identity/OAuth/OIDC endpoint candidate from H1 policy packet. Separate operator approval required before login/signup/OAuth/token/session-boundary testing."
+      },
+      {
+        "type": "domain",
+        "value": "app.<program-redacted>",
+        "notes": "Insomnia web app candidate from H1 policy packet. Exact-host scope only; owned-account boundary required before live work."
+      },
+      {
+        "type": "domain",
+        "value": "cloud.<program-redacted>.com",
+        "notes": "<program-slug> Konnect management console candidate from H1 policy packet. Preferred first-bounty SaaS access-control surface after account-control gate."
+      }
+    ],
+    "out_of_scope": [
+      {
+        "type": "wildcard",
+        "value": "*.edge.gateways.<program-redacted>.com",
+        "notes": "Customer data plane explicitly excluded from this lane."
+      },
+      {
+        "type": "wildcard",
+        "value": "*.kongcloud.io",
+        "notes": "Customer proxy instances/customer data plane excluded from this lane."
+      },
+      {
+        "type": "domain",
+        "value": "kuma.io",
+        "notes": "Policy packet marked kuma.io out of scope."
+      }
+    ],
+    "idn_handling": "punycode_only"
+  },
+  "techniques": {
+    "allowed": [
+      "http_probe",
+      "vulnerability_scan_passive"
+    ],
+    "forbidden": [
+      "subdomain_enumeration",
+      "port_scan",
+      "service_fingerprint",
+      "directory_bruteforce",
+      "vulnerability_scan_active",
+      "intrusive_fuzz",
+      "dos",
+      "credential_brute_force",
+      "social_engineering",
+      "physical",
+      "malware",
+      "callback_payloads"
+    ],
+    "automation_permitted": false,
+    "automation_notes": "Exact scope is approved, but live automation is not. Use dry-run policy checks and passive/public documentation only until operator approves an owned-account surface-mapping lane."
+  },
+  "rate_limits": {
+    "max_concurrency": 1,
+    "max_requests_per_second": 1,
+    "request_delay_ms": 5000
+  },
+  "testing_windows": {
+    "always": false,
+    "timezone": "UTC",
+    "allowed": [
+      {
+        "days": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri"
+        ],
+        "start": "00:00",
+        "end": "23:59"
+      }
+    ],
+    "blackouts": []
+  },
+  "expiration": {
+    "valid_from": "2026-05-29T00:00:00Z",
+    "valid_until": "2026-12-31T00:00:00Z"
+  }
+}

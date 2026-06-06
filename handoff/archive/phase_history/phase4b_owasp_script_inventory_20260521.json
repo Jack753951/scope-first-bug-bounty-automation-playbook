@@ -1,0 +1,43 @@
+{
+  "schema_version": "phase4b_script_inventory/0.1",
+  "created": "2026-05-21",
+  "scope_boundary": {
+    "runtime_target": "http://<lab-ip>:3000/",
+    "target_class": "local intentionally vulnerable OWASP Juice Shop lab",
+    "no_public_targets": true,
+    "candidate_only_outputs": true
+  },
+  "project_scripts": [
+    {"path": "scripts/headers_audit.sh", "owasp": ["A02:2021", "A05:2021"], "risk_tier": "Tier 1", "decision": "use_wave_1", "notes": "Header-only observation; candidate language only."},
+    {"path": "scripts/cors_audit.sh", "owasp": ["A05:2021"], "risk_tier": "Tier 1", "decision": "use_wave_1", "notes": "Crafted Origin headers; wildcard CORS is not automatically vulnerability."},
+    {"path": "scripts/open_redirect.sh", "owasp": ["A01:2021", "A05:2021"], "risk_tier": "Tier 2", "decision": "refit_then_use_wave_2", "notes": "Needs fixed URL allowlist and request cap."},
+    {"path": "scripts/xss_finder.sh", "owasp": ["A03:2021"], "risk_tier": "Tier 3", "decision": "refit_before_use", "notes": "Use benign reflection canary only before dalfox-style deep scan."},
+    {"path": "scripts/sqli_triage.sh", "owasp": ["A03:2021"], "risk_tier": "Tier 3", "decision": "refit_before_use", "notes": "Disable time-based payload and sqlmap confirmation in first local-lab run."},
+    {"path": "scripts/lfi_finder.sh", "owasp": ["A01:2021", "A05:2021"], "risk_tier": "Tier 3", "decision": "do_not_run_as_is", "notes": "Reads sensitive files and recommends secret/RCE chains; rewrite for lab-safe metadata only."},
+    {"path": "scripts/ssrf_finder.sh", "owasp": ["A10:2021"], "risk_tier": "Tier 4", "decision": "defer", "notes": "OOB/callback behavior is not authorized in current lab phase."},
+    {"path": "scripts/jwt_inspect.sh", "owasp": ["A02:2021", "A07:2021"], "risk_tier": "Tier 0", "decision": "local_only", "notes": "Synthetic/local token inspection only; no token collection."},
+    {"path": "scripts/nginx_config_audit.sh", "owasp": ["A05:2021"], "risk_tier": "Tier 0", "decision": "local_config_only", "notes": "Owned config files only."}
+  ],
+  "kali_tools": [
+    {"name": "nmap", "observed": true, "decision": "limited_single_host_port_validation"},
+    {"name": "nikto", "observed": true, "decision": "maybe_bounded_local_lab_only"},
+    {"name": "sqlmap", "observed": true, "decision": "defer_until_t4_run_card"},
+    {"name": "gobuster", "observed": true, "decision": "tiny_wordlist_wave_1"},
+    {"name": "ffuf", "observed": true, "decision": "tiny_wordlist_wave_1"},
+    {"name": "nuclei", "observed": true, "decision": "custom_info_low_templates_only"},
+    {"name": "masscan", "observed": true, "decision": "do_not_use_for_single_lab_host"},
+    {"name": "msfconsole", "observed": true, "decision": "do_not_use_current_phase"},
+    {"name": "hydra", "observed": true, "decision": "prohibited_bruteforce"},
+    {"name": "john", "observed": true, "decision": "not_part_of_web_lab_flow"},
+    {"name": "hashcat", "observed": true, "decision": "not_part_of_web_lab_flow"},
+    {"name": "burpsuite", "observed": true, "decision": "manual_human_in_loop"},
+    {"name": "zaproxy", "observed": false, "decision": "do_not_install_yet"}
+  ],
+  "execution_waves": [
+    {"id": "wave_0", "name": "preflight_health", "risk": "low", "execute_next": true},
+    {"id": "wave_1a", "name": "headers_cors_known_path_metadata", "risk": "low", "execute_next": true},
+    {"id": "wave_2", "name": "open_redirect_and_reflection_candidates", "risk": "medium", "execute_next": false},
+    {"id": "wave_3", "name": "controlled_injection_triage", "risk": "high", "execute_next": false},
+    {"id": "wave_4", "name": "manual_high_risk_planned_only", "risk": "high", "execute_next": false}
+  ]
+}

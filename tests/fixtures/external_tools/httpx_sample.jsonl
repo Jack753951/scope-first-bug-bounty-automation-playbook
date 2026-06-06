@@ -1,0 +1,1 @@
+{"input":"http://<lab-ip>:3000","url":"http://<lab-ip>:3000","host":"<lab-ip>","port":"3000","scheme":"http","status_code":200,"title":"OWASP Juice Shop","tech":["Express","Node.js"],"webserver":"Express","content_length":9903,"response_time":"42.5ms"}

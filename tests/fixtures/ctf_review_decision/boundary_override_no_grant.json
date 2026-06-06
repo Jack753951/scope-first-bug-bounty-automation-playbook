@@ -1,0 +1,12 @@
+{
+  "candidate_flag": "picoCTF{forced}",
+  "candidate_sources": [
+    "solver"
+  ],
+  "claimed_confidence": "high",
+  "expected_format_regex": "^picoCTF\\{.+\\}$",
+  "force_verified": true,
+  "scope_override": true,
+  "status": "verified",
+  "target_url": "https://example.test"
+}

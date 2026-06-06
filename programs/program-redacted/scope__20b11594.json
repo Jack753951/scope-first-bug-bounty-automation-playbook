@@ -1,0 +1,163 @@
+{
+  "schema_version": "1.0",
+  "program": {
+    "slug": "<program-redacted>",
+    "name": "<program-name>",
+    "platform": "<bug-bounty-platform>",
+    "url": "https://<bug-bounty-platform>.com/<program-redacted>",
+    "authorization_reference": "Operator authorized Hermes to open the third live target only within in-scope <program-name> assets on 2026-05-26. Exact assets were confirmed from the logged-in <bug-bounty-platform> Scope CSV downloaded in Kali/noVNC: setting/local/hackerone_scope/<program-redacted>/scopes_for_program-redacted_at_2026-05-26_08_10_14_UTC.csv.",
+    "policy_acknowledged_at": "2026-05-26",
+    "program_contact": "<bug-bounty-platform> program: <program-redacted>",
+    "status": "scope_confirmed_dry_run_pending_front_a2_viability"
+  },
+  "scope": {
+    "in_scope": [
+      {
+        "type": "domain",
+        "value": "<in-scope-host>",
+        "asset_type": "URL",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "critical",
+        "notes": "Confirmed in logged-in <bug-bounty-platform> Scope CSV. Selected first-contact web app host for manual/noVNC owned-account viability only."
+      },
+      {
+        "type": "domain",
+        "value": "<in-scope-host>",
+        "asset_type": "URL",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "critical",
+        "notes": "Confirmed in logged-in <bug-bounty-platform> Scope CSV. Public API documented at https://dev.frontapp.com/. API testing requires separate bounded A2 plan, owned account/token handling, and redaction; no token storage in repo."
+      },
+      {
+        "type": "apple_store_app_id",
+        "value": "com.frontapp.mobile",
+        "asset_type": "APPLE_STORE_APP_ID",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "high",
+        "notes": "Confirmed in logged-in <bug-bounty-platform> Scope CSV; reference only for current web-first lane."
+      },
+      {
+        "type": "google_play_app_id",
+        "value": "com.frontapp.mobile",
+        "asset_type": "GOOGLE_PLAY_APP_ID",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "high",
+        "notes": "Confirmed in logged-in <bug-bounty-platform> Scope CSV; reference only for current web-first lane."
+      },
+      {
+        "type": "downloadable_executable",
+        "value": "<program-name> for Mac",
+        "asset_type": "DOWNLOADABLE_EXECUTABLES",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "high",
+        "notes": "Download URL listed as https://<program-domain>/download. Reference only; binary/client testing is not selected for first lane."
+      },
+      {
+        "type": "downloadable_executable",
+        "value": "<program-name> for Windows",
+        "asset_type": "DOWNLOADABLE_EXECUTABLES",
+        "eligible_for_bounty": true,
+        "eligible_for_submission": true,
+        "max_severity": "high",
+        "notes": "Download URL listed as https://<program-domain>/download. Reference only; binary/client testing is not selected for first lane."
+      }
+    ],
+    "reference_only": [
+      {
+        "type": "url",
+        "value": "https://dev.frontapp.com/",
+        "notes": "Policy/scope instruction references public API documentation; use for documentation review before API lane."
+      },
+      {
+        "type": "url",
+        "value": "https://<program-domain>/signup?affiliate=partners",
+        "notes": "Policy signup route captured in prior passive intake; only use if still visible/consistent in current policy and after noVNC stop conditions are acknowledged."
+      },
+      {
+        "type": "url",
+        "value": "https://<program-domain>/download",
+        "notes": "Listed as executable download source for Mac/Windows assets; not selected for current lane."
+      }
+    ],
+    "out_of_scope": [
+      {"type": "action", "value": "non_owned_account_or_customer_data_access", "reason": "Policy says only test owned/permitted accounts and do not download/modify customer data or interact with <program-name> customers."},
+      {"type": "action", "value": "service_disruption_dos_or_rate_limit_testing", "reason": "Policy says do not disrupt or degrade <program-name> service."},
+      {"type": "action", "value": "out_of_asset_testing", "reason": "Policy says do not test websites out of scope or not listed in assets."},
+      {"type": "action", "value": "public_disclosure_without_authorization", "reason": "Policy says do not disclose vulnerability information outside <bug-bounty-platform> without written authorization."},
+      {"type": "action", "value": "customer_interaction_or_outbound_messages", "reason": "Policy example explicitly warns against interacting with <program-name> customers or posting comments/messages in customer accounts."},
+      {"type": "action", "value": "scanner_fuzzer_dast", "reason": "Not selected for first lane; project boundary keeps live work manual/noVNC low-speed unless separately approved."},
+      {"type": "action", "value": "external_callbacks_oast_tunnels_integrations", "reason": "Not selected for first lane; requires separate A4 plan and operator approval."}
+    ],
+    "idn_handling": "punycode_only"
+  },
+  "techniques": {
+    "allowed": [
+      "manual_low_speed_research_account_signup_login_when_policy_consistent",
+      "owned_account_profile_workspace_surface_mapping",
+      "owned_non_sensitive_role_permission_viability_mapping",
+      "documentation_review_of_public_api"
+    ],
+    "conditionally_allowed_later": [
+      "owned_account_a_b_role_permission_checks_after_account_b_or_teammate_control_exists",
+      "api_ui_permission_mismatch_checks_after_token_handling_and_redaction_plan",
+      "two_owned_company_or_tenant_isolation_checks_after_signup_rules_confirm_multi_tenant_creation"
+    ],
+    "forbidden_or_blocked_for_first_lane": [
+      "scanner_fuzzer_dast",
+      "dos_ddos_or_rate_limit_testing",
+      "non_owned_account_or_customer_data_access",
+      "outbound_message_or_customer_interaction",
+      "destructive_or_state_changing_actions_beyond_minimal_owned_account_setup",
+      "external_callbacks_oast_webhooks_tunnels",
+      "third_party_integrations",
+      "credential_token_cookie_or_api_key_storage",
+      "public_disclosure_or_report_submission_without_operator_final_approval"
+    ],
+    "automation_permitted": false,
+    "automation_notes": "First lane is manual/noVNC/browser-assisted only. Dry-run safety gate may validate scope without target contact."
+  },
+  "session_layer": {
+    "required_account_identity": "Use <bug-bounty-platform> @researcher-alias.example alias email; policy preview says company name should include [Bug Bounty] SomeCompanyName.",
+    "required_headers": {},
+    "account_rule": "Only interact with operator-owned or explicitly permitted accounts. Operator handles password, CAPTCHA, OTP, email/phone verification, payment, and recovery gates locally. Do not store alias, credentials, cookies, tokens, API keys, or verification links in repo artifacts."
+  },
+  "rate_limits": {
+    "max_concurrency": 1,
+    "request_delay_ms": 5000,
+    "notes": "Conservative project default. Stop on CAPTCHA, bot warning, account warning, rate limiting, or policy ambiguity."
+  },
+  "first_lane": {
+    "name": "front_owned_account_signup_profile_workspace_surface_map_then_role_permission_viability",
+    "selected_assets": [
+      "<in-scope-host>"
+    ],
+    "api_reference_asset": "<in-scope-host>",
+    "goal": "Open the third target in Kali/noVNC using only in-scope <program-name> assets, establish owned-account viability, and map non-sensitive workspace/profile/role surfaces without customer interaction or report submission.",
+    "blocked_state_changes": [
+      "customer messages or comments",
+      "third-party integrations",
+      "external callbacks/webhooks/OAST/tunnels",
+      "API token retention in artifacts",
+      "billing/payment",
+      "support/customer interaction",
+      "scanner/fuzzer/DAST",
+      "report submission"
+    ]
+  },
+  "reporting_rules": {
+    "one_vulnerability_per_report": true,
+    "detailed_reproducible_steps_required": true,
+    "report_submission_requires_operator_final_approval": true,
+    "impact_focus": "Policy preview emphasizes cross-company/cross-tenant sensitive disclosure and low-privilege users viewing/executing admin-only API/data. Within-company teammate visibility and non-sensitive API data may be expected behavior and must not be overclaimed."
+  },
+  "expiration": {
+    "valid_from": "2026-05-26",
+    "valid_until": "2026-06-25",
+    "notes": "Re-check <bug-bounty-platform> policy/scope before target-touching work after this date or if <bug-bounty-platform> shows updates."
+  }
+}

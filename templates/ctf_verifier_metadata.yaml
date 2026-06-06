@@ -1,0 +1,49 @@
+# ctf_verifier_metadata.yaml
+#
+# Status: NON-BINDING, UNVERSIONED template (P2.18 trial).
+#
+# This file is a discussion sketch only. It is not a schema, not a registered
+# contract, and not consumed by any runtime. Do not import, parse, or treat it
+# as authoritative. P2.18 trial consumers live under
+# `tests/fixtures/ctf_verifier_metadata/` and may be checked manually with
+# `scripts/lint_ctf_verifier_metadata.py`. Promotion to a versioned JSON
+# Schema or registry entry remains deferred to P2.19+ and requires a separate
+# review.
+#
+# Fields below borrow vocabulary from established result schemas (SARIF kind,
+# Nuclei template tags, DefectDojo states, Semgrep confidence) but DO NOT
+# adopt any severity/CVSS/exploitability axis. Keep this template flat and
+# string-valued for forward compatibility.
+
+id: example-verifier
+category: crypto            # crypto | web | reverse | forensics | misc | pwn | unknown
+mode: offline               # offline | oracle | active-service | reconstruction
+requires_scope: true
+destructive: false
+uses_external_service: false
+oracle_required: false
+kali_required: false        # required true for active-service / external-service / oracle descriptors
+confidence: candidate       # advisory only; the runtime decision uses
+                            # ctf_review_decision.py confidence axis instead.
+
+second_review_triggers:
+  - abnormal_format
+  - multiple_candidates
+  - solver_timeout
+  - external_source_only
+  - ui_or_checker_only
+
+evidence_outputs:
+  - raw_artifact
+  - candidate
+  - verification_log
+
+# Notes:
+# - `mode: active-service`, `uses_external_service: true`, or
+#   `oracle_required: true` require `kali_required: true` and
+#   `requires_scope: true`. The control plane on the host repo must not perform
+#   live target interaction.
+# - `oracle_required: true` implies the verifier needs an active service or
+#   stateful oracle; treat its output as candidate until an independent replay
+#   verifies it.
+# - `destructive: true` is reserved and must NOT be used by P2.18 trial descriptors.

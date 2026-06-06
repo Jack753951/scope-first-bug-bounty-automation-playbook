@@ -1,0 +1,105 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "program_url": "https://<bug-bounty-platform>.com/syfe_bbp",
+  "last_checked": "2026-05-27",
+  "authorization_basis": "<bug-bounty-platform> <program-slug> bug bounty program private opportunity claimed/opened; listed assets are in scope, bounty eligible, max severity Critical.",
+  "assets": [
+    {
+      "asset": "www.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Main production domain. Production signup must use @researcher-alias.example address at https://www.<program-slug>.com/create-account?utm_source=bug_bounty&medium=bug_bounty. Production requests should include X-<bug-bounty-platform>-Research header."
+    },
+    {
+      "asset": "uat-bugbounty.nonprod.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Primary test environment. H1 says provided credentials are only valid for this environment; findings need to be reproducible on production to be eligible."
+    },
+    {
+      "asset": "mark8.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Market data API service."
+    },
+    {
+      "asset": "https://apps.apple.com/sg/app/<program-slug>-stay-invested/id1497156434",
+      "type": "iOS: App Store",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "<program-slug> iOS application."
+    },
+    {
+      "asset": "com.<program-slug>",
+      "type": "Android: Play Store",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "<program-slug> Android application."
+    },
+    {
+      "asset": "api.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "User services API."
+    },
+    {
+      "asset": "api-uat-bugbounty.nonprod.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Test environment API."
+    },
+    {
+      "asset": "alfred.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Trading service APIs."
+    },
+    {
+      "asset": "alfred-uat-31.nonprod.<program-slug>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Trading UAT endpoint; APK link visible on H1 page. Static-analysis findings must be validated against latest production build."
+    }
+  ],
+  "program_rules_summary": {
+    "allowed_baseline": [
+      "Use owned accounts/objects only.",
+      "Provide detailed reproducible reports.",
+      "Production requests should include X-<bug-bounty-platform>-Research: [H1 username]."
+    ],
+    "hard_stops": [
+      "social_engineering",
+      "privacy_violation",
+      "data_destruction",
+      "service_interruption_or_degradation",
+      "dos_or_resource_exhaustion",
+      "bruteforce_or_automated_attack_on_production",
+      "support_team_spam",
+      "customer_or_non_owned_data",
+      "report_submission_without_operator_approval"
+    ],
+    "non_qualifying_notes": [
+      "UAT information disclosure alone is non-qualifying.",
+      "UI-only response manipulation with no actual access impact is non-qualifying.",
+      "CORS requires demonstrated data exfiltration to qualify.",
+      "Static/mobile-only issues need production-build validation where applicable."
+    ]
+  }
+}

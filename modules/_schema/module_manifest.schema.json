@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/hacklab/module_manifest.schema.json",
+  "title": "Hacklab Module Manifest",
+  "description": "Versioned manifest for policy-gated cybersec lab modules. The manifest declares risk, supported target types, approved technique tags, dry-run/network posture, output contracts, external tool dependencies, and safety gates before any runner may execute a module.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "module_id",
+    "version",
+    "name",
+    "description",
+    "risk_level",
+    "target_types",
+    "technique_tags",
+    "execution",
+    "external_tools",
+    "output_contracts",
+    "safety_gates",
+    "references"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "module_manifest/1.0" },
+    "module_id": { "$ref": "#/$defs/id" },
+    "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9._-]+)?$" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 120 },
+    "description": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "risk_level": { "type": "string", "enum": ["info", "low", "medium", "high"] },
+    "target_types": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "enum": ["url", "domain", "ip", "cidr"] }
+    },
+    "technique_tags": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "passive.http_headers",
+          "passive.tls_metadata",
+          "passive.dns_metadata",
+          "passive.content_metadata",
+          "active.http_get",
+          "active.tcp_connect",
+          "active.dns_lookup",
+          "active.web_content_check"
+        ]
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "supports_dry_run",
+        "requires_network",
+        "network_access",
+        "target_touching",
+        "destructive",
+        "intrusive",
+        "default_profile"
+      ],
+      "properties": {
+        "supports_dry_run": { "type": "boolean", "const": true },
+        "requires_network": { "type": "boolean" },
+        "network_access": { "type": "string", "enum": ["none", "dns", "target-http", "target-tcp"] },
+        "target_touching": { "type": "boolean" },
+        "destructive": { "type": "boolean", "const": false },
+        "intrusive": { "type": "boolean", "const": false },
+        "default_profile": { "type": "string", "minLength": 1, "maxLength": 120 }
+      }
+    },
+    "external_tools": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/external_tool" }
+    },
+    "output_contracts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_schema", "finding_schema", "evidence_schema", "emits_findings", "emits_evidence"],
+      "properties": {
+        "run_schema": { "type": "string", "const": "run/1.0" },
+        "finding_schema": { "type": "string", "const": "finding/1.0" },
+        "evidence_schema": { "type": "string", "const": "evidence/1.0" },
+        "emits_findings": { "type": "boolean" },
+        "emits_evidence": { "type": "boolean" }
+      }
+    },
+    "safety_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "require_policy_decision",
+        "require_scope_match",
+        "manual_verification_required",
+        "scanner_output_only",
+        "store_redacted_evidence_only",
+        "stores_raw_secrets",
+        "writes_to_loot",
+        "allows_destructive_actions",
+        "allows_oast_callbacks"
+      ],
+      "properties": {
+        "require_policy_decision": { "type": "boolean", "const": true },
+        "require_scope_match": { "type": "boolean", "const": true },
+        "manual_verification_required": { "type": "boolean", "const": true },
+        "scanner_output_only": { "type": "boolean", "const": true },
+        "store_redacted_evidence_only": { "type": "boolean", "const": true },
+        "stores_raw_secrets": { "type": "boolean", "const": false },
+        "writes_to_loot": { "type": "boolean", "const": false },
+        "allows_destructive_actions": { "type": "boolean", "const": false },
+        "allows_oast_callbacks": { "type": "boolean", "const": false }
+      }
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^https?://[^\\s]+$" }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "execution": { "properties": { "requires_network": { "const": false } }, "required": ["requires_network"] } }, "required": ["execution"] },
+      "then": { "properties": { "execution": { "properties": { "network_access": { "const": "none" }, "target_touching": { "const": false } }, "required": ["network_access", "target_touching"] } } }
+    },
+    {
+      "if": { "properties": { "execution": { "properties": { "network_access": { "enum": ["target-http", "target-tcp"] } }, "required": ["network_access"] } }, "required": ["execution"] },
+      "then": { "properties": { "execution": { "properties": { "requires_network": { "const": true }, "target_touching": { "const": true } }, "required": ["requires_network", "target_touching"] } } }
+    },
+    {
+      "if": { "properties": { "technique_tags": { "contains": { "enum": ["active.http_get", "active.web_content_check"] } } }, "required": ["technique_tags"] },
+      "then": { "properties": { "execution": { "properties": { "network_access": { "const": "target-http" }, "target_touching": { "const": true } }, "required": ["network_access", "target_touching"] } } }
+    },
+    {
+      "if": { "properties": { "technique_tags": { "contains": { "const": "active.tcp_connect" } } }, "required": ["technique_tags"] },
+      "then": { "properties": { "execution": { "properties": { "network_access": { "const": "target-tcp" }, "target_touching": { "const": true } }, "required": ["network_access", "target_touching"] } } }
+    },
+    {
+      "if": { "properties": { "technique_tags": { "contains": { "const": "active.dns_lookup" } } }, "required": ["technique_tags"] },
+      "then": { "properties": { "execution": { "properties": { "network_access": { "const": "dns" }, "target_touching": { "const": false } }, "required": ["network_access", "target_touching"] } } }
+    },
+    {
+      "if": { "properties": { "execution": { "properties": { "target_touching": { "const": true } }, "required": ["target_touching"] } }, "required": ["execution"] },
+      "then": { "properties": { "technique_tags": { "contains": { "enum": ["active.http_get", "active.web_content_check", "active.tcp_connect"] } } }, "required": ["technique_tags"] }
+    }
+  ],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+    "external_tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "required"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._+-]{0,127}$" },
+        "required": { "type": "boolean" },
+        "version_constraint": { "type": "string", "minLength": 1, "maxLength": 80 }
+      }
+    }
+  }
+}

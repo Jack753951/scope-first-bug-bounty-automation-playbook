@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/hacklab/module_result.schema.json",
+  "title": "Hacklab Module Result Envelope",
+  "description": "P2-10 constrained future output envelope. Current results are dry-run-only and not executed; they cannot contain findings, evidence, raw observations, reports, secrets, loot paths, callbacks, or scanner output.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "module_id",
+    "status",
+    "dry_run",
+    "target_touching",
+    "summary",
+    "findings",
+    "evidence",
+    "errors",
+    "warnings"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "module_result/1.0" },
+    "run_id": { "$ref": "#/$defs/run_id" },
+    "module_id": { "$ref": "#/$defs/id" },
+    "status": { "type": "string", "enum": ["not_executed", "planned", "skipped", "error"] },
+    "dry_run": { "type": "boolean", "const": true },
+    "target_touching": { "type": "boolean", "const": false },
+    "summary": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?i:dry-run|planned|skipped|error|module code was not executed|.*not executed.*|.*dry-run.*)$"
+    },
+    "findings": { "type": "array", "maxItems": 0 },
+    "evidence": { "type": "array", "maxItems": 0 },
+    "errors": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 200 },
+      "maxItems": 20
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1, "maxLength": 200 },
+      "maxItems": 20
+    }
+  },
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+    "run_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$" }
+  }
+}

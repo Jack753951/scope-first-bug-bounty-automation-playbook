@@ -1,0 +1,8 @@
+{
+  "candidate_flag": "picoCTF{blogflag}",
+  "candidate_sources": [
+    "external_writeup"
+  ],
+  "claimed_confidence": "medium",
+  "expected_format_regex": "^picoCTF\\{.+\\}$"
+}

@@ -1,0 +1,26 @@
+# Trial verifier descriptor: source_transform_inversion
+#
+# Status: TRIAL INPUT for P2.18 CTF verifier metadata trial. NON-BINDING.
+# Not a schema, not a registered contract, not consumed by any runtime.
+# Promotion to a versioned JSON Schema is deferred to P2.19+.
+#
+# Models the vault-door-8 lesson: a source-reverse / transform inversion
+# verifier that reads a captured transform routine and computes the
+# pre-image offline. No external service. No host execution affordances.
+id: source-transform-inversion
+category: reverse
+mode: offline
+requires_scope: true
+destructive: false
+uses_external_service: false
+oracle_required: false
+kali_required: false
+confidence: candidate
+second_review_triggers:
+  - abnormal_format
+  - multiple_candidates
+  - solver_timeout
+evidence_outputs:
+  - raw_artifact
+  - candidate
+  - verification_log

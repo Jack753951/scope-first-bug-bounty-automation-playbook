@@ -1,0 +1,50 @@
+{
+  "schema_version": "module_profile/1.0",
+  "profile_id": "audit-baseline",
+  "name": "Audit Baseline",
+  "description": "Offline dry-run-only Level 1 metadata audit profile. This profile selects conservative passive modules that do not open network connections, touch targets, execute scanners, or emit findings/evidence.",
+  "mode_allowlist": [
+    "dry-run"
+  ],
+  "risk_level_allowlist": [
+    "info",
+    "low"
+  ],
+  "target_type_allowlist": [
+    "url",
+    "domain",
+    "ip",
+    "cidr"
+  ],
+  "technique_tag_allowlist": [
+    "passive.http_headers",
+    "passive.tls_metadata",
+    "passive.dns_metadata",
+    "passive.content_metadata"
+  ],
+  "execution_constraints": {
+    "supports_dry_run": true,
+    "requires_network": false,
+    "network_access": "none",
+    "target_touching": false,
+    "destructive": false,
+    "intrusive": false
+  },
+  "output_constraints": {
+    "emits_findings_allowed": false,
+    "emits_evidence_allowed": false
+  },
+  "required_safety_gates_true": [
+    "require_policy_decision",
+    "require_scope_match",
+    "manual_verification_required",
+    "scanner_output_only",
+    "store_redacted_evidence_only"
+  ],
+  "required_safety_gates_false": [
+    "stores_raw_secrets",
+    "writes_to_loot",
+    "allows_destructive_actions",
+    "allows_oast_callbacks"
+  ]
+}

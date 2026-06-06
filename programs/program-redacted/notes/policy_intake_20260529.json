@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "captured_at": "2026-05-29T04:10:00Z",
+  "source": "logged-in H1 Opportunity Discovery + policy/scope page via Kali/noVNC CDP visible text",
+  "boundary": "Non-authoritative note. Machine-enforced program scope is programs/<program-slug>/scope.json plus config/scope.txt.",
+  "signals": [
+    "Dedicated bug-bounty environment with only three explicit in-scope assets.",
+    "Policy gives H1-alias test-account pattern and extra-user pattern (+1/+2), reducing account-control ambiguity.",
+    "In-scope REST API, dashboard URL, and API host map directly to auth-role, removed/downgraded stale access, API/UI mismatch, and owned-object IDOR bundles.",
+    "Gold Standard, response efficiency 98%, launched May 2025, overview updated Apr 6 2026; 90-day reports/bounties show activity.",
+    "No phone/payment/KYC gate observed in policy text; email confirmation remains operator/human gate."
+  ],
+  "candidate_assets": [
+    "https://bug-bounty-rest.k8s.tools-001.d-use-1.<program-redacted>-dev.com/",
+    "https://bug-bounty-dashboard.k8s.tools-001.d-use-1.<program-redacted>-dev.com/",
+    "https://bug-bounty-api.k8s.tools-001.d-use-1.<program-redacted>-dev.com/"
+  ],
+  "bundle_fit": [
+    "auth-role-separation",
+    "removed-downgraded-stale-access",
+    "api-ui-permission-mismatch",
+    "object-ownership-idor",
+    "invite-membership-lifecycle"
+  ],
+  "blocked_before": [
+    "operator/H1 alias signup/email-confirmation gate",
+    "API token/webhook/integration actions remain separate explicit gates",
+    "no automated scanners; no SSRF per policy"
+  ]
+}

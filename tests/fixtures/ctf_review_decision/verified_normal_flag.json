@@ -1,0 +1,12 @@
+{
+  "candidate_flag": "picoCTF{abc123}",
+  "candidate_sources": [
+    "oracle"
+  ],
+  "claimed_confidence": "high",
+  "expected_format_regex": "^picoCTF\\{[A-Za-z0-9_{}-]+\\}$",
+  "verifier": {
+    "artifact": "local",
+    "kind": "deterministic_replay"
+  }
+}

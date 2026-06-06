@@ -1,0 +1,89 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-redacted>",
+  "lane_id": "owned_account_signup_profile_workspace_surface_map",
+  "lane_title": "<program-name> owned-account signup/profile/workspace passive surface map",
+  "autonomy_level": "A3",
+  "operator_decision": "KILL",
+  "machine_state": "NO_FINDING_CLOSEOUT",
+  "state": "NO_FINDING_CLOSEOUT",
+  "status": "no_finding",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-redacted>",
+    "scope_file": "programs/<program-redacted>/scope.json",
+    "global_scope_entries": [
+      "<in-scope-host>",
+      "<in-scope-host>"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "manual_low_speed_noVNC_navigation_to_in_scope_app_host",
+      "owned_account_signup_flow_until_operator_secret_or_phone_gate",
+      "post_auth_profile_workspace_empty_state_surface_map_after_operator_completes_auth_gate",
+      "passive_UI_docs_mapping_of_owned_visible_surfaces_only",
+      "operator_authorized_in_scope_owned_account_a_b_permission_testing_without_extra_approval",
+      "owned_teammate_invite_attempt_to_operator_controlled_account_b",
+      "minimal_low_speed_in_scope_header_checks_with_secret_redaction"
+    ],
+    "blocked_actions": [
+      "scanner_fuzzer_dast",
+      "dos_ddos_or_rate_limit_testing",
+      "customer_or_non_owned_data_access",
+      "customer_messages_or_outbound_communications",
+      "third_party_integrations_or_external_channel_connection",
+      "callbacks_oast_tunnels_webhooks",
+      "credential_token_cookie_api_key_storage",
+      "billing_payment_support_or_kyc_flows",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "Use the operator's <bug-bounty-platform> identity and program-appropriate <bug-bounty-platform> alias plus addressing for project-specific signup if accepted by the target form. Do not write email addresses, phone numbers, passwords, OTPs, cookies, tokens, API keys, or verification links into repo artifacts. Company name should include the policy-required [Bug Bounty] marker."
+  },
+  "operator_gates": [
+    "operator_confirmed_account_b_logged_in_2026_05_27",
+    "password_otp_captcha_email_phone_verification_or_session_switch_if_needed",
+    "operator_final_approval_before_report_submission",
+    "clean_admin_vs_low_priv_control_required",
+    "operator_account_c_signup_auth_fields_required_2026_05_27"
+  ],
+  "stop_conditions": [
+    "policy_or_scope_ambiguity_appears",
+    "account_warning_bot_warning_rate_limit_or_anti_abuse_challenge_appears",
+    "non_owned_customer_data_or_real_customer_interaction_appears",
+    "secret_cookie_token_api_key_otp_password_or_phone_capture_would_be_needed",
+    "destructive_impact_dos_or_rate_limit_stress_would_be_needed",
+    "candidate_is_report_packet_ready_and_needs_operator_final_submission_approval"
+  ],
+  "next_autonomous_action": "Lane closed 2026-05-28 as KILL during single-agent restructure: no clean low-priv/removed/downgraded/resource-excluded negative control is available, no forward path to proof without significant operator setup that was not forthcoming after two weeks. Attacker hypotheses, surface maps, and Account A/B notes preserved in artifacts/ and learning.next_preview_seed for future reference.",
+  "next_operator_action": "No action required. Lane closed. To reopen would require: a separately scoped clean negative control (e.g., a fresh owned <program-name> workspace where Account B can be removed/downgraded from a resource group) and a new lane plan.",
+  "artifacts": {
+    "dry_run_packet": "programs/<program-redacted>/notes/program-redacted_first_contact_scope_and_signup_gate_20260526.md",
+    "evidence_dir": "setting/local/screenshots/program-redacted_live_20260526",
+    "latest_evidence": "setting/local/screenshots/program-redacted_live_20260527/b_profile_menu.png",
+    "attacker_flow_packet": "programs/<program-redacted>/notes/program-redacted_authorized_attacker_flow_packet_20260526.md",
+    "passive_docs_bundle_map": "programs/<program-redacted>/notes/program-redacted_passive_docs_bundle_map_20260526.md",
+    "account_b_passive_surface_map": "programs/<program-redacted>/notes/program-redacted_account_b_passive_surface_map_20260526.md",
+    "account_b_surface_evidence_json": "handoff/live_bounty_evidence/<program-redacted>/owned_account_signup_profile_workspace_surface_map/evidence_surface_map_20260526.json",
+    "passive_resume_20260527": "programs/<program-redacted>/notes/program-redacted_live_practical_resume_20260527.md",
+    "latest_local_screenshot_20260527": "setting/local/screenshots/program-redacted_live_20260527/passive_resume_visible_front_20260527.png",
+    "a3_attempt_invite_checkpoint": "programs/<program-redacted>/notes/program-redacted_a3_attempt_invite_boundary_checkpoint_20260527.md",
+    "a3_owned_account_b_permission_checkpoint": "programs/<program-redacted>/notes/program-redacted_a3_owned_account_b_permission_checkpoint_20260527.md",
+    "account_c_clean_repro_checkpoint": "programs/<program-redacted>/notes/program-redacted_account_c_clean_repro_checkpoint_20260527.md",
+    "account_c_signup_ready_screenshot": "setting/local/screenshots/program-redacted_live_20260527/account_c_signup_ready.png",
+    "account_c_line_parked": "programs/<program-redacted>/notes/program-redacted_account_c_line_parked_20260527.md",
+    "first_bounty_run_card_permission_controls": "programs/<program-redacted>/notes/program-redacted_first_bounty_run_card_permission_controls_20260527.md",
+    "permission_precondition_check": "programs/<program-redacted>/notes/program-redacted_permission_precondition_check_20260527.md"
+  },
+  "learning": {
+    "preview_references": [
+      "handoff/program-redacted_target_selection_preview_20260526.md",
+      "handoff/proof_library_live_bounty_bridge_20260525.md",
+      "handoff/program-redacted_passive_docs_bundle_map_20260526.md"
+    ],
+    "next_preview_seed": "<program-name> permission-control precondition check is parked: H1 scope and <program-name> settings/permissions surfaces were confirmed, but no clean low-priv, removed, downgraded, or resource-excluded negative control exists. Reopen <program-name> only if an already-owned clean negative control becomes available or operator explicitly prepares one; otherwise switch target. Account C same-company/same-domain line remains parked.",
+    "reusable_capability": "<program-name> A/B proof should first verify browser profile identity; plus-address alias collision/hidden teammate state is a candidate signal but not reportable without independent Account B control. Operator gate note: Operator confirmed Account B is logged in on 2026-05-27; previous independent-session blocker is resolved. Later precondition check parked the lane because the remaining blocker is a clean low-priv/removed/downgraded negative control, not identity/session."
+  },
+  "updated_at": "2026-05-28"
+}

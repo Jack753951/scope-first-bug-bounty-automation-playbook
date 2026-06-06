@@ -1,0 +1,14 @@
+{
+  "confidence": "low",
+  "ignored_fields": [],
+  "input_hash": "21bd63fd2c7908bfc93b2d64fdd97c510151755ff25c18f071ba8e34cac21555",
+  "reasons": [
+    "candidate_sources contained only external writeup tags",
+    "confidence capped at low because status is needs_second_review"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "needs_second_review",
+  "triggers": [
+    "external_source_only"
+  ]
+}

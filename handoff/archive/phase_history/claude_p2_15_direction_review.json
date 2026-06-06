@@ -1,0 +1,137 @@
+{
+  "phase": "P2-15 offline preview ledger / archive index",
+  "verdict": "APPROVE_DIRECTION",
+  "review_tier": "T3",
+  "recommended_boundary": "schema_plus_validator",
+  "oss_recon_gate": [
+    {
+      "reference": "OSV vulnerability feed metadata (stable schema_version literal + Z-suffixed UTC timestamps + stable IDs)",
+      "decision": "adopt",
+      "reason": "OSV's pattern of a required const schema_version string plus closed, typed fields and Z-suffixed UTC timestamps is the cleanest fit for a small, stable index contract and aligns 1:1 with how preview_manifest/1.0 already encodes its version and time fields."
+    },
+    {
+      "reference": "SARIF runs[] and result artifact references (versioned tool/run + array of bound records)",
+      "decision": "adapt",
+      "reason": "Borrow only the shape: a versioned producer block plus an array of records that each bind a specific run by id and reference an external artifact. Do not adopt SARIF's result/finding lifecycle, taxonomies, locations, fixes, or any importer-style semantics; preview_ledger/1.0 must remain a binding index, not a findings format or importer surface."
+    },
+    {
+      "reference": "CycloneDX/BOM-style component index metadata (per-component {alg, content, name} hashes)",
+      "decision": "adapt",
+      "reason": "The per-entry {algorithm, content_hash, relative_path, size_bytes} descriptor maps cleanly to binding each persisted preview_manifest.json file by digest. Do not adopt full BOM scope, supplier/license fields, vulnerability sub-objects, or any external resolution/fetch behavior."
+    },
+    {
+      "reference": "DefectDojo importer/test metadata (engagement/test lifecycle, upload state)",
+      "decision": "ignore",
+      "reason": "Tightly coupled to a service, engagement/test lifecycle, finding ingestion, and remote tracking state. Adopting any of these fields would imply upload, triage, or remote sync surfaces, which violate the offline/data-only boundary."
+    },
+    {
+      "reference": "Nuclei output/template metadata for scan-result indexing",
+      "decision": "ignore",
+      "reason": "Conventions are driven by live scanning output, template-source assumptions, and severity heuristics. Embedding them risks normalizing target-touching defaults and confusing the ledger (a manifest-of-manifests index) with a scan-result aggregator."
+    }
+  ],
+  "approved_scope": [
+    "Introduce a closed, versioned JSON Schema at modules/_schema/preview_ledger.schema.json defining preview_ledger/1.0 as a manifest-of-manifests index.",
+    "Introduce a standalone, read-only, stdlib-only validator at scripts/validate_preview_ledger.py that validates a ledger JSON document against the schema and against the preview_manifest.json files it references by recomputing SHA-256 and verifying paths.",
+    "Bind each ledger entry strictly to preview_manifest/1.0 by requiring schema_version_observed == \"preview_manifest/1.0\" per entry; ledger is not a generic file index.",
+    "Reuse the P2-14 fixture tree by referencing tests/fixtures/preview_manifest/1.0/valid_minimal/ as the golden manifest target for a committed valid ledger fixture under tests/fixtures/preview_ledger/1.0/valid_minimal/.",
+    "Add a focused test suite at scripts/test_preview_ledger.py covering valid fixtures and per-rule invalid cases (see test_requirements).",
+    "Document the contract addition in modules/_schema/README.md with the same strict-equal versioning rule used for preview_manifest/1.0 (no silent 1.0 drift; additive fields require a future minor version).",
+    "Validator CLI output is single-line JSON with its own schema_version literal preview_ledger_validation/1.0 so future tooling consumes it without re-parsing prose."
+  ],
+  "out_of_scope": [
+    "Builder/indexer (scripts/build_preview_ledger.py). Defer to a separate phase (P2-16) with its own review; that phase must justify the new write surface, the filesystem scan, and the opt-in flag explicitly.",
+    "Any automatic scan of runs/*/preview/preview_manifest.json from CI, hooks, module_runner, or pre-commit.",
+    "Wiring module_runner or any executor to emit, update, append to, or rely on the ledger.",
+    "Agent-assisted triage logic, archive promotion, retention/aging policy, deletion or move of bundles.",
+    "Multi-version support: ledger must reject preview_manifest/1.1+, preview_manifest/2.0, or any non-literal preview_manifest/1.0 entries.",
+    "Per-entry findings, evidence, severity, status_tags, target identifiers, host names, secrets, environment values, or notes that imply remote tracking state.",
+    "Network access, subprocess, threads, or any third-party schema library.",
+    "Writing, repairing, renaming, deleting, or moving any preview bundle file or ledger file from the validator. Validator is pure-read.",
+    "Any field that implies upload, publish, sync_status, remote_id, dojo_engagement, triage_state, or external endpoint.",
+    "Re-running the preview_manifest validator's full artifact-integrity sweep from inside the ledger validator (it must only hash the preview_manifest.json file itself; inner-artifact integrity remains the preview_manifest validator's responsibility, invoked separately when desired)."
+  ],
+  "required_contract_fields": [
+    "schema_version (string, const: \"preview_ledger/1.0\")",
+    "ledger_id (string, matches the same safe-id regex used by run_id: ^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$)",
+    "created_at_utc (string, Z-suffixed UTC: ^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$)",
+    "producer.name (string, const: \"preview_ledger\" — a curated/declarative producer name, not a live tool; reserved for an eventual P2-16 builder)",
+    "producer.version (string, semver: ^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9._-]+)?$)",
+    "entry_count (integer, >= 0; defense-in-depth equality with len(entries))",
+    "entries (array, closed; items as defined below; minItems may be 0 to allow an empty curated ledger)",
+    "entries[].run_id (string, same safe-run-id regex as preview_manifest/1.0)",
+    "entries[].preview_manifest_relative_path (string, must match exactly runs/<run_id>/preview/preview_manifest.json with no '..', no leading '/', no Windows drive, no backslash, no '//', no '/./')",
+    "entries[].preview_manifest_sha256 (string, 64 lowercase hex)",
+    "entries[].preview_manifest_size_bytes (integer, >= 0)",
+    "entries[].schema_version_observed (string, const: \"preview_manifest/1.0\")",
+    "entries[].observed_at_utc (string, Z-suffixed UTC; the time the ledger entry was recorded; must be <= ledger.created_at_utc and not in the future)",
+    "entries[].notes (string, optional, max 256 chars, must match a redaction-safe regex with no path separators / URLs / @ / host indicators)",
+    "additionalProperties: false enforced at the top-level object, at producer, and at each entry item (closed schema everywhere)."
+  ],
+  "validator_requirements": [
+    "Standard-library only (json, re, hashlib, pathlib, datetime, argparse, dataclasses, sys, typing). No third-party schema libs. No socket, urllib, http, subprocess, threading, or multiprocessing imports.",
+    "Pure read-only over the ledger file and the referenced preview_manifest.json files. The validator never creates, writes, repairs, renames, deletes, executes modules, opens network clients, or touches targets.",
+    "Strict JSON parse for the ledger document: reject duplicate keys via an object_pairs_hook; reject trailing data after the JSON document; reject non-UTF-8 with a typed error.",
+    "Schema-shape validation: enforce required fields, reject unknown fields at every object level, enforce all const literals, enforce all regex patterns, enforce integer non-negativity and string-vs-integer types strictly (booleans must not satisfy integer types).",
+    "Strict-equal version negotiation: ledger.schema_version must be the exact literal preview_ledger/1.0; each entries[].schema_version_observed must be the exact literal preview_manifest/1.0. Any drift is a hard reject.",
+    "Duplicate-run guard: each entries[].run_id must appear at most once; second occurrence is rejected with a typed error and the offending entry index.",
+    "Path safety: each entries[].preview_manifest_relative_path must equal PurePosixPath('runs') / run_id / 'preview' / 'preview_manifest.json' exactly. Reject absolute paths, Windows drive prefixes, backslashes, leading './' or '/', '..' anywhere, '//', '/./', or trailing dot segments.",
+    "Symlink rejection: reject if the ledger file itself, any parent of the ledger file, the resolved preview_manifest.json path, or any parent of that path is a symlink. OSError during the symlink check is treated as denial (fail-closed).",
+    "File binding: for each entry, read the referenced preview_manifest.json by bytes only, recompute SHA-256, and compare to entries[].preview_manifest_sha256. Compare file length to entries[].preview_manifest_size_bytes. Both must match.",
+    "Do not parse, walk, or hash the four inner artifacts (run.json, module_inputs.json, module_results.json, bundle_consistency.json). Inner-artifact integrity remains the preview_manifest validator's responsibility; the ledger only binds the preview_manifest.json file.",
+    "Timestamp checks: ledger.created_at_utc must not be in the future; each entries[].observed_at_utc must not be in the future and must not be later than ledger.created_at_utc.",
+    "entry_count equality: ledger.entry_count must equal len(entries); mismatch is rejected.",
+    "Path resolution base: the validator computes the manifest path relative to a caller-supplied repo root (CLI: positional ledger_file plus --repo-root REPO_ROOT, defaulting to the ledger file's parent if and only if that parent matches a runs/ container heuristic; otherwise --repo-root is required). The repo-root is normalized via Path.resolve() once, and resolved manifest paths must remain inside repo_root/runs/.",
+    "Fail-closed: PreviewLedgerValidation defaults verdict='deny'; flips to 'allow' only when the errors list is empty.",
+    "Output: a single-line JSON document with schema_version preview_ledger_validation/1.0, fields {validated_schema_version, verdict, errors[{code,path,message,expected?,observed?}], error_codes, warnings}. Errors must be redaction-safe: do not echo raw file contents, target identifiers, or environment values; use _type_name()-style placeholders for 'observed'.",
+    "Exit code: 0 on allow, nonzero on deny. The validator is not wired into module_runner or any other write-path."
+  ],
+  "test_requirements": [
+    "Golden valid fixture: a ledger at tests/fixtures/preview_ledger/1.0/valid_minimal/preview_ledger.json with one entry referencing the committed tests/fixtures/preview_manifest/1.0/valid_minimal/preview_manifest.json bundle passes validation.",
+    "Empty-entries valid case: a ledger with entries=[] and entry_count=0 passes (the contract permits a curated empty ledger).",
+    "Each required top-level field missing -> rejection with field path (schema_version, ledger_id, created_at_utc, producer, producer.name, producer.version, entry_count, entries).",
+    "additionalProperties: unknown top-level field -> rejection; unknown field inside producer -> rejection; unknown field inside an entries[] item -> rejection.",
+    "schema_version drift -> rejection (preview_ledger/1.0.0, preview_ledger/1.1, preview_ledger/2.0, missing, non-string).",
+    "Per-entry schema_version_observed drift -> rejection (preview_manifest/1.1, preview_manifest/2.0, missing, non-string).",
+    "Unsafe ledger_id and unsafe entries[].run_id (path chars, spaces, traversal, empty, leading dot) -> rejection.",
+    "entries[].preview_manifest_relative_path with '..', leading '/', backslash, drive letter, '//', '/./', or not equal to runs/<run_id>/preview/preview_manifest.json -> rejection.",
+    "Duplicate run_id across entries -> rejection citing both entry indices.",
+    "Hash mismatch between entries[].preview_manifest_sha256 and the actual preview_manifest.json contents -> rejection.",
+    "Size mismatch between entries[].preview_manifest_size_bytes and the actual file length -> rejection.",
+    "Missing preview_manifest.json file (path-correct entry but no file on disk) -> rejection.",
+    "Symlinked preview_manifest.json, symlinked preview/ directory, symlinked run/ directory, and symlinked ledger file -> each rejected.",
+    "Timestamp checks: ledger.created_at_utc in the future -> rejection; entries[].observed_at_utc in the future -> rejection; entries[].observed_at_utc > ledger.created_at_utc -> rejection; non-Z-suffixed or non-RFC3339-shaped timestamp -> rejection.",
+    "entry_count != len(entries) -> rejection.",
+    "Strict JSON parse: duplicate JSON keys -> rejection; trailing data after the document -> rejection; non-UTF-8 ledger bytes -> rejection.",
+    "notes field: over-length notes -> rejection; notes containing '/', '\\\\', '@', 'http://', 'https://', or an IP-like or host-like token -> rejection (redaction-safe vocabulary).",
+    "Boolean-vs-integer: entry_count or preview_manifest_size_bytes set to true/false -> rejection (booleans must not satisfy integer types).",
+    "Pure-function guarantee: validator run leaves filesystem mtimes, sizes, and contents of the ledger file, the referenced preview_manifest.json, and the bundle artifacts unchanged (snapshot before/after).",
+    "Static import test: scripts/validate_preview_ledger.py imports do not include socket, urllib, http, subprocess, threading, or multiprocessing.",
+    "CLI behavior: nonzero exit on any deny verdict; single-line JSON output; no stderr noise on success; --json flag accepted for compatibility with the preview_manifest validator convention."
+  ],
+  "safety_boundary": [
+    "No scans, probes, callbacks, exploit/fuzz/brute-force, or target-touching behavior introduced.",
+    "No module execution, no subprocess, no network, no scanner adapters, no template fetching, no threads.",
+    "No changes to config/scope.txt, program scope, safe_target, dry-run gates, or live-mode toggles.",
+    "No findings, evidence, reports, notifications, publishing surfaces, or remote-tracking fields added.",
+    "No loot/secret access; validator errors are redaction-safe and use _type_name()-style placeholders for observed values.",
+    "Validator is read-only: it never writes, repairs, deletes, moves, or renames the ledger file, the preview_manifest.json file, or any bundle artifact.",
+    "Ledger is a binding index of preview_manifest/1.0 records, not a generic file index. Each entry is constrained to runs/<run_id>/preview/preview_manifest.json with an exact path equality check.",
+    "No automatic filesystem scan in P2-15. Building a ledger from filesystem state is deferred to P2-16 and must justify its write surface and opt-in semantics separately.",
+    "No wiring of the ledger or its validator into module_runner, discovery, the policy gate, or any commit/PR hook in P2-15.",
+    "Strict-equal version negotiation: preview_ledger/1.0 and per-entry preview_manifest/1.0 are exact-literal; any drift is a hard reject. No silent multi-version support.",
+    "Closed schema (additionalProperties: false at every object) plus an exact-path constraint per entry plus a duplicate-run-id guard prevents the ledger from being repurposed as a generic write/output mechanism or a covert publishing channel.",
+    "Stricter rule wins: if this contract conflicts with .hermes.md, scope, or the OSS Recon Gate, defer to the stricter constraint."
+  ],
+  "blocking_concerns": [],
+  "non_blocking_recommendations": [
+    "Defer the builder/indexer (scripts/build_preview_ledger.py) to P2-16 and gate it behind an explicit --build / --opt-in flag; document the new write surface, the runs/ scan boundary, and the symlink/path-traversal posture in that phase's direction doc before implementation.",
+    "Co-locate ledger fixtures under tests/fixtures/preview_ledger/1.0/{valid_minimal, invalid_*}/ and reuse tests/fixtures/preview_manifest/1.0/valid_minimal/ as the referenced bundle so the two contracts share a single source of truth for the golden case.",
+    "Add a one-paragraph compatibility rule to modules/_schema/README.md mirroring the preview_manifest/1.0 rule: preview_ledger/1.0 is strict-equal; additive optional fields require a new minor version and a new schema file; the validator never silently upgrades or downgrades.",
+    "Reserve (but do not implement in P2-15) a future entries[].preview_manifest_validation_status field that would record an allow/deny verdict from the preview_manifest validator. Deferring it keeps 1.0 minimal and avoids embedding stale validation state in a committed file.",
+    "Reserve (but do not implement in P2-15) a top-level ledger_digest field plan for a later phase that wants tamper-evident sealing of the ledger itself. Document the deferral rather than adding it now.",
+    "Keep the validator CLI output a single-line JSON document (matching the preview_manifest validator convention) so a future agent-assisted triage consumer can pipe and diff results without re-parsing prose.",
+    "Add a contracts/CHANGELOG.md-style entry policy (or extend the existing README rule) so any future preview_ledger/1.x bump is reviewed as its own T3 change with its own direction doc and fixtures.",
+    "When the builder lands in P2-16, require it to call the preview_manifest validator on each candidate bundle before writing the entry, and to refuse to emit entries for bundles that do not pass; this keeps the ledger's allow-listed records bound to validator-approved bundles without making the ledger validator itself re-run that sweep."
+  ]
+}

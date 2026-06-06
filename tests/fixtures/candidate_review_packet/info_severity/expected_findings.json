@@ -1,0 +1,45 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "review_packet_self_test.info_severity.http_excerpt",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "9ce788a4aa62fa31dff68c49eac173923524875e0c3fd4ccd8e29fd545bed388"
+      }
+    ],
+    "id": "review_packet_self_test.info_severity.candidate",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Self-test fixture: severity_hint is info, so report_readiness must remain not_ready even with an evidence ref.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "info",
+    "source": {
+      "module_id": "self_test.candidate_review_packet",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "self-test.candidate-review-packet"
+    },
+    "status": "candidate",
+    "summary": "Self-test fixture exercising the not_ready branch caused by severity_hint == info.",
+    "target": {
+      "type": "domain",
+      "value": "selftest.example.test"
+    },
+    "title": "Self-test: info severity not ready",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Self-test fixture only: do not draft an info-level observation before reviewer decision."
+  }
+]

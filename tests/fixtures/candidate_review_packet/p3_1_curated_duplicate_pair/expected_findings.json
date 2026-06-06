@@ -1,0 +1,88 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "p3_1_curated.duplicate_pair.source_a.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.duplicate_pair.source_a",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.duplicate_pair.source_a",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-duplicate_pair-source-a"
+    },
+    "status": "candidate",
+    "summary": "Synthetic candidate from source A describes the same weak header pattern as source B and should survive without dedupe.",
+    "target": {
+      "type": "domain",
+      "value": "duplicate.example.test"
+    },
+    "title": "P3.1 synthetic duplicate pair source A",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: inspect the redacted local evidence and record an authorized human decision before any downstream action."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "p3_1_curated.duplicate_pair.source_b.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.duplicate_pair.source_b",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.duplicate_pair.source_b",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-duplicate_pair-source-b"
+    },
+    "status": "candidate",
+    "summary": "Synthetic candidate from source B is near-identical to source A; P3.1 records that the chain does not deduplicate today.",
+    "target": {
+      "type": "domain",
+      "value": "duplicate.example.test"
+    },
+    "title": "P3.1 synthetic duplicate pair source B",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: inspect the redacted local evidence and record an authorized human decision before any downstream action."
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "confidence": "high",
+  "ignored_fields": [],
+  "input_hash": "c7483b35b4603380c1df1d8f5e9b831284a6e52c677f0357f5029d5cf9838133",
+  "reasons": [
+    "verifier kind deterministic_replay accepted (no triggers fired)"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "verified",
+  "triggers": []
+}

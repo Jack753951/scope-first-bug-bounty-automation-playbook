@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "gocardless_sandbox_access_control",
+  "lane_title": "<program-redacted> sandbox dashboard/API access-control sprint",
+  "autonomy_level": "A2",
+  "operator_decision": "PARK",
+  "machine_state": "PARKED",
+  "state": "PARKED",
+  "status": "no_finding",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "global_scope_entries": [
+      "manage-sandbox.<program-redacted>.com",
+      "api-sandbox.<program-redacted>.com",
+      "pay-sandbox.<program-redacted>.com",
+      "payer-details-sandbox.<program-redacted>.com",
+      "oauth-sandbox.<program-redacted>.com",
+      "connect-sandbox.<program-redacted>.com"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "manual_low_speed_navigation_to_in_scope_sandbox_pages",
+      "passive_frontend_resource_review_for_routes_and_api_host_config",
+      "owned_account_signup_flow_until_operator_secret_otp_captcha_phone_payment_kyc_gate",
+      "post_auth_owned_object_surface_map_after_operator_completes_auth_gate",
+      "bundle_precondition_review_for_auth_role_idor_invite_lifecycle_api_ui_mismatch",
+      "bounded_aggressive_scripted_checks_against_in_scope_sandbox_assets_after_checkpoint",
+      "scripted_proof_surrogates_with_scope_fail_closed_rate_limits_redaction_and_owned_data_only",
+      "manual_or_scripted_A_B_owned_account_role_lifecycle_checks_for_primary_bundle"
+    ],
+    "blocked_actions": [
+      "unbounded_scanner_fuzzer_dast_or_endpoint_bruteforce",
+      "production_target_testing",
+      "dos_ddos_or_resource_exhaustion",
+      "customer_or_non_owned_data_access",
+      "real_billing_payment_kyc_bank_connection_or_financial_flow",
+      "third_party_integrations_callbacks_oast_tunnels_webhooks",
+      "credential_token_cookie_api_key_storage",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "Use operator-owned sandbox accounts/objects only. Do not store email/password/OTP/cookies/tokens/phone/verification links in repo artifacts. Stop at any CAPTCHA/OTP/email/phone/payment/KYC/API-token gate."
+  },
+  "operator_gates": [
+    "operator_create_or_authenticate_owned_GoCardless_sandbox_account_if_required",
+    "password_otp_captcha_email_phone_verification_or_session_switch_if_needed",
+    "any API-token/OAuth/integration/bank/payment/KYC setup",
+    "operator_final_approval_before_report_submission"
+  ],
+  "stop_conditions": [
+    "signup_requires_phone_payment_kyc_bank_or_support_contact_before_owned_object_surface_exists",
+    "policy_or_scope_ambiguity_appears",
+    "account_warning_bot_warning_rate_limit_or_anti_abuse_challenge_appears",
+    "non_owned_customer_data_or_real_financial_data_appears",
+    "secret_cookie_token_api_key_otp_password_or_phone_capture_would_be_needed",
+    "destructive_impact_dos_or_rate_limit_stress_would_be_needed",
+    "candidate_is_report_packet_ready_and_needs_operator_final_submission_approval"
+  ],
+  "next_autonomous_action": "PARKED no-finding checkpoint. Account B read-only controls denied team/invite/company-settings direct routes; webhook create route showed admin-required message with no form/submit controls. Resume only for a new distinct owned-account hypothesis. Current priority: <program-redacted> target scope gate.",
+  "next_operator_action": "No action required for <program-redacted> unless operator wants to reopen a new distinct <program-redacted> hypothesis; current recommended action is approve <program-redacted> exact-host scope/lane gate.",
+  "artifacts": {
+    "dry_run_packet": "programs/<program-slug>/scope.json",
+    "evidence_dir": "programs/<program-slug>/notes/",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "dashboard_surface_map": "programs/<program-slug>/notes/2026-05-29_dashboard_surface_map.md",
+    "account_b_lifecycle_run_card": "programs/<program-slug>/notes/2026-05-29_account_b_lifecycle_run_card.md"
+  },
+  "learning": {
+    "preview_references": [
+      "programs/<program-slug>/notes/2026-05-29_dashboard_surface_map.md",
+      "programs/<program-slug>/notes/2026-05-29_account_b_lifecycle_run_card.md"
+    ],
+    "next_preview_seed": "No-finding: read-only Account B route checks denied team/invite/company settings and webhook creation. Do not reopen same role-lifecycle hypothesis without a distinct owned-account report title.",
+    "reusable_capability": "Read-only role direct-route negative controls for SaaS developer/API settings."
+  },
+  "updated_at": "2026-05-29"
+}

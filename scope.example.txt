@@ -1,0 +1,7 @@
+# Scope patterns for recon_pipeline.py — one per line.
+# Wildcards (*) match like fnmatch. Lines starting with # are comments.
+# Replace these with the actual in-scope assets from your bug-bounty program.
+
+*.example.com
+example.com
+api-*.example.com

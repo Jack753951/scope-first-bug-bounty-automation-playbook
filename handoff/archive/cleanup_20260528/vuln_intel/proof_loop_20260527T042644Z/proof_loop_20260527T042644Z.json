@@ -1,0 +1,110 @@
+{
+  "status": "ok",
+  "stamp": "20260527T042644Z",
+  "generated_at": "2026-05-27T04:26:50Z",
+  "target_touching": false,
+  "source_delta": "handoff/vuln_intel/bundle_freshness_delta_20260527T042644Z.json",
+  "selected_candidate": {
+    "id": "<specific-cve-id>",
+    "source": "CISA KEV",
+    "published": "2021-11-03",
+    "vendor_project": "Zoho",
+    "product": "ManageEngine",
+    "title": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+    "routing": "local_bootstrap_review",
+    "vuln_classes": [
+      "rce/command-execution",
+      "auth/access-control"
+    ],
+    "classification": "covered_by_existing_bundle",
+    "safe_proof_hint": "Use throwaway accounts, role/account matrix, positive + negative controls, and no real data retention.",
+    "matched_bundles": [
+      {
+        "path": "modules/bundles/verified_lab_flow_modern_api_path_traversal_file_read.md",
+        "title": "Verified lab flow: modern_vuln_api path traversal file-read safe-marker",
+        "maturity": "verified",
+        "vuln_classes": [
+          "xxe",
+          "file-read/path-traversal",
+          "auth/access-control",
+          "upload/archive",
+          "exposure/metadata"
+        ],
+        "match_reason": "class"
+      },
+      {
+        "path": "modules/bundles/source_reviewed_wrapper_wave1_patterns.md",
+        "title": "source_reviewed_wrapper_wave1_patterns",
+        "maturity": "verified",
+        "vuln_classes": [
+          "xxe",
+          "file-read/path-traversal",
+          "xss",
+          "auth/access-control",
+          "upload/archive",
+          "exposure/metadata"
+        ],
+        "match_reason": "class"
+      },
+      {
+        "path": "modules/bundles/valuable_candidate_auth_access_boundary_expansion.md",
+        "title": "valuable_candidate_auth_access_boundary_expansion",
+        "maturity": "verified",
+        "vuln_classes": [
+          "sqli",
+          "auth/access-control"
+        ],
+        "match_reason": "class"
+      },
+      {
+        "path": "modules/bundles/valuable_candidate_kev_path_traversal_file_read_variants.md",
+        "title": "valuable_candidate_kev_path_traversal_file_read_variants",
+        "maturity": "verified",
+        "vuln_classes": [
+          "file-read/path-traversal",
+          "rce/command-execution",
+          "exposure/metadata"
+        ],
+        "match_reason": "class"
+      },
+      {
+        "path": "modules/bundles/valuable_candidate_upload_retrieval_and_validation.md",
+        "title": "valuable_candidate_upload_retrieval_and_validation",
+        "maturity": "verified",
+        "vuln_classes": [
+          "file-read/path-traversal",
+          "rce/command-execution",
+          "sqli",
+          "upload/archive"
+        ],
+        "match_reason": "class"
+      }
+    ]
+  },
+  "stages": {
+    "latest_vulnerability_intake": {
+      "status": "consumed_existing_delta",
+      "source": "<private-workspace>/handoff/vuln_intel/vuln_intel_candidates_20260527T042644Z.json"
+    },
+    "local_target_test": {
+      "status": "run_card_only_operator_gate",
+      "artifact": "handoff/vuln_intel/proof_loop_20260527T042644Z/local_run_card_cve_2021_40539_20260527T042644Z.md"
+    },
+    "proof_pattern_library": {
+      "status": "draft_only_until_local_proof_verified",
+      "artifact": "handoff/vuln_intel/proof_loop_20260527T042644Z/proof_pattern_draft_cve_2021_40539_20260527T042644Z.md"
+    },
+    "live_target_selection": {
+      "status": "prerequisite_mapping_only_no_live_touch",
+      "artifact": "handoff/vuln_intel/proof_loop_20260527T042644Z/live_target_prereq_map_cve_2021_40539_20260527T042644Z.md"
+    }
+  },
+  "artifacts": {
+    "local_run_card": "handoff/vuln_intel/proof_loop_20260527T042644Z/local_run_card_cve_2021_40539_20260527T042644Z.md",
+    "proof_pattern_draft": "handoff/vuln_intel/proof_loop_20260527T042644Z/proof_pattern_draft_cve_2021_40539_20260527T042644Z.md",
+    "live_target_prereq_map": "handoff/vuln_intel/proof_loop_20260527T042644Z/live_target_prereq_map_cve_2021_40539_20260527T042644Z.md",
+    "summary_json": "handoff/vuln_intel/proof_loop_20260527T042644Z/proof_loop_20260527T042644Z.json",
+    "summary_md": "handoff/vuln_intel/proof_loop_20260527T042644Z/proof_loop_20260527T042644Z.md"
+  },
+  "safety_note": "planning artifacts only; no local or live execution"
+}

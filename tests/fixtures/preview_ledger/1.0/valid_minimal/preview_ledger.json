@@ -1,0 +1,20 @@
+{
+  "created_at_utc": "2026-05-16T02:05:00Z",
+  "entries": [
+    {
+      "observed_at_utc": "2026-05-16T02:04:30Z",
+      "preview_manifest_relative_path": "runs/20260516T020304Z_runner/preview/preview_manifest.json",
+      "preview_manifest_sha256": "b5af4311c4bc9884ae79c350f864f01877dbbbc78cdb802f97f6722eb63815f0",
+      "preview_manifest_size_bytes": 1697,
+      "run_id": "20260516T020304Z_runner",
+      "schema_version_observed": "preview_manifest/1.0"
+    }
+  ],
+  "entry_count": 1,
+  "ledger_id": "ledger_20260516",
+  "producer": {
+    "name": "preview_ledger",
+    "version": "0.1.0"
+  },
+  "schema_version": "preview_ledger/1.0"
+}

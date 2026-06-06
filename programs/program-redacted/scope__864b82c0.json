@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-redacted>",
+  "program_url": "https://<bug-bounty-platform>.com/<program-redacted>",
+  "observed_at": "2026-05-27",
+  "scope_summary": {
+    "campaign": "Active campaign ends in 30 days; double payouts for Core services operating within the main mobile application backend/frontend/APIs.",
+    "campaign_eligible_assets_observed": [
+      "*.indriverapp.com",
+      "https://*.indriver.io",
+      "cargo.<program-redacted>.com",
+      "couriers.<program-redacted>.com",
+      "<program-redacted>.com",
+      "intercity.<program-redacted>.com",
+      "teammate.indriver.io"
+    ],
+    "policy_notes": [
+      "Use own accounts/phone numbers only.",
+      "Do not access arbitrary user accounts or data.",
+      "DoS/DDoS/resource exhaustion prohibited.",
+      "Automated scanning limit stated by program: max 5 requests/second per target host and max 5 parallel requests; current lane did not use scanning.",
+      "Auth/authz bypass and serverside information disclosure categories are bounty-relevant."
+    ]
+  },
+  "minimal_contact_summary": {
+    "mode": "single low-speed public landing-page requests with X-<bug-bounty-platform>-Research header; no login, no scanning, no non-owned data access",
+    "assets_checked": [
+      {"url": "https://<program-redacted>.com/", "status": 200, "title": "Earn With <program-redacted> or Offer Your Fare and Get Ride | <program-redacted>"},
+      {"url": "https://teammate.indriver.io/", "status": 200, "title": "<program-redacted> @ Teammate", "observed_page_text": "Teammate / Build Collaborative Teams / Sign in with Google"},
+      {"url": "https://couriers.<program-redacted>.com/", "status": 200, "title": "Express Delivery, Courier & Delivery Services – <program-redacted>.Courier"},
+      {"url": "https://cargo.<program-redacted>.com/", "status": 200, "title": "Online Cargo Transportation Service - cargo.<program-redacted>"},
+      {"url": "https://intercity.<program-redacted>.com/", "status": 200, "title": "Comfortable Rides Between Cities At Your Price - <program-redacted> City to city"}
+    ]
+  },
+  "candidate_signal": {
+    "asset": "teammate.indriver.io",
+    "signals": [
+      "Core, in-scope, bounty-eligible domain with 0 resolved reports on visible H1 scope table.",
+      "Public SPA login page uses Google sign-in.",
+      "Client bundle contains internal-looking routes and API path strings, but no external third-party documents were opened and raw bundle content is not preserved as evidence."
+    ],
+    "risk": "Requires Google/company-style auth before owned controls exist; current signal is hypothesis only."
+  }
+}

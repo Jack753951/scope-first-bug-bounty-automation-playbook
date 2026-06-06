@@ -1,0 +1,58 @@
+{
+  "execution_default": "plan_only",
+  "intensity": "max-lab",
+  "safety_limits": [
+    "local lab only",
+    "no brute force",
+    "no external callback",
+    "no database extraction",
+    "no OS shell",
+    "no recursive download",
+    "no promotion above candidate without human review"
+  ],
+  "status": "planned",
+  "steps": [
+    {
+      "command": "./scripts/headers_audit.sh --yes -o <out>/headers http://<lab-ip>:3000",
+      "id": "headers_audit",
+      "purpose": "browser security header triage",
+      "risk": "low",
+      "tool": "headers_audit.sh"
+    },
+    {
+      "command": "./scripts/cors_audit.sh --yes -o <out>/cors http://<lab-ip>:3000",
+      "id": "cors_audit",
+      "purpose": "credentialed CORS triage",
+      "risk": "low",
+      "tool": "cors_audit.sh"
+    },
+    {
+      "command": "nikto -h http://<lab-ip>:3000 -nointeractive -maxtime 2m -Tuning xb -output <out>/nikto.txt",
+      "id": "nikto_bounded",
+      "purpose": "bounded web-server baseline; triage only",
+      "risk": "moderate",
+      "tool": "nikto"
+    },
+    {
+      "command": "GET http://<lab-ip>:3000/ftp/ and record status/title/filenames only",
+      "id": "ftp_metadata_only",
+      "purpose": "metadata-only directory listing verification; no recursive download",
+      "risk": "low",
+      "tool": "custom_verifier"
+    },
+    {
+      "command": "single-reflection marker checks against one known Juice Shop search/fragment interaction on http://<lab-ip>:3000; no payload sweep",
+      "id": "xss_marker_triage",
+      "purpose": "bounded XSS signal check with inert marker only",
+      "risk": "moderate",
+      "tool": "xss_finder.sh/manual"
+    },
+    {
+      "command": "single-endpoint SQL error triage against lab login/search surface on http://<lab-ip>:3000; no database extraction",
+      "id": "sqli_error_triage",
+      "purpose": "bounded SQLi signal check; no dump or shell",
+      "risk": "moderate",
+      "tool": "sqli_triage.sh/manual"
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "engagement_name": "Example Authorized Lab Assessment",
+  "owner": "Your name or team",
+  "authorization": {
+    "status": "authorized_lab",
+    "approved_by": "Lab owner",
+    "approval_reference": "Internal note, program URL, ticket, or written approval",
+    "start_date": "2026-05-11",
+    "end_date": "2026-05-18"
+  },
+  "targets": [
+    {
+      "name": "Juice Shop local lab",
+      "type": "web",
+      "value": "http://127.0.0.1:3000",
+      "allowed": true,
+      "notes": "Local intentionally vulnerable lab only."
+    }
+  ],
+  "out_of_scope": [
+    "*.third-party.example",
+    "production systems without written approval"
+  ],
+  "allowed_activities": [
+    "passive reconnaissance",
+    "service enumeration",
+    "non-destructive vulnerability scanning",
+    "manual verification with minimal proof"
+  ],
+  "disallowed_activities": [
+    "destructive testing",
+    "credential theft",
+    "persistence",
+    "stealth or evasion",
+    "social engineering",
+    "testing outside listed targets"
+  ],
+  "rate_limits": {
+    "max_requests_per_second": 5,
+    "notes": "Reduce further if the target becomes unstable."
+  },
+  "reporting": {
+    "output_directory": "reports/example-lab",
+    "evidence_rules": "Capture only what is necessary to prove impact. Do not store secrets."
+  }
+}

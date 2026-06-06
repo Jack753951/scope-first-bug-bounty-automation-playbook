@@ -1,0 +1,59 @@
+{
+  "phase": "P2-11",
+  "review_type": "direction",
+  "verdict": "PASS_WITH_RECOMMENDATIONS",
+  "recommended_direction": "Add an offline-only module I/O preview bundle consistency validator that, given a planned run/1.0 manifest plus the parallel arrays of module_input/1.0 and module_result/1.0 previews (as already emitted by scripts/module_runner.py --include-module-io-preview), checks cross-document invariants and fails closed on any mismatch. The validator should be a new standard-library-only helper (e.g. scripts/validate_module_io_bundle.py) exposing a pure function that accepts in-memory dicts and an optional CLI that loads JSON paths. It must bind each module_result/module_input pair to exactly one modules[*] entry of the run, verify run_id/program/target/policy/profile/mode/dry_run/runner consistency, verify per-module module_id, manifest_sha256, risk_level, target_types, and technique_tags match the run plan's modules entry plus the input envelope, verify the result's run_id and module_id match the input, verify status is one of the P2-10 dry-run-safe values and dry_run/target_touching/findings/evidence remain in their fail-closed default state, and refuse duplicate, missing, extra, or reordered preview pairs. Wire the runner so its existing --include-module-io-preview path also runs this bundle validator before returning allow, but keep the bundle validator standalone so it can be reused by tests and future consistency checks. Defer the optional preview audit ledger to a later focused phase.",
+  "blocking_items": [],
+  "non_blocking_recommendations": [
+    "Expose the validator as a pure function build_bundle_consistency_report(run_plan, input_previews, result_previews) -> ValidationResult so unit tests can drive it without touching the filesystem, mirroring the style of validate_module_io_contract.validate_module_input / validate_module_result.",
+    "Reuse existing per-document validators (validate_run_manifest, validate_module_io_contract) inside the bundle validator instead of re-implementing field checks; the bundle layer should focus on cross-document binding, not re-validation of single envelopes.",
+    "Use stable, deterministic error/warning codes (e.g. BUNDLE_RUN_ID_MISMATCH, BUNDLE_MODULE_ID_MISMATCH, BUNDLE_MANIFEST_HASH_MISMATCH, BUNDLE_DUPLICATE_PREVIEW, BUNDLE_MISSING_RESULT_FOR_INPUT, BUNDLE_MISSING_INPUT_FOR_RESULT, BUNDLE_EXTRA_PREVIEW, BUNDLE_MODE_MISMATCH, BUNDLE_POLICY_HASH_MISMATCH, BUNDLE_PROFILE_HASH_MISMATCH, BUNDLE_PROGRAM_SLUG_MISMATCH, BUNDLE_TARGET_MISMATCH, BUNDLE_FINDINGS_NOT_EMPTY, BUNDLE_EVIDENCE_NOT_EMPTY, BUNDLE_PATH_TRAVERSAL) following the existing profile_issues code style.",
+    "Have the runner call the new bundle validator after build_module_io_previews succeeds and surface its errors through the existing RunnerResult.errors/error_codes path so a default-deny is preserved end-to-end.",
+    "Update modules/_schema/README.md with one short paragraph describing the bundle consistency layer, its scope, and an example CLI invocation; do not introduce a new schema file unless strictly necessary.",
+    "Add a small representative on-disk fixture or build-from-runner test that exercises the happy path through the runner with --include-module-io-preview, plus targeted in-memory tests for each fail-closed code; this keeps test runtime reasonable and avoids duplicating runner setup."
+  ],
+  "safety_constraints": [
+    "Offline schema/helper/test/documentation work only; no live scans or external target interaction.",
+    "Standard-library only — no new dependencies, no jsonschema-required code path (parity with validate_module_io_contract.py).",
+    "No real module execution, scanner execution, subprocess launch for module behavior, network client, socket use, callbacks, exploit/fuzz/brute-force behavior, or target touching.",
+    "No finding or evidence emission beyond the existing empty dry-run preview placeholders; bundle validator must reject any non-empty findings/evidence even if individual envelopes were tampered with.",
+    "Preserve audit-baseline constraints: profile.profile_id must remain 'audit-baseline', constraints must remain in their P2-10 fail-closed defaults, and result status must remain in {not_executed, planned, skipped, error}.",
+    "Preserve runner default-deny: any bundle inconsistency must flip the runner verdict to deny and clear plan/preview emission in the same way existing errors already do.",
+    "No changes to config/scope.txt, modules/_schema/*.schema.json constants, or the policy_boundary/policy_decision schema versions.",
+    "Validator must not write findings, evidence, reports, callbacks, or loot anywhere; if a ledger is added later it must be opt-in and offline-only, and is explicitly out of scope for this phase."
+  ],
+  "acceptance_tests": [
+    "Happy path: scripts/module_runner.py --discover-root . --profile audit-baseline --include-module-io-preview against the committed level1 policy_decision_metadata_audit fixture returns verdict=allow and the new bundle validator reports no errors.",
+    "Happy path (in-memory): build_bundle_consistency_report on a run plan with two distinct modules and two matching input/result preview pairs returns verdict=allow.",
+    "Fail-closed: run_id in a module_result preview differs from run.run_id → BUNDLE_RUN_ID_MISMATCH, verdict=deny.",
+    "Fail-closed: module_id in a module_input or module_result preview is absent from run.modules[*].module_id → BUNDLE_MODULE_ID_MISMATCH, verdict=deny.",
+    "Fail-closed: module.manifest_sha256 in an input preview differs from the matching run.modules[*].manifest_sha256 → BUNDLE_MANIFEST_HASH_MISMATCH, verdict=deny.",
+    "Fail-closed: input preview's policy.decision_sha256 / decision_artifact_path / profile.profile_sha256 / program.* / target.* differ from run plan → corresponding BUNDLE_*_MISMATCH codes, verdict=deny.",
+    "Fail-closed: an input preview has no matching result preview for the same module_id (or vice versa) → BUNDLE_MISSING_RESULT_FOR_INPUT / BUNDLE_MISSING_INPUT_FOR_RESULT, verdict=deny.",
+    "Fail-closed: duplicate module_id across the input or result preview list → BUNDLE_DUPLICATE_PREVIEW, verdict=deny.",
+    "Fail-closed: a preview pair exists whose module_id is not in run.modules[*] → BUNDLE_EXTRA_PREVIEW, verdict=deny.",
+    "Fail-closed: result findings or evidence is non-empty, or status is outside the P2-10 allowed set, or dry_run/target_touching are inconsistent with the plan → BUNDLE_FINDINGS_NOT_EMPTY / BUNDLE_EVIDENCE_NOT_EMPTY / BUNDLE_STATUS_INVALID / BUNDLE_DRY_RUN_MISMATCH, verdict=deny.",
+    "Fail-closed: output.module_output_dir in an input preview does not match runs/<run_id>/modules/<module_id> for the matching run/module → BUNDLE_OUTPUT_PATH_MISMATCH, verdict=deny.",
+    "Fail-closed: a malformed input or result preview (e.g. missing required key, bad hash, traversal in module_output_dir) is rejected via the existing per-document validators surfaced through the bundle report, verdict=deny.",
+    "CLI: scripts/validate_module_io_bundle.py --run runs/<id>/run.json --input ... --result ... --json exits non-zero on any inconsistency and prints a structured JSON payload with errors and codes."
+  ],
+  "architecture_notes": [
+    "Bundle consistency is a thin cross-document layer above three existing layers: per-document schema (validate_module_io_contract, validate_run_manifest), profile/policy gating (module_runner._profile_allows_manifest, _validate_policy_artifact), and discovery (_load_and_validate_manifests / discover_profile_manifests). Keep it thin — its job is only to check that the three documents agree, not to re-derive their contents.",
+    "The matching key between previews and the run plan should be module_id, with manifest_sha256 used as a secondary equality check. Order-independent matching keeps the validator robust to future ordering changes while still rejecting duplicates and extras.",
+    "A new top-level result type (e.g. ValidationResult(document_type='module_io_bundle') or a BundleConsistencyResult dataclass) keeps the schema_version of the report distinct (e.g. 'module_io_bundle_consistency/1.0') so downstream consumers can branch on it.",
+    "Wiring inside module_runner.py should occur only after build_module_io_previews returns clean, and only when --include-module-io-preview is set, so the bundle layer never weakens the existing default-deny path for plans that opt out of the preview.",
+    "Defer richer artifacts (preview hash ledger, on-disk consistency log) to a separate phase: it adds filesystem I/O surface and a new persisted schema, which is orthogonal to the consistency check and should be reviewed on its own.",
+    "Standard-library-only parity with validate_module_io_contract.py keeps the validator usable in CI and in the existing test harness without optional jsonschema."
+  ],
+  "avoid": [
+    "Do not implement both the cross-document validator and a persisted preview audit ledger in the same phase — pick the validator now and route the ledger to a follow-up.",
+    "Do not introduce a new JSON Schema file for the bundle in modules/_schema unless the runner or downstream consumers actually serialize a bundle envelope; a Python-side report is sufficient for P2-11.",
+    "Do not add jsonschema, pydantic, attrs, or any third-party dependency; match the standard-library style of the existing module I/O validator.",
+    "Do not import module code, spawn subprocesses, open sockets, perform DNS resolution, or read targets — even transitively via imports.",
+    "Do not emit, accept, or pass through non-empty findings/evidence, raw scanner output, callbacks, loot paths, or anything that implies execution.",
+    "Do not modify config/scope.txt, audit-baseline profile constants, run/1.0 / module_input/1.0 / module_result/1.0 schema versions, or the policy_boundary/policy_decision contract semantics.",
+    "Do not relax the runner's existing default-deny on profile/policy/manifest errors when threading the bundle validator in.",
+    "Do not introduce a writable filesystem ledger, run/<id> directory mutation, or any new persisted artifact in this phase; consistency reporting should stay in-memory plus optional stdout JSON.",
+    "Do not weaken the existing 'no execution' boundary by adding plumbing (callbacks, hooks, plugin entry points) that future phases could repurpose for real module execution without further review."
+  ]
+}

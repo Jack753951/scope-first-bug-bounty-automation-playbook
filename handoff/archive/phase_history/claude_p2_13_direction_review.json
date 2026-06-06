@@ -1,0 +1,31 @@
+{
+  "phase": "P2-13",
+  "topic": "offline preview bundle persistence / audit manifest direction review",
+  "verdict": "PASS_WITH_RECOMMENDATIONS",
+  "review_type": "direction_review",
+  "safety_boundary": {
+    "live_scans": false,
+    "external_targets_touched": false,
+    "module_execution": false,
+    "subprocess_or_scanner_execution": false,
+    "network_access": false,
+    "config_scope_changed": false
+  },
+  "oss_recon_gate": {
+    "sarif": "Adapt artifact inventory/run linkage ideas for repo-safe preview artifacts and hashes.",
+    "defectdojo": "Adapt import-candidate lifecycle semantics: persisted preview is not a confirmed finding.",
+    "nuclei": "Adapt separation between template/module metadata and generated output; reject default-live target touching.",
+    "openvex_sbom_integrity": "Adapt hash/provenance linkage patterns for preview_manifest/1.0 integrity metadata."
+  },
+  "required_contract": [
+    "Opt-in persistence only via a dedicated flag, not by reusing generic --output semantics.",
+    "Write only after manifest/profile/policy/run/module I/O/bundle gates allow.",
+    "Persist fixed JSON filenames under repo-local runs/<run_id>/preview/.",
+    "Deny and write nothing on validation failure, path escape, symlink parent, existing preview directory, or missing module I/O preview.",
+    "Preserve no module execution, no subprocess, no scanner, no network, no target-touching, no findings/evidence emission."
+  ],
+  "non_blocking_recommendations": [
+    "Document that preview_manifest.json is not self-hashed unless a later schema supports a canonical self-reference.",
+    "Consider extracting repeated CLI deny-output branches into a helper in a later cleanup phase."
+  ]
+}

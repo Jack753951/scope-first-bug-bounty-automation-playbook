@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "profile": "<attacker-vm>",
+  "checked_at": "2026-05-27T05:26:51Z",
+  "readiness": "degraded",
+  "target_touching_allowed": false,
+  "checks": [
+    {
+      "name": "ssh",
+      "status": "pass",
+      "evidence": "scripts/kali-vnc-control.ps1 status/start reached Kali over configured SSH and started local tunnel pid=6304",
+      "command_safe_to_rerun": true
+    },
+    {
+      "name": "browser",
+      "status": "pass",
+      "evidence": "noVNC page reachable at 127.0.0.1:6080; visible <program-name> browser session observed through local tunnel",
+      "command_safe_to_rerun": true
+    },
+    {
+      "name": "project_mount",
+      "status": "unknown",
+      "evidence": "not checked in this resume; no file mount probe executed",
+      "command_safe_to_rerun": true
+    },
+    {
+      "name": "host_only_network",
+      "status": "unknown",
+      "evidence": "VirtualBox/VBoxManage not available in PATH from Windows Git-Bash; host-only/NAT posture not independently verified in this resume",
+      "command_safe_to_rerun": true
+    },
+    {
+      "name": "nat_closed",
+      "status": "unknown",
+      "evidence": "VirtualBox/VBoxManage not available in PATH from Windows Git-Bash; NAT closure not independently verified in this resume",
+      "command_safe_to_rerun": true
+    }
+  ],
+  "conditions": [
+    {
+      "type": "KaliVncReachable",
+      "status": "True",
+      "reason": "NoVNCReachable",
+      "message": "Kali noVNC is reachable through SSH local tunnel for passive browser observation",
+      "last_transition_time": "2026-05-27T05:26:51Z"
+    },
+    {
+      "type": "KaliNetworkPosture",
+      "status": "Unknown",
+      "reason": "VBoxManageUnavailable",
+      "message": "Host-only/NAT posture was not verified by this local precheck; this state does not grant target-touching authorization",
+      "last_transition_time": "2026-05-27T05:26:51Z"
+    }
+  ],
+  "blockers": [
+    "host-only/NAT posture not independently verified in this resume; use only already-authorized low-speed passive <program-name> UI mapping, no scanners/scripts/stronger techniques"
+  ],
+  "warnings": [
+    "Visible browser session may contain workspace labels; keep screenshots local-only and redact notes"
+  ],
+  "next_action": "local_precheck"
+}

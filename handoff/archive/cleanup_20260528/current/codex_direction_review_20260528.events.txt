@@ -1,0 +1,1803 @@
+OpenAI Codex v0.134.0
+--------
+workdir: <private-workspace>
+model: gpt-5.5
+provider: openai
+approval: never
+sandbox: read-only
+reasoning effort: xhigh
+reasoning summaries: none
+session id: 019e6cf6-d9fd-7973-92d5-3d59ab7f1132
+--------
+user
+# Direction Review Packet — 2026-05-28
+
+Status: read-only direction review request
+Boundary: no target contact; no scan/fuzz/exploit/callback/OAST; no credential handling; no account mutation; no report submission; no file edits by reviewers.
+
+## Review goal
+
+The operator asks for Codex and Claude Code to act as direction reviewers and advise on the project capability vision and timeline.
+
+Question to answer:
+
+1. Is the current project vision coherent?
+2. What should the platform be capable of in 48h / 7d / 14d / 30d / 90d?
+3. Which capabilities are essential versus distracting?
+4. What should be explicitly out of scope for the next 30 days?
+5. What hard engineering/policy risks could make the repo chaotic again?
+6. What should Hermes ask the operator to confirm about the capability vision?
+
+## Project summary
+
+This repository is an authorized bug bounty automation platform and capability library, not a general cybersecurity notebook.
+
+Desired operating loop:
+
+```text
+fresh intel / scope change / target freshness
+  -> detector or proof bundle lane
+  -> candidate + controls
+  -> evidence packet or no-finding closeout
+  -> operator inbox decision
+  -> report draft / final operator submit gate
+```
+
+Hermes role: project owner, scheduler, worker router, verifier, safety gate, and repo truth maintainer.
+
+Operator role: auth/OTP/CAPTCHA/phone/payment/KYC, scarce account setup, safe phrases, final tactical corrections, and final submission approval.
+
+## Required context reads
+
+Read these files before giving advice and include an attestation listing which were read:
+
+- `.hermes.md`
+- `PROJECT_CHARTER.md`
+- `docs/ENGINEERING_INDEX.md`
+- `docs/policy/README.md`
+- `docs/policy/repo_hygiene_policy.md`
+- `docs/policy/memory_and_strategy_routing.md`
+- `handoff/INDEX.md`
+- `handoff/current_navigation.md`
+- `handoff/active_strategy_queue.md`
+- `handoff/current_artifact_index.md`
+- `docs/strategy/platform/engineering_direction_20260527.md`
+- `handoff/current/worktree_cleanup_index_20260528.md`
+
+If a file is missing, say so.
+
+## Current Hermes proposal to review
+
+### 0–48 hours
+
+- Clean worktree into reviewable commits.
+- Keep active truth minimal: `docs/ENGINEERING_INDEX.md`, policy index, handoff index, current navigation/queue/artifact index.
+- Stop adding policy variants.
+- Verify with local tests and `hermes review`.
+
+### 3–7 days
+
+- Produce a compact operator inbox with 3–5 decisions.
+- Push at least one live lane to candidate evidence, no-finding closeout, or explicit PARK/KILL.
+
+### 7–14 days
+
+- Run one complete loop: scope intake -> lane state -> bundle/detector -> evidence/no-finding -> review -> inbox -> report draft or closeout.
+
+### 14–30 days
+
+- Turn recurring substrate into daily dry-run/local job.
+- Add scoped passive checks only after policy/scope gates.
+- Stabilize 2–3 reusable bundles/detectors.
+
+### 30–90 days
+
+- Mature into a bug bounty operating system with recurring intel, detector/bundle library, lane state machine, evidence redaction, operator inbox, report draft pipeline, and clean repo discipline.
+
+## Expected response format
+
+Use Traditional Chinese.
+
+Return:
+
+1. Worker identity
+2. Context read attestation
+3. Verdict: APPROVE / APPROVE_WITH_CHANGES / REVISE
+4. 48h / 7d / 14d / 30d / 90d recommended sequence
+5. Essential capabilities
+6. Non-goals for the next 30 days
+7. Risks and hard stops
+8. Questions Hermes should ask the operator to confirm capability vision
+9. Any disagreement with Hermes proposal
+
+Do not modify files. This is a read-only direction review.
+
+
+
+# Embedded Context Bundle for Codex Retry
+
+Codex sandbox could not read files directly on Windows. Hermes is injecting the required context contents below. Treat this as the synchronized memory/context packet. Do not use local tools. Review based on this embedded context.
+
+
+
+## FILE: .hermes.md
+
+# Hermes Project Context — Authorized Bug Bounty Automation Platform
+
+This repository uses a Hermes + Cowork + Codex orchestration workflow,
+adapted for an authorized bug bounty automation platform.
+
+Active north star: this project is an automated, multi-agent collaborative
+bug bounty platform and capability library. Hermes acts as project owner,
+task decomposer, scheduler, worker router, verifier, and safety gate. The
+platform should continuously refresh intelligence and target state, turn new
+vulnerability/proof patterns into reusable bundles, match proven patterns to
+in-scope targets, produce bounded proof-only evidence, and feed every real run
+back into the library: site type, likely bug classes, common vulnerable objects,
+controls, and reporting lessons.
+
+Maintenance style: prefer editing compact active-truth sections and machine-readable
+contracts over endlessly appending date-stamped strategy blocks. Use dated entries only
+for audit logs, immutable checkpoints, evidence chronology, and historical references.
+
+Project name: **cybersec lab (hacking)**
+Mounted at:   Windows `<private-workspace>` ↔ Kali `/mnt/hacking` ↔ `~/projects/cybersec`
+
+---
+
+## Roles
+
+- **Hermes** — project owner, scheduler, memory keeper, task decomposer, worker router,
+  final verifier, and security gate. Hermes should maintain a clear expected working-tree
+  shape and engineering direction, object when proposed work drifts away from the long-term
+  platform/capability-library goal, and pause for operator or strong-agent advice when the
+  direction is unclear.
+  Implemented as `bin/hermes` (bash) on Linux and `run_hermes_worker.ps1` (PowerShell) on Windows.
+- **OSS / Source Recon Guidance** — lightweight source-check habit for borrowing mature patterns before custom scripts/contracts; documented in `docs/policy/oss_recon_gate.md`. It is guidance, not a blocking ceremony.
+- **Growth-First Review Policy** — simplified review rule: Hermes proceeds on capability-building work unless a concrete hard-stop blocker exists; documented in `docs/policy/review_tiering_policy.md`. The old T0-T5 review-depth machinery is no longer active.
+- **Multi-Agent Collaboration Policy** — external strong agents are expected to be used
+  frequently for direction, dissent, architecture, tactic selection, and implementation review,
+  especially when Hermes is uncertain or the change affects contracts, safety, recurring
+  automation, evidence/reporting, or platform shape. Before invoking external workers, Hermes
+  must synchronize context by engineering means: include `.hermes.md`, current navigation,
+  active strategy queue, current artifact index, Cybersec Lab Obsidian bridge, recent accepted
+  changes, relevant program state, stop-before rules, and the exact task. Reviews remain
+  advisory unless they identify a concrete authorization, safety, validation, or data-loss
+  blocker; Hermes remains final verifier.
+- **Claude/Cowork** — strategy, learning plans, documentation cleanup, research synthesis,
+  threat modeling, report drafting, independent review, and third-party architecture guidance.
+  Reviews should not only look for blocking defects; they should also assess whether changes
+  improve extensibility, updateability, modularity, safety gates, testing, and agent-assisted
+  analysis toward the operator's long-term platform goals. For new contracts, schemas,
+  module/runner/reporting boundaries, or external-tool integrations, Claude/Cowork should
+  use lightweight OSS/source comparison when it materially improves the design: compare relevant
+  open-source projects/formats, choose adopt/adapt/ignore decisions, and avoid copying
+  unsafe target-touching defaults. Driven by Claude Code CLI (`claude`) or the Cowork desktop app.
+- **Codex** — surgical fallback, small deterministic fixes, secondary engineering review, script safety, validation, tests, automation.
+  Driven by OpenAI Codex CLI (`codex`).
+- **Claude Code Impl** — default implementation worker for offline/local coding slices that should visibly consume Claude Code MAX/OAuth usage and emit usage JSON.
+  Driven by Claude Code CLI (`claude`) through `hermes claude-impl`; Hermes remains verifier and safety gate.
+
+---
+
+## Security Gate (binding)
+
+Before any active scan, exploit, brute force, callback, or target-touching automation,
+Hermes must confirm one of:
+
+- local lab or intentionally vulnerable app
+- CTF / training platform (HackTheBox, TryHackMe, PortSwigger Labs)
+- user-owned asset
+- written client authorization
+- explicit bug bounty scope
+
+The whitelist lives in `config/scope.txt`. `recon.sh` enforces this automatically through the mandatory `safe_target` runtime guard: every host or URL must pass syntax validation and scope matching before any probe, scan, fuzz, nuclei, or notification stage consumes it. Domain-expansion output from subfinder/crt.sh is revalidated and out-of-scope results are dropped with audit reasons.
+
+Per-program scope files live at `programs/<program-slug>/scope.json` as the intended machine-readable contract. Bug bounty automation must require both `config/scope.txt` and the active program scope/rules to allow the target and technique. If either source is missing, ambiguous, or disallows automation, Hermes routes the task to clarification or policy intake, not execution.
+
+**Do not create:** stealth persistence, credential theft tooling, malware,
+destructive actions, evasion of legitimate controls, unauthorized access workflows.
+
+Scanner output is **triage only**. Confirmed findings require manual verification,
+evidence, impact analysis, remediation, and retest steps before they enter `reports/`.
+
+In-scope testing authorization: the operator authorizes testing, including aggressive or
+attack-shaped scripts, only after exact bug-bounty scope and program rules confirm the target
+and technique are allowed. Execution must remain bounded proof-only: do not browse, download,
+modify, or exfiltrate internal/customer/non-owned data even if access appears possible. Stop at
+the minimum evidence needed to prove impact, redact artifacts, and route report submission to
+the operator final gate.
+
+---
+
+## Current Project Assets
+
+| Asset | Path | Owner |
+|---|---|---|
+| Platform charter | `PROJECT_CHARTER.md` | Hermes + Operator |
+| Platform core | `platform/` | Hermes / implementation workers |
+| Detector/proof modules | `modules/`, `platform/detectors/` | Hermes + Codex/Claude Impl |
+| Live bounty lane state | `programs/<slug>/` | Hermes |
+| Env bootstrap | `setup_kali_env.sh` | Hermes |
+| Legacy recon entrypoints | `recon.sh`, `recon_pipeline.py` | Cowork (spec) + Codex (impl) |
+| Recon config | `config/recon.conf` | Codex |
+| Authorization whitelist | `config/scope.txt` | **Operator only** |
+| Hermes CLI (Linux) | `bin/hermes` | Hermes |
+| Orchestration template | `agent_orchestration_template/` | Hermes |
+| Scan outputs | `scans/<target>_<ts>/` | runtime |
+| Audit logs | `logs/audit.log`, `logs/hermes_audit.log` | runtime |
+| Loot (sensitive) | `loot/` | runtime — never commit |
+| Reports/evidence | `reports/` | Hermes + workers |
+| CVE brief archive | `intelligence/cve_briefs/` | Hermes / platform intel |
+| Notes | `notes/` | supporting learning/defense notes |
+| Runbooks | `docs/runbook/` | Hermes |
+| Memory / strategy routing | `docs/policy/memory_and_strategy_routing.md` | Hermes |
+| Active strategy queue | `handoff/active_strategy_queue.md` | Hermes |
+
+---
+
+## Collaboration Contract
+
+1. **Operator** writes intent → `hermes new-task cowork "topic"` creates `handoff/cowork_task.md`.
+2. **Hermes** checks the request against hard stops in `.hermes.md` and `docs/policy/`, then proceeds by default on capability-building work when no concrete blocker exists.
+3. **Cowork** reads task + this context, writes strategy/spec to `handoff/cowork_result.md`,
+   optionally drafts a proposal at `handoff/cowork_proposal.md`.
+4. **Hermes** runs focused validation (`hermes review` when broad/shared contracts changed), checks for concrete hard-stop blockers, and uses OSS/source comparisons only when they materially improve the implementation. Hermes then translates proposals into a
+   Claude-Code-friendly task at `handoff/claude_code_task.md` for offline implementation-heavy coding, or a Codex fallback task at `handoff/codex_task.md` for surgical fixes. Before any rolling task file is overwritten, `bin/hermes new-task` archives the previous non-empty file under `handoff/archive/rolling/`.
+5. **Claude Code Impl** implements suitable offline/local changes through `hermes claude-impl`, writes:
+   - `handoff/claude_code_result.md` (summary/result; previous non-empty rolling result is archived first)
+   - `logs/runs/claude_code_impl_run_<timestamp>.json` (usage/cost/turns/session metadata)
+   - task-specific named artifacts when the slice matters for audit, e.g. `handoff/claude_code_task_p3_6.md` / `handoff/claude_code_result_p3_6.md`, so `claude_code_task.md` and `claude_code_result.md` can remain convenient rolling pointers without losing review history
+6. **Codex** is used for fallback/surgical fixes or secondary review and updates:
+   - `handoff/codex_review.md` (analysis + diff summary)
+   - `handoff/accepted_changes.md` (append-only history)
+7. **Hermes** runs focused validation, obtains external review only when it would materially improve quality or when a hard-stop boundary is near, treats reviewer output as advisory unless it names a concrete blocker, then summarizes back to Cowork for next iteration.
+
+Full pipeline shortcut: `hermes pipeline`
+
+---
+
+## CLI Worker Integration
+
+### Linux / Kali path (bash) — preferred when working inside the VM
+
+```bash
+# bin/hermes is already in PATH via setup_kali_env.sh
+hermes doctor                       # check claude + codex installed
+hermes status                       # show handoff/ state
+hermes new-task cowork "topic"      # scaffold strategy task
+hermes cowork                       # run Claude Code CLI on cowork_task.md
+hermes review                       # static validation (json/python/bash/git/scope)
+hermes claude-impl                  # run Claude Code MAX/OAuth on claude_code_task.md, emits usage JSON, archives previous rolling result
+hermes codex                        # fallback Codex worker for surgical fixes
+hermes pipeline                     # default chain: cowork → review → claude-impl → review
+HERMES_IMPL_WORKER=codex hermes pipeline  # explicit Codex fallback chain
+```
+
+### Windows path (PowerShell) — preferred for docs / research on host
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_hermes_worker.ps1 -Doctor
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_hermes_worker.ps1 -Worker cowork
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_codex_review.ps1
+powershell -NoProfile -ExecutionPolicy Bypass -File .\run_hermes_worker.ps1 -Worker codex
+```
+
+Both surfaces share `handoff/` and `.hermes.md`. Tasks can hop between OS freely.
+
+### Worker invocation reference
+
+| Worker | CLI call (used internally) |
+|---|---|
+| Cowork | `claude -p "<context+required-context-reads+task>" --max-turns 10 --allowedTools "Read,Edit,Write,Grep,Glob"` |
+| Claude Impl | `claude -p "<context+required-context-reads+task+safety_footer>" --output-format json --max-turns ${CLAUDE_IMPL_MAX_TURNS:-25} --allowedTools "Read,Edit,Write,Bash,Grep,Glob"` |
+| Codex fallback | `codex exec --sandbox workspace-write --output-last-message <out> -` |
+
+All workers receive **this `.hermes.md` as prefix context** before the task body, plus a required-context-read block instructing them to read the current route/strategy/artifact entrypoints when present:
+`handoff/current_navigation.md`, `handoff/active_strategy_queue.md`, `handoff/current_artifact_index.md`, `notes/obsidian_projects/Cybersec Lab.md`, and recent `handoff/accepted_changes.md` entries. Worker outputs must include `Worker identity`, checked `Context read attestation`, `Validation`, and `Verdict` sections; `scripts/check-worker-attestation.py` enforces this in `hermes review` and after worker runs. When `config/worker_roles.txt` exists, the `role:` field must use its canonical hyphenated vocabulary or `other:<reason>`. This gives workers stable long-term goal context without dumping the whole Obsidian vault into every prompt.
+
+---
+
+## Routing Rules
+
+- Recurring intelligence/recon engineering → `platform/intel/`, `platform/recon/`,
+  `platform/pipeline/`, and scheduled jobs. Default cadence target: minute-level CT/scope/CVE-PoC
+  alerts; hourly differential subdomain/httpx/nuclei-diff; daily full passive inventory,
+  NVD/CISA KEV, nuclei template update + sweep; weekly deep wordlist/JS/parameter/version/policy
+  intake; monthly asset re-inventory and bug-class strategy review.
+- Dual-track practical hunting → (1) latest-vuln/lab-proof/bundle-library lane and (2)
+  multi-agent matching of existing proof patterns to suitable in-scope targets for bounded
+  proof-only testing.
+- Operator inbox / final decision / scarce-action triage → Hermes summarizes candidates with EXECUTE / PASSIVE-ONLY / PARK / KILL.
+- Detection lane → `platform/detectors/`, `modules/`, and local lab validation before any live use.
+- Lane execution → `programs/<slug>/` with scope, controls, owned object/resource, evidence, and cleanup notes.
+- Evidence/report work → `reports/` plus redacted request/screenshot snippets and final-submit gate.
+- Platform code / schemas / pipeline / inbox builder → `platform/`, `schemas/`, `tests/`; use implementation workers and verify locally.
+- Supporting learning/defense notes → `notes/`; do not make them the main platform workflow.
+- Current CVE / advisory brief → Hermes gathers primary sources and archives outputs into `intelligence/cve_briefs/`.
+- Live incident / suspected compromise → preserve evidence, write IR case note, do not clean up until evidence handling is decided.
+- Active target testing → scope verification and policy check before any payload.
+
+## Structural Engineering Priorities
+
+1. **Contract alignment** — `programs/<slug>/scope.json` and `lane_state.json` must become
+   validator-valid machine-readable contracts. Human policy summaries belong in
+   `policy_intake.json`, `scope_notes.md`, or `programs/<slug>/notes/`.
+2. **Platform core migration** — move reusable root scripts gradually into `platform/intel/`,
+   `platform/recon/`, `platform/detectors/`, `platform/bounty/`, `platform/inbox/`, and
+   stable CLI entrypoints; keep root focused on wrappers and project docs.
+3. **Evidence-to-report pipeline** — standardize lane state → evidence packet → redaction
+   check → report draft → operator final gate; do not rely on ad-hoc agent-written reports.
+4. **Detector harness** — unify metadata-only, local-lab validation, live-passive, fixture tests,
+   and candidate JSON output so detectors can feed recurring sweeps and operator inbox.
+5. **Artifact/path integrity** — automatically check that machine-readable artifact paths exist,
+   are not stale, and do not point into ignored sensitive areas.
+6. **Repo hygiene and environment profiles** — stabilize LF/UTF-8, local-only temp scripts,
+   test profiles for Windows/Kali/Git-Bash/WSL, and retention rules for logs/notebook binaries/images.
+7. **Near-term ROI lanes** — reporting automation, authentication/session state management,
+   submission tracking, hourly differential recon, disclosed-report mining, mobile static analysis,
+   and vendor advisory diffing. Avoid web UI, SaaS/multi-tenant, distributed scanner, custom vuln DB,
+   custom ML, or reimplementing mature tools.
+
+---
+
+## Safety Rules (binding for all agents)
+
+1. **Authorization first.** Never run active scans/exploits against any target absent from
+   `config/scope.txt`. `--skip-scope-check` requires operator approval and audits.
+2. **No exfiltration.** Never transmit `loot/`, `.env`, credentials, hashes, tokens, or
+   proprietary wordlists outside the local machine. Webhooks send summaries only.
+3. **No destructive defaults.** `recon.sh` defaults to `normal` intensity, which excludes
+   `dos,intrusive,fuzz` nuclei tags. `--full` requires conscious opt-in.
+4. **No silent overwrites.** Codex modifying existing files MUST log diff summary to
+   `handoff/accepted_changes.md`.
+5. **Lock discipline.** Long-running worker tasks must respect `.agent.lock`.
+6. **Secrets out of git.** `.gitignore` excludes `loot/`, `logs/`, `*.pcap`, `*.cap`,
+   `*.kdbx`, `*.key`, `*.pem`, `creds*`. Do not weaken.
+7. **Report integrity.** Generated reports under `reports/` may be reset.
+   `accepted_changes.md` is **append-only** — never truncate.
+8. **No production-side changes** without explicit operator approval (deployment, billing,
+   scheduler, publish).
+
+---
+
+## Validation Expectations
+
+Before any worker reports "done":
+
+- `hermes review` passes (JSON valid, Python compiles, `bash -n` clean on every `.sh`)
+- `.agent.lock` released
+- `handoff/codex_review.md` contains concrete findings (not boilerplate)
+- If a shell script changed → dry-run executed at least once
+- If `recon.sh` or scope logic changed → unauthorized target rejected in test
+
+---
+
+## Recommended Cadence
+
+- **Continuous/minute-level** — CT log subscription, Censys/SecurityTrails or equivalent,
+  new program/scope-expansion alerts, and CVE/PoC GitHub/RSS intake; objective is to notice new
+  subdomains within minutes and preserve the 0–72h disclosure window.
+- **Hourly** — differential `subfinder`/`dnsx`/`httpx`/nuclei only on assets/endpoints discovered
+  since the previous run, with banner/port/tech changes routed to operator inbox.
+- **Daily** — check operator inbox / `handoff/active_strategy_queue.md`; agents should update lane decisions rather than expect manual recon.
+- **Daily engineering sweep** — full passive inventory refresh, tech fingerprint refresh,
+  NVD recent-modified, CISA KEV diff, nuclei template update, and bounded full sweep for allowed scope.
+- **Weekly** — deep feroxbuster/wordlist, JS endpoint extraction, Arjun parameter discovery,
+  bundle/CMS version inventory, public disclosed-report mining, and new-program policy intake.
+- **Monthly** — full asset re-inventory, tech-stack pivot assessment, bug-class strategy review,
+  metrics/funnel review, and capability-library cleanup.
+- **Milestone / direction boundary** — update `handoff/active_strategy_queue.md` with the active lane, next candidate slices, deferred lanes, and real operator-only hard stops.
+- **Periodic / deep review** — include freshness metadata plus memory drift, handoff drift, goal drift, capability-growth drift, and structure drift checks using `docs/policy/memory_and_strategy_routing.md`.
+- **CVE brief** — archive generated briefs under `intelligence/cve_briefs/`.
+- **Per lab/proof session** — update the relevant `labs/`, `modules/`, or `programs/<slug>/` artifact.
+- **Per script/platform change** — update `handoff/accepted_changes.md`, add dry-run or smoke-test evidence.
+
+
+
+## FILE: PROJECT_CHARTER.md
+
+# Authorized Bug Bounty Automation Platform Charter
+
+## Mission
+
+Build a user-owned, authorized bug bounty automation platform that continuously turns fresh vulnerability intelligence and target surface changes into operator-ready bounty decisions.
+
+The platform should not be a general cybersecurity notebook. Its north star is a repeatable pipeline:
+
+```text
+fresh intel / target change -> detector or bundle lane -> candidate -> evidence packet -> operator decision -> report submission
+```
+
+## North Star Metrics
+
+Primary outcomes:
+
+- Operator inbox contains high-quality, bounded decisions instead of raw research.
+- Each active lane has an EXECUTE / PARK / KILL state.
+- Report candidates have redacted evidence, controls, scope references, and cleanup notes.
+- Manual operator time is reserved for auth, OTP/CAPTCHA, phone/payment/KYC, account-control setup, tactical corrections, and final submit approval.
+
+Secondary outcomes:
+
+- CVE/freshness detectors become reusable platform modules.
+- Lab proofs become bounded live-safe evidence patterns.
+- Agent reviews improve attack paths and evidence quality without becoming conservative blockers.
+
+## Operating Model
+
+The platform runs in four layers:
+
+1. Continuous intelligence
+   - CVE advisories, H1 freshness, scope changes, program updates, and vendor advisories.
+   - Output: ranked candidates and detector work items.
+
+2. Detector and bundle execution
+   - Passive fingerprint/version/exposure detectors for known CVEs.
+   - Practiced bounty bundles for access-control, lifecycle, metadata, upload-marker, and API/UI mismatch lanes.
+   - Output: candidate records, proof requirements, and lane state.
+
+3. Evidence and review
+   - Redacted screenshots, request snippets, expected-vs-observed matrices, positive/negative controls, and stop-before boundaries.
+   - Multi-agent review is advisory unless it identifies a concrete blocker.
+   - Output: report packet or explicit PARK/KILL reason.
+
+4. Operator inbox and submission
+   - Operator receives short decisions, not raw logs.
+   - Operator approves scarce platform actions, human verification, credential gates, and final report submission.
+
+## Safety and Authorization Boundary
+
+This is an authorized-only platform.
+
+Allowed by default:
+
+- Local labs and owned test instances.
+- Passive public fingerprinting and version/exposure checks when allowed by program policy.
+- Owned-account/object evidence collection inside explicit scope.
+- Report drafting with redaction.
+
+Human-gated or policy-gated:
+
+- Auth, OTP, CAPTCHA, phone, payment, KYC, OAuth/integration setup, API-token creation, mailbox/channel setup, and final report submission.
+- Any active scanning, fuzzing, callbacks/OAST, exploit proof, or state-changing request on live targets.
+
+Never store in repo/memory:
+
+- Passwords, OTPs, cookies, tokens, verification links, API keys, private customer data, non-owned secrets, or raw sensitive program details.
+
+## Repository Shape
+
+- `platform/` — core automation engine: detectors, recon, pipeline, bounty, intel, inbox, agents.
+- `programs/` — per-target live bounty lane state and evidence.
+- `modules/` — reusable proof bundles and detector modules.
+- `labs/` — local vulnerable apps, proof validation, and lab runbooks.
+- `reports/` — generated reports, templates, and submission drafts.
+- `handoff/` — compact rolling IPC and current strategy queue.
+- `docs/policy/` — safety, scope, model, review, and evidence policies.
+- `docs/runbook/` — operator and agent operating procedures.
+- `docs/charter/historical/` — original expert-workbench charter and retired structures.
+- `notes/` — learning, defense, and Obsidian project notes that support but do not drive the platform.
+- `intelligence/cve_briefs/` — generated CVE brief archive.
+
+## Decision Vocabulary
+
+- EXECUTE: preconditions are met and the proof stays within authorization and safety boundaries.
+- PASSIVE-ONLY: only version, exposure, or metadata checks are allowed on live targets.
+- PARK: useful hypothesis but missing controls, scope clarity, or operator setup.
+- KILL: low-value, out-of-scope, unsafe, duplicate-prone, or not worth revisiting soon.
+
+## Current Strategic Bias
+
+Prioritize first reportable bounty over broad learning:
+
+- Fresh/new/updated H1 programs and mid-sized SaaS with clean self-serve controls.
+- Latest CVE detector lanes only when they can be reduced to safe passive/live checks and local lab proof.
+- Access-control and lifecycle bundles when owned A/B/C accounts and objects exist.
+- Script-first evidence, not manual one-off browsing.
+
+Learning assets remain valuable, but they support the platform; they are not the primary workflow.
+
+
+
+## FILE: docs/ENGINEERING_INDEX.md
+
+# Engineering Index
+
+Status: active engineering entrypoint
+Boundary: index only; this file does not authorize live target testing, scanning, exploitation, account mutation, credential handling, scheduler activation, report promotion, or final submission.
+
+## Read order for any future agent
+
+1. `.hermes.md` — project contract, safety gate, routing, and worker expectations.
+2. `PROJECT_CHARTER.md` — product north star and repository shape.
+3. `docs/policy/README.md` — active policy set and archived-policy boundary.
+4. `handoff/INDEX.md` — active handoff map.
+5. `handoff/current_navigation.md` — current route, blockers, and stop-before gates.
+6. `handoff/active_strategy_queue.md` — next decisions and active priorities.
+7. `handoff/current_artifact_index.md` — current artifacts, lane state, and platform substrate pointers.
+8. `docs/strategy/platform/engineering_direction_20260527.md` — current engineering backlog and anti-patterns.
+
+If these conflict, follow the authority order in `docs/policy/memory_and_strategy_routing.md`: current operator instruction, live repo/config/validation state, repo handoff, Obsidian, durable memory, session recall.
+
+## Active project truth
+
+| Area | Active entrypoint | Rule |
+|---|---|---|
+| Mission | `PROJECT_CHARTER.md` | Keep short; no dated variants. |
+| Agent contract | `.hermes.md` | Binding safety/routing contract. |
+| Repo hygiene | `docs/policy/repo_hygiene_policy.md` | No broad reset/clean; classify then archive/quarantine. |
+| Safety/testing | `docs/policy/lab_safety_contract.md`, `docs/policy/active_testing_policy.md`, `docs/policy/live_bounty_autonomous_workflow_policy_20260525.md` | Target-touching work requires scope + policy + operator gate. |
+| Memory/routing | `docs/policy/memory_and_strategy_routing.md` | Global memory is a compact signpost, not project state. |
+| Worker/review | `docs/policy/multi_agent_tactical_review_memory_sync_rule_20260526.md`, `docs/policy/multi_party_review_decision_policy.md`, `docs/policy/review_tiering_policy.md` | Use external review when boundaries/contracts/platform shape change; blockers must be concrete. |
+| Source guidance | `docs/policy/oss_recon_gate.md` | Lightweight OSS comparison; not ceremony. |
+| Model/tool routing | `docs/policy/model_usage_routing_policy.md` | Edit this file if routing changes; do not create variants. |
+| Current state | `handoff/current_navigation.md`, `handoff/active_strategy_queue.md`, `handoff/current_artifact_index.md` | Edit existing current files; archive snapshots only when needed. |
+
+## Repository zones
+
+| Zone | Path | Keep minimal by |
+|---|---|---|
+| Platform code | `platform/`, `modules/`, `schemas/`, `tests/`, production `scripts/` | Test/schema required before promotion. |
+| Program state | `programs/<slug>/` | Do not bulk-delete; lane state is provenance. |
+| Evidence/report | `handoff/live_bounty_evidence/`, `reports/`, `labs/proofs/` | Redacted, scoped, and operator-gated. |
+| Handoff | `handoff/` | Root holds current map/queue/state/rolling IPC only. Old items go to `handoff/archive/`. |
+| Policy | `docs/policy/` | Active set in README; superseded files go to `docs/policy/archive/`. |
+| Strategy/reference | `docs/strategy/` | One active engineering direction; dated material is reference. |
+| Local/runtime | `logs/`, `scans/`, `loot/`, `<artifact-output-dir>/`, browser profiles | Usually ignored; never auto-clean broadly. |
+
+## Promotion gates
+
+A file may move into active project truth only if it passes the relevant gate:
+
+- It has a clear owner/path and does not duplicate an existing active file.
+- It does not contain passwords, cookies, tokens, OTPs, verification links, private scope/rules, customer data, or raw sensitive evidence.
+- If it is automation, default mode is offline/dry-run/no-target unless separately approved.
+- If it can touch a target, it references `config/scope.txt`, `programs/<slug>/scope.json`, stop-before rules, and operator gate.
+- If it is platform code, it has tests or a documented local validation command.
+- If it is policy/strategy, it edits the active file instead of creating a dated variant.
+
+## Commit discipline
+
+Split work by intent:
+
+1. structure/index
+2. policy
+3. platform code/schema
+4. tests
+5. program/lane state
+6. archive/quarantine
+7. redaction/deletion with explicit approval
+
+No mega-commits. Every commit should state whether it is target-touching, whether it can contain sensitive/private data, and what validated it.
+
+## Minimal cleanup rule
+
+When unsure, archive or quarantine; do not delete. A visually clean tree is less important than preserving authorization, scope, evidence, and lane-decision provenance.
+
+
+
+## FILE: docs/policy/README.md
+
+# Policy / Contract Index
+
+Status: active policy index
+Boundary: these documents define process, review, safety, routing, memory, and cleanup rules. They do not authorize live target testing, scanning, exploitation, callbacks, credential handling, report submission, scheduler activation, account mutation, or scope expansion.
+
+## Active binding policies
+
+Read these as the current policy set:
+
+| Policy | Purpose |
+|---|---|
+| `repo_hygiene_policy.md` | Worktree cleanup, archive/quarantine rules, commit discipline, and anti-chaos safeguards. |
+| `lab_safety_contract.md` | Local/lab and live-target safety boundaries. |
+| `active_testing_policy.md` | Simplified active-testing policy: hard stops only; local/lab capability growth by default. |
+| `live_bounty_autonomous_workflow_policy_20260525.md` | Authorized live-bounty autonomy boundaries and operator gates. |
+| `memory_and_strategy_routing.md` | Project-local memory, handoff, Obsidian, skills, and session-recall routing. |
+| `multi_agent_tactical_review_memory_sync_rule_20260526.md` | Worker context-read and role-attestation rule for meaningful external worker use. |
+| `multi_party_review_decision_policy.md` | Multi-agent review is advisory unless it names a concrete blocker. |
+| `review_tiering_policy.md` | Growth-first review policy; old T0-T5 ceremony is no longer active. |
+| `oss_recon_gate.md` | Lightweight OSS/source reconnaissance guidance, not a blocking ceremony. |
+| `model_usage_routing_policy.md` | Model/worker routing notes; edit this file for routing changes instead of creating variants. |
+
+## Active templates / references
+
+| File | Use |
+|---|---|
+| `WORKER_PROMPT_TEMPLATES.md` | Worker prompt template reference. Not a safety grant. |
+| `tactical_freedom_platform_direction_20260526.md` | Tactical direction reference; current execution still comes from `.hermes.md` and handoff current files. |
+
+## Archived / superseded policy material
+
+Historical policy variants and phase-specific policy results are under:
+
+`docs/policy/archive/2026-05-cleanup/`
+
+Archived files are preserved for provenance but are not active policy unless an active policy explicitly references a section as historical context.
+
+Archived in the 2026-05 cleanup batch:
+
+- `CLAUDE_CODEX_ROUTING_POLICY.md` — superseded by `model_usage_routing_policy.md` plus `.hermes.md` worker routing.
+- `memory_coexistence_policy.md` — superseded by `memory_and_strategy_routing.md` and the dedicated cybersec Hermes profile boundary.
+- `periodic_third_party_review_process.md` — folded into active review/routing expectations and periodic review templates.
+- `program_policy_dry_run_closeout_20260519.md` — historical phase closeout.
+- `p3_13_module_risk_tier_policy_result.md` — historical module-risk design result.
+- `p3_15_manifest_profile_policy_crosswalk_20260520.md` — historical crosswalk.
+- `phase4b_lab_fast_lane_policy_20260521.md` — historical lab fast-lane rule; active safety policy controls now apply.
+- `architecture_review_next_schema_contracts_20260526.md` — historical architecture review artifact.
+- `tactical_risk_rebalance_20260526.md` — superseded by tactical freedom direction and current engineering direction.
+
+## Hygiene rule
+
+Do not create a new dated policy file to correct an existing policy topic. Patch the active file, and rely on git/archive history for old versions. New policy files require a new policy topic and must be added to this index.
+
+
+
+## FILE: docs/policy/repo_hygiene_policy.md
+
+# Repository Hygiene Policy
+
+Status: active policy
+Scope: `<private-workspace>` authorized bug bounty automation platform
+
+## Decision
+
+Do not reset this repository and do not restart from a blank repository as the default cleanup strategy.
+
+This repo is messy, but it contains authorization boundary history, lane state, scope/policy decisions, platform code, tests, evidence pointers, and operator workflow context. Those are more valuable than a visually clean tree. Cleanup must preserve provenance first, then reduce noise.
+
+Default cleanup strategy:
+
+1. Freeze and inventory.
+2. Classify files by role.
+3. Split work into reviewable commits.
+4. Quarantine uncertain material instead of deleting it.
+5. Promote only tested/policy-backed artifacts to active project truth.
+
+## When a new repository is allowed
+
+A new repo or clean-room copy is allowed only as a staging/migration aid, not as the source of truth, unless the operator explicitly approves a repository reset.
+
+Allowed use cases:
+
+- build a temporary clean staging copy for structure comparison;
+- prototype a reduced tree shape without secrets/evidence;
+- generate a migration manifest.
+
+Not allowed by default:
+
+- replacing the main repo while leaving scope/policy/evidence history behind;
+- copying only attractive files and losing lane decisions or authorization trail;
+- using a clean repo to bypass hard cleanup decisions.
+
+## Forbidden cleanup commands without explicit operator approval
+
+Do not run broad destructive cleanup commands in this repo:
+
+```bash
+git reset --hard
+git clean -fd
+git clean -fdx
+rm -rf handoff programs reports logs scans loot config docs/policy docs/runbook intelligence
+```
+
+If deletion is needed, prefer recoverable quarantine or recycle/trash. Never hard-delete security evidence, scope files, credentials, logs, scans, loot, governance artifacts, or program lane state during broad cleanup.
+
+## Repository zones
+
+### Active project truth
+
+Keep small, current, and reviewed.
+
+- `.hermes.md`
+- `PROJECT_CHARTER.md`
+- `README.md`
+- `AGENTS.md`
+- `docs/policy/`
+- `docs/runbook/`
+- `docs/strategy/platform/engineering_direction_20260527.md`
+- `handoff/current_navigation.md`
+- `handoff/active_strategy_queue.md`
+- `handoff/current_artifact_index.md`
+- `handoff/live_bounty_lane_queue.json`
+- `programs/<slug>/scope.json`
+- `programs/<slug>/lane_state*.json`
+
+Rule: edit existing active-truth files instead of creating dated variants, unless archiving an immutable checkpoint.
+
+### Platform code
+
+Reusable code must live under stable paths and be testable.
+
+- `platform/`
+- `modules/`
+- `schemas/`
+- `tests/`
+- production-quality `scripts/`
+
+Promotion requirements:
+
+- no secrets;
+- no live target-touching default;
+- explicit input/output contract;
+- local or fixture test;
+- safe failure mode;
+- policy gate if target-touching is possible.
+
+### Program/lane state
+
+- `programs/<slug>/`
+- `handoff/live_bounty_evidence/<slug>/`
+
+Rule: do not bulk-delete or bulk-rewrite. Lane state is provenance. Redact sensitive material rather than erase history unless operator requests removal.
+
+Every active lane should end in one of:
+
+- `EXECUTE`
+- `PASSIVE_ONLY`
+- `PARK`
+- `KILL`
+- `ARCHIVED`
+
+### Handoff
+
+Current handoff should stay compact.
+
+- Active rolling files stay in `handoff/` only when existing tools require those paths.
+- New multi-file working sets should go under `handoff/current/` or a named archived folder.
+- Old dated handoffs should move to `handoff/archive/<topic-or-phase>/` after they are indexed.
+
+Do not create new root-level handoff sprawl unless it is a temporary checkpoint that will be archived in the same cleanup batch.
+
+### Historical/reference material
+
+- `docs/charter/historical/`
+- `notes/`
+- `intelligence/cve_briefs/`
+- archived handoff folders
+
+Rule: preserve useful context, but mark it as reference or historical so agents do not treat it as current direction.
+
+### Runtime, local, ignored, or sensitive material
+
+Usually not committed except for `.gitkeep` or sanitized summaries.
+
+- `logs/`
+- `scans/`
+- `loot/`
+- `<artifact-output-dir>/`
+- browser/session profiles
+- raw request/response captures
+- credentials, cookies, tokens, OTPs, verification links
+
+Rule: never promote raw sensitive material into active truth, memory, or committed docs.
+
+## Commit policy
+
+Avoid mega-commits. Cleanup must be split by intent:
+
+1. `chore(repo): snapshot cleanup inventory`
+2. `chore(repo): establish platform structure`
+3. `policy: define repo hygiene and operator gates`
+4. `feat(platform): add dry-run no-target substrate`
+5. `test(platform): cover inbox and lane contracts`
+6. `docs: archive retired workbench material`
+7. `chore(cleanup): quarantine transient artifacts`
+
+Each commit must answer:
+
+- Is it target-touching? Default answer should be no.
+- Does it contain program-private or sensitive data?
+- What validates it?
+- How can it be reverted safely?
+
+## Cleanup workflow
+
+### Phase 0 — Freeze
+
+Run read-only inventory:
+
+```bash
+git status --short
+git diff --stat
+git diff --name-status
+```
+
+Create a temporary safety branch before large cleanup:
+
+```bash
+git switch -c cleanup/worktree-stabilization-20260528
+```
+
+Do not run live scans or target-touching automation during cleanup.
+
+### Phase 1 — Classify
+
+Classify every modified/untracked/deleted path into one bucket:
+
+- keep active truth;
+- keep platform code/test/schema;
+- archive historical/reference;
+- quarantine uncertain/transient;
+- ignore generated/local;
+- delete only with explicit operator approval.
+
+### Phase 2 — Promote
+
+Promote only files that satisfy the relevant zone rules. Temporary scripts must not become production tools without tests and safety gates.
+
+### Phase 3 — Quarantine
+
+Move uncertain material to an ignored local quarantine, for example:
+
+```text
+setting/local/quarantine/<YYYYMMDD>/
+```
+
+Quarantine is preferred over deletion when a file might contain evidence, private program context, or an unrecovered decision trail.
+
+### Phase 4 — Verify
+
+Minimum verification after cleanup:
+
+```bash
+bash ./bin/hermes review
+bash tests/test_current_live_bounty_contracts.sh
+bash tests/test_recurring_substrate_dry_run.sh
+bash tests/test_operator_inbox_summary.sh
+```
+
+If shell scripts changed, run `bash -n` or the project review. If scope logic changed, verify unauthorized targets are rejected.
+
+### Phase 5 — Record
+
+Append a short summary to `handoff/accepted_changes.md`:
+
+- what was promoted;
+- what was archived;
+- what was quarantined;
+- what was deliberately not touched;
+- validation commands and results.
+
+## Anti-chaos rules for future development
+
+- One active direction file; edit it, do not create daily strategy variants.
+- One active navigation file; archive snapshots only when needed.
+- No new root-level scratch files.
+- New automation starts as no-target/dry-run unless explicitly approved otherwise.
+- Every live-lane artifact references scope, policy, stop-before rule, and operator gate.
+- Every platform script has tests before being treated as reusable infrastructure.
+- Handoff files are indexed or archived; they are not allowed to accumulate silently.
+- Cleanup is a normal engineering task, not a panic reset.
+
+
+
+## FILE: docs/policy/memory_and_strategy_routing.md
+
+# Memory and Strategy Routing
+
+Status: active
+Source: Hermes, adapted from the YouTubeAgent memory-flow pattern
+Date: 2026-05-19
+Repo truth: `.hermes.md`, `handoff/accepted_changes.md`, `handoff/active_strategy_queue.md`, `handoff/periodic_reviews/review_template_v0.md`
+
+## Purpose
+
+This document defines where durable project knowledge belongs in the cybersec lab. It adopts the useful parts of the YouTubeAgent memory flow without copying YouTubeAgent project content.
+
+The goal is to keep Hermes global memory small, keep repo-local engineering truth auditable, and keep long-term strategy navigable as the bug-bounty automation platform grows.
+
+## 2026-05-21 Global memory compaction compatibility note
+
+Hermes global memory is intentionally being compacted into a cross-project routing/index layer. Future hacking/Cybersec agents must not infer that project direction changed just because global memory contains fewer cybersec details.
+
+## 2026-05-22 Workflow/process memory routing update
+
+User preference: when the hacking/Cybersec Lab workflow or process changes, do not record it only in chat or Hermes global memory. Durable workflow/process decisions that should guide future Hermes/Codex/Cowork behavior must also be written into this repo's handoff layer and the Obsidian namespace `Projects/Cybersec Lab/`, with rationale and metadata where appropriate.
+
+This applies to collaboration rules, growth-first review policy, safety gates, lab routing, evidence/report workflow, worker routing, memory governance, and other process changes that future agents need to follow. Keep exact sensitive target/evidence/secrets out of global memory and broad notes; store only non-sensitive decision rationale in Obsidian and engineering truth in repo handoff.
+
+Before continuing cybersec work that depends on phase, scope, safety posture, roadmap, active lane, or report/evidence workflow, read:
+
+1. live repo files and current validation/tool output as needed;
+2. `handoff/active_strategy_queue.md` for current lane/navigation;
+3. `handoff/accepted_changes.md` and named handoff artifacts for engineering truth;
+4. Obsidian namespace `Projects/Cybersec Lab/`, especially `00_Index/Hermes Memory Routing.md`, for long-term methodology/strategy decisions.
+
+Global Hermes memory should retain only compact cross-project preferences and pointers. Sensitive cybersec material, exact scan output, private scope/rules, raw evidence, credentials, tokens, payloads, loot, hashes, and one-off phase progress do not belong in global memory.
+
+## Authority Order
+
+When layers disagree, use this order:
+
+1. Current explicit operator instruction.
+2. Live repo files, config, validation output, and current git state.
+3. Repo handoff files for accepted engineering state and safety boundaries.
+4. Obsidian project notes for long-term strategy, decisions, research, experiments, and review synthesis.
+5. Hermes durable memory for compact cross-project preferences and signposts.
+6. `session_search` only as recall; verify recovered claims against files before acting.
+
+## Layer Responsibilities
+
+### Hermes durable memory
+
+Use only for compact cross-project signposts and stable preferences, such as:
+
+- user-wide language and review/reporting preferences;
+- stable safety/routing principles that apply across sessions;
+- short pointers to the correct project memory location.
+
+Do not store:
+
+- phase-completion logs, PR/issue/commit IDs, one-off validation results, or daily progress;
+- target details, scan output, exploit payloads, hashes, loot, cookies, credentials, tokens, private scope/rules, or client-sensitive data;
+- full strategy documents or review reports.
+
+Write memories as declarative facts, not commands.
+
+### Repo handoff files
+
+Repo handoff is the engineering truth for this project.
+
+Use `handoff/` for:
+
+- accepted implementation and documentation changes;
+- validation outcomes and review artifacts;
+- worker coordination prompts/results;
+- safety gates and authorization boundaries;
+- current active strategy queue and deferred/blocked lanes.
+
+`handoff/accepted_changes.md` remains append-oriented history, but it should not be the only navigation surface. Use `handoff/active_strategy_queue.md` for the compact current map.
+
+### Active strategy queue
+
+`handoff/active_strategy_queue.md` is the short, current project-navigation layer.
+
+Use it to answer:
+
+- What lane is active now?
+- What are the next 1-3 likely slices?
+- Which review artifact is authoritative for the current decision?
+- Which lanes are deferred?
+- Which changes are blocked until operator approval?
+
+Keep it short. It is not a full history file.
+
+### Obsidian project notes
+
+Use Obsidian for long-term strategy, roadmap rationale, research synthesis, experiment results, and periodic-review synthesis that should remain searchable outside one git diff.
+
+Recommended namespace:
+
+```text
+Projects/Cybersec Lab/
+```
+
+Recommended durable note metadata:
+
+```markdown
+Status: active | superseded | rejected | experiment | reference
+Source: User | Hermes | Claude | Codex | Mixed
+Date: YYYY-MM-DD
+Repo truth: path/to/handoff-or-code-file
+```
+
+Do not put raw sensitive evidence, secrets, private target details, loot, or credentials in Obsidian. Store methodology and decisions, not sensitive operational data.
+
+### Skills
+
+Use skills for reusable procedures and judgment criteria that should transfer across projects.
+
+Do not store cybersec project state in a skill. If a workflow becomes reusable, update or create a skill with the method only, and keep project facts in repo handoff or Obsidian.
+
+### session_search
+
+Use `session_search` to recover leads from prior conversations. Never treat it as authority by itself. Verify against repo files, Obsidian notes, or live state before acting.
+
+## Periodic Review Freshness Convention
+
+Every periodic or milestone-boundary review should state:
+
+```text
+Packet frozen at:
+Latest live handoff inspected:
+Latest commit inspected:
+Post-packet changes included:
+Post-packet changes excluded:
+Authority if stale:
+```
+
+If a frozen review packet conflicts with live code, accepted changes, or the active strategy queue, use the live project-local authority and record the conflict.
+
+## Drift Checks for Reviews
+
+Periodic and direction reviews should explicitly check:
+
+- memory drift: did Hermes global memory over- or understate project truth?
+- handoff drift: do accepted changes, rolling handoffs, named artifacts, and active queue agree?
+- goal drift: is the project still moving toward authorized bug-bounty automation rather than CTF-only or artifact-only work?
+- structure drift: are files, templates, and review artifacts accumulating without a clear active queue?
+- safety-boundary drift: did any proposal blur dry-run/internal work with activation, live target execution, scanner/module execution, report submission, scheduler, OAuth, or production changes?
+
+## High-Risk Activation Boundary
+
+Borrowed process lesson from YouTubeAgent: internal preparation and external activation must stay separate.
+
+For this cybersec lab:
+
+- Internal / usually lower-risk: offline fixtures, dry-run artifacts, local validators, read-only review prompts, documentation, static tests.
+- Activation / higher-risk: live targets, scanner execution, recon runtime changes, scheduler/CI target automation, report/submission adapters, credentials/OAuth, production settings, scope/rules changes, callbacks/OAST/proxy/pivot/tunnels.
+
+Activation-adjacent work must be checked against `docs/policy/review_tiering_policy.md` and `docs/policy/multi_party_review_decision_policy.md` for hard stops and concrete blockers before implementation. Do not resurrect historical tier ceremony; proceed with focused validation when no hard stop applies.
+
+## Update Rules
+
+- Update `handoff/active_strategy_queue.md` after closeout reviews, direction reviews, or milestone changes.
+- Update `handoff/accepted_changes.md` for accepted project changes and validation outcomes.
+- Update periodic review templates when drift checks or freshness metadata need to become standard.
+- Save only compact cross-project pointers in Hermes memory.
+- Create or patch skills only for reusable process, not project state.
+
+
+
+## FILE: handoff/INDEX.md
+
+# Handoff Index
+
+Status: active handoff index
+Boundary: `handoff/` is the current collaboration surface, not the whole project database. This index does not authorize target-touching work.
+
+## Read first
+
+1. `.hermes.md` — project contract and safety gate.
+2. `docs/ENGINEERING_INDEX.md` — minimal engineering map and cleanup discipline.
+3. `handoff/current_navigation.md` — current route, blockers, and hard gates.
+4. `handoff/active_strategy_queue.md` — current priority queue.
+5. `handoff/current_artifact_index.md` — current artifact pointers.
+6. `handoff/accepted_changes.md` — append/prepend audit log.
+
+## Current machine state
+
+- `handoff/live_bounty_lane_queue.json`
+- `handoff/live_bounty_lane_runner_status.json`
+- `handoff/live_bounty_learning_seeds.jsonl`
+- `handoff/kali_vm_operations_state.json`
+
+## Rolling worker IPC
+
+These paths may remain in `handoff/` root while existing tooling expects them:
+
+- `cowork_task.md` / `cowork_result.md` / `cowork_proposal.md`
+- `claude_code_task.md` / `claude_code_result.md`
+- `codex_task.md` / `codex_review.md`
+
+## Root-level handoff rule
+
+Do not add new dated strategy/review/run-card files directly under `handoff/` root. Put new working sets under `handoff/current/` or a named archive folder, then link them from `handoff/current_artifact_index.md` when they matter.
+
+## Moved out of handoff root
+
+- Policies: `docs/policy/`
+- Strategy/reference docs: `docs/strategy/`
+- Target notes: `programs/<slug>/notes/`
+- Local lab proof packets: `labs/proofs/`
+- Worker run receipts: `logs/runs/`
+- Old phase/review history: `handoff/archive/phase_history/`
+- Root handoff cleanup batch: `handoff/archive/phase_history/2026-05-27-root-handoff/`
+- Full pre-cleanup navigation snapshots: `handoff/archive/nav_snapshots/`
+
+Manifest: `handoff/project_cleanup_migration_manifest_20260527.json`.
+
+
+
+## FILE: handoff/current_navigation.md
+
+# Cybersec Lab Current Navigation
+
+Status: active compact navigation
+Source: Hermes cleanup on 2026-05-27
+Repo truth: `.hermes.md`, `handoff/INDEX.md`, `handoff/active_strategy_queue.md`, `handoff/current_artifact_index.md`, `docs/policy/README.md`, `notes/obsidian_projects/Cybersec Lab.md`
+
+## Purpose
+
+This file answers: what is current, where artifacts live, what is allowed now, and what is blocked.
+Prefer modifying this compact navigation file when active truth changes. Do not create new
+date-stamped navigation/strategy files by default unless they are audit/checkpoint artifacts.
+
+## Current route
+
+- Windows repo root: `<private-workspace>`
+- Hermes profile boundary: future Cybersec Lab sessions should use `hermes --profile cybersec` (or alias `cybersec`) from this repo. `default` remains the current Gateway/cron owner during transition; profile creation does not authorize target-touching work.
+- Preferred attacker VM/project mount when target-touching local lab work is explicitly active: Kali `/mnt/hacking` / `~/projects/cybersec`
+- Default attacker VM: `<attacker-vm>`
+- Victim/lab VM: `<victim-vm>`
+- Default network: host-only. NAT only for temporary installs/pulls, then close and verify.
+
+## Current project lane
+
+Primary project identity has pivoted from broad cybersecurity expert workbench to an automated, multi-agent collaborative bug bounty platform and capability library. North star: recurring fresh-intel/target-change/CVE-PoC intake → differential recon → detector or lab-proof bundle → candidate → bounded proof-only in-scope test → evidence packet → redaction/report draft → operator decision/submission. Hermes is the project owner/task router/verifier and should use external strong agents frequently for direction, dissent, architecture, tactic selection, and implementation review when the path is unclear or high-impact.
+
+Current execution discipline:
+
+1. Tier A / primary live lane: only one target-touching live bounty lane is active by default. Push it to candidate evidence, report draft, PARK, KILL, or explicit operator-blocked checkpoint before opening the next live lane. Other programs may stay PASSIVE-ONLY or PARKED.
+2. Tier B / recurring platform substrate: scheduled intelligence/recon/detector jobs run as background infrastructure and feed the operator inbox. They do not hijack the live lane unless they produce a high-confidence, policy-allowed candidate that Hermes promotes through the same lane gate.
+3. Capability-library work is valid when it directly supports the active lane, recurring substrate, detector/report/inbox automation, reusable proof bundles, or explicit operator-requested research. Do not let library/index work replace evidence/report progress while a live lane can still move.
+
+Active recurring-detector sublane: 2026-05 RCE/remote-control detector lane. Primary candidate is `<specific-cve-id>` Avada Builder / Fusion Builder passive+lab detector; secondary candidates are Strapi/n8n/OFBiz/Magento RCE detectors. Treat this as Tier B background substrate: lab/passive detector and inbox signal only, not a live-exploit main lane. Live boundary is PASSIVE-ONLY unless program policy and operator approval explicitly allow more.
+
+Structure pivot record: `docs/strategy/cleanup/platform_structure_pivot_20260527.md`. Platform charter: `PROJECT_CHARTER.md`. Runbooks: `docs/runbook/`. Historical expert-workbench charter: `docs/charter/historical/`.
+
+## Live-bounty lane state
+
+- <program-redacted>: `programs/<program-redacted>/lane_state.json` = `A2_PENDING_OPERATOR_AUTH` / `blocked_operator_action`; parked at human/robot check after env-backed alias email fill and Verify email click. Operator must complete only the visible human check if continuing; stop for OTP/email code, phone, payment, KYC, company OAuth, secrets, or dashboard state change.
+- <program-slug>: `programs/<program-slug>/lane_state.json` = `PARKED` / `parked`; signup/API precondition lane parked after browser CORS/signup drift and no owned account controls.
+- <program-redacted>: `programs/<program-redacted>/lane_state.json` = `PARKED` / `parked`; campaign/core teammate hypothesis parked because it needs high-operator-cost owned identity/OAuth controls before proof.
+- <program-name>: `programs/<program-redacted>/lane_state.json` = `PARKED` / `parked`; Account B independent-session blocker is resolved, H1 scope + <program-name> settings/permissions surfaces were confirmed, but no clean low-priv/removed/downgraded negative control exists. Decision artifact: `programs/<program-redacted>/notes/program-redacted_permission_precondition_check_20260527.md`; Account C same-domain signup line remains parked.
+- <program-redacted> Taiwan: `programs/<program-slug>/lane_state_pending_second_account.json`; blocked on Account B/operator guidance.
+- <program-redacted> VDP: `programs/<program-slug>/lane_state.json` = no-finding closeout.
+- Queue: `handoff/live_bounty_lane_queue.json`.
+
+## File map
+
+- Platform core: `platform/`
+- Current collaboration/IPC: `handoff/` (`handoff/current/` is staged for future rolling IPC after script migration)
+- Policies/contracts: `docs/policy/`
+- Runbooks: `docs/runbook/`
+- Strategy/reference docs: `docs/strategy/`
+- Historical charter/retired structures: `docs/charter/historical/`
+- Target notes: `programs/<slug>/notes/`
+- Local proof packets/run cards: `labs/proofs/`
+- CVE brief archive: `intelligence/cve_briefs/`
+- Worker run receipts: `logs/runs/`
+- Historical phase/review artifacts: `handoff/archive/phase_history/`
+- Full pre-cleanup nav snapshots: `handoff/archive/nav_snapshots/`
+
+## Hard safety boundary
+
+Allowed now:
+
+- File organization, documentation cleanup, path-index updates, validation, and capability-library substrate improvements.
+- Metadata-only public advisory intake, local bundle coverage diff, non-executing local-lab run-card/proof-pattern draft/live-prereq artifact generation, and lightweight OSS/source comparison when useful.
+- Explicitly requested local-lab proof execution against disposable/recoverable Kali 靶機, with temporary NAT only for package acquisition and final network closure verification.
+- Passive/read-only status checks.
+- In-scope owned-account browser/manual bounty work may proceed to a reportable / no-finding / blocked checkpoint without extra reviewer approval, as long as it stays inside the current proof boundary and stop-before rules.
+- For signup/auth gates, Hermes may fill env-backed signup fields only inside a separately approved lane and only when program scope/rules allow account creation. This does not authorize the offline recurring substrate, secret storage, or bypassing human gates. Stop and notify the operator for email verification, SMS verification, OTP, CAPTCHA, unexpected password/phone/payment/billing/KYC/OAuth gates, or final report submission.
+
+Not authorized by this cleanup:
+
+- New live-target contact outside established scope, scanners, fuzzing, DAST, exploits, callbacks, tunnels, OAuth/channel connection, API-token creation, credential/token handling, non-owned data access, report-ready promotion, report submission, destructive actions, or broad account/state mutation beyond an explicitly approved owned-control proof boundary.
+
+Process simplification / multi-agent use:
+
+- Historical review tiers and multi-party approval gates are no longer active blockers. Claude/Cowork/Codex reviews are advisory unless they identify a concrete hard-stop blocker. Hermes should favor capability growth, focused validation, compact handoff, and runnable proof/automation substrate over ceremony.
+- External strong agents should be called often for unclear direction, architecture, recurring automation, target-pattern fit, evidence/reporting, or safety-boundary dissent. Before invoking them, sync project memory by engineering means: `.hermes.md`, this file, active queue, artifact index, Cybersec Lab Obsidian bridge, accepted changes, relevant program state, and stop-before rules.
+
+## Recurring engineering cadence target
+
+- Minute-level: CT log subscription, Censys/SecurityTrails-style enrichment, new program/scope expansion alerts, CVE/PoC GitHub/RSS.
+- Hourly: differential `subfinder`/`dnsx`/`httpx` and nuclei on newly discovered endpoints only.
+- Daily: full passive inventory refresh, tech fingerprint refresh, NVD recent-modified, CISA KEV diff, nuclei template update, and allowed-scope sweep.
+- Weekly: deep feroxbuster/wordlist, JS endpoint extraction, Arjun parameter discovery, bundle/CMS version inventory, disclosed report mining, new-program policy intake.
+- Monthly: full asset re-inventory, tech-stack pivot review, bug-class strategy review, metrics/funnel review, capability-library cleanup.
+
+## Freshness rule
+
+1. Current explicit user instruction wins.
+2. Live repo/config/validation output wins for verifiable facts.
+3. `programs/<slug>/lane_state.json` and `handoff/live_bounty_lane_queue.json` are current machine state.
+4. `docs/policy/` holds active policy; `handoff/archive/` is history.
+5. Obsidian stores long-term strategy/rationale; global Hermes memory is only a compact signpost.
+
+
+
+## FILE: handoff/active_strategy_queue.md
+
+# Active Strategy Queue
+
+Status: active compact queue
+Source: Hermes cleanup on 2026-05-27
+Repo truth: `.hermes.md`, `handoff/current_navigation.md`, `handoff/current_artifact_index.md`, `handoff/accepted_changes.md`, `docs/policy/`, `programs/<slug>/lane_state.json`, `notes/obsidian_projects/Cybersec Lab.md`
+
+## Long-term goal
+
+Build an automated, multi-agent collaborative bug bounty platform and capability library. Hermes acts as project owner/task decomposer/scheduler/verifier, keeps recurring intelligence and target-state freshness loops running, converts lab-proven vulnerability patterns into reusable bundles, matches those patterns to in-scope targets for bounded proof-only testing, and turns evidence into operator-ready report/submission packets.
+
+## Current phase
+
+Phase 5A is now the platform-pivot cleanup and continuous multi-agent automation alignment phase. The old expert-workbench framing has been retired into `docs/charter/historical/`; active north star is recurring freshness loops, platform/inbox/detector/evidence/report flow, and capability-library growth.
+
+Latest structure pivot record: `docs/strategy/cleanup/platform_structure_pivot_20260527.md`. Latest RCE detector lane correction: `handoff/latest_rce_cve_lane_2026_20260527.md`. Prior local proof loop remains useful platform substrate but is no longer the headline project identity.
+
+## Hermes profile boundary
+
+- Cybersec Lab now has a dedicated Hermes profile: `cybersec` at `<user-home>\AppData\Local\hermes\profiles\cybersec`.
+- Start future Cybersec Lab sessions from this repo with `hermes --profile cybersec` or the generated `cybersec` alias.
+- `default` remains the current Gateway/cron owner during transition; do not clone, migrate, pause, or remove cron/Gateway ownership without a separate migration checklist.
+- Profile isolation is memory/session/runtime hygiene only; it does not authorize live target contact, scans, exploits, account mutation, report promotion, or report submission.
+- Completion smoke check passed on 2026-05-27: `cybersec` has isolated config/env paths and profile-local memory sentinel; `cybersec` Gateway is stopped and cron list is empty. To actually use the new profile, start a fresh Hermes process from this repo with `hermes --profile cybersec` or alias `cybersec`; the current already-running default-profile session does not transform in place.
+
+## Top priorities
+
+0. **Direction reset / active north star synchronization**
+   - This queue treats the current operator direction as active truth over older first-bounty-only framing: automated multi-agent bug bounty platform, recurring freshness work, capability-library growth, and dual-track practical hunting.
+   - Hermes should frequently call external strong agents for unclear direction, architecture, target-pattern fit, safety dissent, and implementation review, but must sync project context first and remain final verifier.
+   - In-scope aggressive testing is authorized only after exact scope/program rules allow the target and technique; execution remains bounded proof-only with no internal/customer/non-owned data browsing, download, modification, or exfiltration.
+   - Maintain this queue by modifying active priority sections first; create dated files only for audit/checkpoint evidence, not as the default strategy-update mechanism.
+
+1. **Contract alignment / machine-readable program state**
+   - Convert active `programs/<slug>/scope.json` and `lane_state.json` into validator-valid contracts.
+   - Move narrative policy summaries into `policy_intake.json`, `scope_notes.md`, or `programs/<slug>/notes/`.
+   - Add artifact/path integrity checks for stale/moved/sensitive-area references.
+
+2. **Continuous engineering schedule / recurring substrate**
+   - Sequence, do not perfect all at once:
+     - **Now / Phase 5A closeout**: make active state contracts validator-valid, add Tier A/Tier B routing discipline, preserve single-live-lane default, and keep broad cleanup review/checkpoint clean.
+     - **Next 1-2 engineering sessions**: build the minimum recurring substrate that produces operator-inbox candidates from offline/passive inputs: CVE/PoC intake, CT/scope-change intake, detector candidate JSON, path/artifact integrity checks, and a dry-run/no-target scheduler harness.
+     - **After first end-to-end inbox signal**: add hourly differential recon and daily passive inventory only for policy-allowed scope with per-program budgets and fail-closed guards.
+     - **After evidence/report packet is stable**: add weekly deep discovery/disclosed-report mining and monthly metrics/library cleanup.
+   - Move reusable root scripts into `platform/intel/`, `platform/recon/`, `platform/detectors/`, `platform/bounty/`, `platform/inbox/`, and stable CLI entrypoints as each recurring slice needs them.
+   - Do not activate live recurring jobs until the scheduler can read program policy, scope, rate/technique budget, and stop-before rules.
+
+3. **Tier A primary live lane discipline**
+   - Only one target-touching live bounty lane is active by default.
+   - Push the active lane to candidate evidence, report draft, PARK, KILL, or explicit operator-blocked checkpoint before opening the next live lane.
+   - Other programs may remain PASSIVE-ONLY, PARKED, or in offline prep; do not spend operator gates across many programs simultaneously.
+
+4. **Evidence-to-report and operator submission pipeline**
+   - Build lane_state → evidence packet → redaction check → report draft → operator final gate.
+   - Add report draft builder, pre-flight checklist, CVSS/CWE mapping, response templates, and submission tracking before relying on ad-hoc reports.
+
+5. **Detector harness and library/bundle growth**
+   - Standardize detector metadata-only mode, local-lab validation mode, live-passive mode, fixture tests, and candidate JSON output.
+   - Treat latest RCE detector work as Tier B recurring substrate: lab/passive detector + candidate signal, not a live-exploit main lane.
+   - Primary: `<specific-cve-id>` Avada Builder / Fusion Builder passive+lab detector. Secondary: Strapi/n8n/OFBiz/Magento 2026-05 RCE detectors.
+   - Capability-library work is valid only when it directly supports the active lane, recurring substrate, detector/report/inbox automation, reusable proof bundles, or explicit operator-requested research.
+   - Every practical run must feed back site type, suitable bug classes, vulnerable object patterns, controls, and report lessons.
+
+6. **Near-term ROI lanes after cleanup**
+   - Reporting automation, authentication/session state management, submission tracking, hourly differential recon, disclosed-report mining, mobile static analysis, and vendor advisory diffing.
+   - Avoid web UI, SaaS/multi-tenant, distributed scanner, custom vuln DB, custom ML, and reimplementing mature tools.
+
+7. **Directory/policy cleanup closeout**
+   - Periodic third-party agent review completed at `handoff/periodic_reviews/2026-05-27/agent_review_synthesis.md`.
+   - Manifest reconciliation passed: all destinations exist and moved sources are gone.
+   - Remaining action before unrelated work: stage/review/checkpoint the broad migration working tree; keep `config/scope.txt` isolated in review reasoning.
+   - No target-touching work is authorized by cleanup.
+
+8. **<program-redacted>**
+   - Current state: `programs/<program-redacted>/lane_state.json` = `A2_PENDING_OPERATOR_AUTH` / `blocked_operator_action`; queue priority 1 because it is the only currently selected Tier A live lane, but it is stopped at a human/robot check.
+   - Operator gate: complete only the visible human/robot check in noVNC if choosing to continue. Stop for OTP/email code, phone, payment, KYC, company OAuth, secrets, or if dashboard opens and needs next-lane planning.
+   - Autonomous fallback while parked: continue Tier B offline/passive recurring substrate and candidate-inbox engineering; do not open another target-touching live lane unless <program-redacted> is PARK/KILL or operator selects a replacement.
+
+9. **<program-slug>**
+   - Current state: `programs/<program-slug>/lane_state.json` = `PARKED` / `parked`; signup/API precondition lane parked after browser CORS/signup drift and no owned account controls.
+   - Reopen only if operator finds verification email, provides official UAT/provided credentials, or explicitly chooses a retry.
+
+10. **<program-redacted>**
+   - Current state: `programs/<program-redacted>/lane_state.json` = `PARKED` / `parked`; campaign/core teammate hypothesis is high operator cost without owned controls.
+   - Reopen only with official/self-serve owned test identity or explicit operator-approved OAuth path.
+
+11. **<program-name> / `<program-redacted>`**
+   - Current state: `programs/<program-redacted>/lane_state.json` = `PARKED` / `parked`; queue status `parked`.
+   - 2026-05-27 external tactical review selected <program-name> as Rank #1 and created `programs/<program-redacted>/notes/program-redacted_first_bounty_run_card_permission_controls_20260527.md`; live precondition check then confirmed H1 scope and <program-name> settings/permissions surfaces.
+   - Decision artifact: `programs/<program-redacted>/notes/program-redacted_permission_precondition_check_20260527.md`. The current lane is parked because no clean low-priv, removed, downgraded, or resource-excluded negative control exists; do not claim admin/group access as a vuln.
+   - Account C same-domain signup line remains parked; do not force it unless evidence appears for unverified/non-matching domain join, unexpected admin default contrary to docs, or removed/downgraded access retention.
+   - Still blocked: customer/non-owned data, DoS/rate-limit stress, secret/cookie/token/API-key/OTP/password/phone storage, destructive actions, external integration/channel/callback/OAST/tunnel activation, and report submission without operator final approval.
+
+12. **<program-redacted> Taiwan**
+   - Current state: parked at second-account/operator gate.
+   - Next only after operator-owned Account B or program guidance.
+
+13. **<program-redacted> VDP**
+   - Current state: closed as `no_finding` / `surface_only`.
+   - Reopen only with a separately approved lane.
+
+14. **Arcane local bootstrap**
+   - Blocked until disposable Docker daemon/proxy posture is confirmed in the intended victim-lab environment.
+
+## Hard stops
+
+- `config/scope.txt` is operator-owned; do not auto-authorize new live targets.
+- Do not run active live-target scanners/exploits/fuzzing/callbacks/OAST/tunnels/DAST unless exact scope and program rules allow the target and technique; keep execution bounded to proof-only evidence and stop before non-owned/internal data access, destructive impact, persistence, stealth, or exfiltration.
+- Do not store secrets, passwords, OTPs, phone numbers, cookies, API keys, bearer tokens, verification links, loot, or customer/non-owned data in repo artifacts.
+- Do not perform OAuth/integration/channel/API-token/billing/scheduler/deployment/publishing/report-submission activation without explicit operator approval.
+- Do not do report-ready promotion or submission without operator final approval.
+
+Non-stops:
+
+- Historical review tiers, generic reviewer caution, missing optional multi-agent review, and documentation polish are not blockers by themselves. They only block when they reveal one of the hard stops above or a concrete validation/data-loss issue.
+
+## Current file map
+
+- Platform core: `platform/`
+- Handoff index: `handoff/INDEX.md`
+- Policies/contracts: `docs/policy/README.md`
+- Runbooks: `docs/runbook/`
+- Strategy/reference docs: `docs/strategy/README.md`
+- Historical charter: `docs/charter/historical/`
+- Target notes: `programs/<slug>/notes/`
+- Lab proof packets: `labs/proofs/`
+- CVE brief archive: `intelligence/cve_briefs/`
+- Worker run receipts: `logs/runs/`
+- Full pre-cleanup snapshots: `handoff/archive/nav_snapshots/`
+
+
+
+## FILE: handoff/current_artifact_index.md
+
+# Current Artifact Index — Cybersec Lab
+
+Status: active compact index
+Source: Hermes cleanup on 2026-05-27
+Boundary: index only; no target-touching authorization.
+
+## Current entrypoints
+
+| Class | Path |
+|---|---|
+| Project contract | `.hermes.md` |
+| Engineering index | `docs/ENGINEERING_INDEX.md` |
+| Handoff map | `handoff/INDEX.md` |
+| Current navigation | `handoff/current_navigation.md` |
+| Current queue | `handoff/active_strategy_queue.md` |
+| Accepted log | `handoff/accepted_changes.md` |
+| Obsidian bridge | `notes/obsidian_projects/Cybersec Lab.md` |
+| Policy index | `docs/policy/README.md` |
+| Strategy index | `docs/strategy/README.md` |
+
+## Active machine-readable state
+
+| Status | Path |
+|---|---|
+| active queue | `handoff/live_bounty_lane_queue.json` |
+| runner pointer | `handoff/live_bounty_lane_runner_status.json` |
+| learning seeds | `handoff/live_bounty_learning_seeds.jsonl` |
+| vuln-intel intake/latest proof-loop outputs | `handoff/vuln_intel/` |
+| tmp GHSA local proof | `handoff/tmp_path_traversal_ghsa_ph9p_verified_local_lab_20260527.md`, `labs/proofs/tmp_path_traversal_ghsa_ph9p_20260527.md` |
+| 2026-05-27 periodic agent review | `handoff/periodic_reviews/2026-05-27/agent_review_synthesis.md` |
+| Kali readiness | `handoff/kali_vm_operations_state.json` |
+| <program-name> lane | `programs/<program-redacted>/lane_state.json`; latest passive resume `programs/<program-redacted>/notes/program-redacted_live_practical_resume_20260527.md` |
+| <program-redacted> lane | `programs/<program-redacted>/lane_state.json`; scope/rules stub `programs/<program-redacted>/scope.json` |
+| <program-slug> lane | `programs/<program-slug>/lane_state.json`; candidate/evidence index `programs/<program-slug>/evidence_index.json` |
+| <program-redacted> lane | `programs/<program-redacted>/lane_state.json`; scope/run card under `programs/<program-redacted>/` |
+| <program-redacted> lane | `programs/<program-slug>/lane_state.json` |
+| <program-redacted> parked lane | `programs/<program-slug>/lane_state_pending_second_account.json` |
+
+## Platform substrate contracts
+
+| Status | Path |
+|---|---|
+| Operator-inbox candidate schema | `schemas/operator_inbox_candidate.schema.json` |
+| Dry-run recurring substrate harness | `platform/pipeline/recurring_substrate_dry_run.py`; regression `tests/test_recurring_substrate_dry_run.sh` |
+| Operator inbox summary renderer | `platform/inbox/operator_inbox_summary.py`; regression `tests/test_operator_inbox_summary.sh` |
+
+## Main destinations after cleanup
+
+| Destination | Contents |
+|---|---|
+| `docs/policy/` | Active safety/routing/review/memory policies and contracts; historical variants under `docs/policy/archive/2026-05-cleanup/`. |
+| `docs/strategy/live_bounty/` | Live-bounty planning, preview, shortlist, proof-library bridge. |
+| `docs/strategy/platform/` | Architecture/process/workflow strategy references. |
+| `docs/strategy/cleanup/` | Cleanup inventories, coverage estimates, phase/launch summaries. |
+| `programs/<program-redacted>/notes/` | <program-name> target notes/reviews/prompts/passive maps. |
+| `programs/<program-slug>/notes/` | <program-redacted> target notes and surface-map artifacts. |
+| `programs/<program-slug>/notes/` | <program-redacted> target notes and dry-run/surface artifacts. |
+| `labs/proofs/` | Local lab proof packets/run-cards/summaries. |
+| `logs/runs/` | Worker run receipts and usage JSON/TXT. |
+| `intelligence/` | CVE/current-intel/reference notes. |
+| `handoff/archive/phase_history/` | Old P0-P4/P2/P3/worker review history. |
+| `handoff/archive/nav_snapshots/` | Full pre-cleanup current-navigation snapshots. |
+
+## Operator-owned / never auto-clean
+
+- `config/scope.txt`
+- `loot/`
+- `.env`, keys, tokens, cookies, browser profiles
+- raw local screenshots/browser state under ignored local paths
+- private scope/rules or sensitive evidence
+
+## Cleanup manifest
+
+- `handoff/project_cleanup_migration_plan_20260527.md`
+- `handoff/project_cleanup_migration_manifest_20260527.json`
+
+
+
+## FILE: docs/strategy/platform/engineering_direction_20260527.md
+
+# Engineering Direction — 2026-05-27
+
+Status: active engineering direction / supersedes drift from earlier platform/tactical docs
+Source: Operator review + Hermes synthesis after full-project read on 2026-05-27
+Boundary: 本文件是工程優先順序與 backlog，不是新的 safety policy。所有 safety/scope gate 沿用 `docs/policy/lab_safety_contract.md`、`docs/policy/active_testing_policy.md`、`.hermes.md`。
+Repo truth: `.hermes.md`, `docs/policy/*`, `docs/strategy/live_bounty/proof_library_live_bounty_bridge_20260525.md`, `handoff/current_navigation.md`, `handoff/active_strategy_queue.md`, `handoff/live_bounty_lane_queue.json`
+
+## 為什麼有這份文件
+
+過去 3 週累積了 380+ handoff 檔、~20 份 policy/tactical/architecture 文件、20+ verified local proof bundle，但 **0 個 bounty submission**。診斷：
+
+- 基礎建設過剩，自動執行循環沒接好
+- operator_inbox 不存在，每次 operator 回來看不到「該決定什麼」
+- 每個 live lane 卡在不同 micro-gate，agent 沒有 fallback 路徑就停下來
+- Policy/tactical 文件互相 supersede（tactical_freedom 修正 tactical_rebalance，又被 tactical_freedom_v2 修正）
+
+本文件是任何 agent（Hermes / Cowork / Claude Code / Codex）接到新任務時的第一份檢查清單。它說明目前在 optimize 什麼、backlog 哪幾件排最前面、哪些 anti-pattern 必須避免。
+
+任何 agent 在動手前讀順序：本文件 → `.hermes.md` → 對應 `programs/<slug>/lane_state.json` → 對應 bundle / bridge。
+
+## North Star
+
+```text
+讓專案在 operator 不在的時候，每天 18:00 自動產出一份 operator_inbox.md，
+裡面有 3-5 件 operator 可在 5 分鐘內決定的事，
+其中至少 1 件是潛在 bounty candidate 或 informational 級 submission。
+```
+
+不是「讓 agent 自動挖洞」。是「**讓所有可被動執行的工作不停跑，把 operator 的角色濃縮成早晚各 5 分鐘的決定**」。
+
+## 本週 Active Priorities（按執行順序）
+
+### P1 — 補齊每日自動掃描層（4–6 小時）
+
+當前缺：
+
+1. `scripts/detectors/haproxy_cve_2026_33555.py` — H3/QUIC + pooled-backend smuggling fingerprint，模板沿用 `nginx_rift_scanner.py`
+2. `scripts/detectors/apache_httpd_latest_batch.py` — 最新 advisory 批 fingerprint
+3. `scripts/detectors/tomcat_11_0_21_batch.py` — EncryptInterceptor / OCSP / JSON log injection fingerprint
+4. `scripts/detectors/openssl_3_0_18_batch.py` — PKCS7 type confusion fingerprint
+5. `scripts/daily_sweep.py` — chain 上述 + `nginx_rift_scanner.py` + `recon_pipeline.py`
+
+Worker: Claude Code Impl 或 Codex（surgical fix 路徑）
+Acceptance:
+- 每天 08:00 自動對 `programs/<program-redacted>` + `programs/<program-slug>` + `programs/<program-slug>` + 5 個 shortlist program 的 in-scope assets 跑 sweep
+- 結果寫 `handoff/daily_sweep_<YYYYMMDD>.json`
+- 命中 `vulnerable` 或 `version-unknown` 自動加進 operator_inbox
+
+### P2 — operator_inbox.md 產生器（2 小時）
+
+路徑: `scripts/build_operator_inbox.py`
+排程: 每天 18:00 跑，送進 Cowork scheduled task
+固定章節:
+
+```
+## 今日需要你決定 (N 件，按優先序)
+## 今日已完成 (cron 自動跑的)
+## 待 park 或 pivot 提醒
+## 工具/腳本狀態 (failing tests、stale data、broken adapter)
+```
+
+Acceptance: ≤ 300 行 markdown，每件「需要決定」都有 1 行情境 + 3 個選項 + 預設動作。
+
+### P3 — Hermes 後端切換脫離壞掉的 Codex adapter（1–2 小時）
+
+當前: `docs/policy/model_usage_routing_policy.md` 寫 Hermes 主路徑 `gpt-5.5 / openai-codex`，這條 adapter 已知壞（NousResearch/hermes-agent issues #21444 / #17533 / #16161）。
+
+動作:
+- Hermes 後端切到 `xai/grok-4.3`（SuperGrok OAuth, v0.14 新接入）或 `anthropic api key`
+- ChatGPT Pro 的 Codex 額度留給 operator ad-hoc `codex exec` 直接呼叫，不放回 hermes loop
+- Claude Max OAuth **不能**餵進 hermes 的 anthropic provider（Anthropic 4/4 起禁止 third-party OAuth）
+
+Acceptance: `hermes pipeline` 連續跑 3 個任務不出現 stale-call timeout 或 silent payload drop；`tests/test_hermes_review_fail_closed.sh` 仍通過。
+
+### P4 — 持續監控層基礎（3 小時）
+
+3 個小工具，每 30 分鐘 cron：
+
+1. `scripts/disclose_io_diff.py` — pull https://disclose.io/diodb，diff 上次，新 program alert
+2. `scripts/chaos_bugbounty_diff.py` — pull ProjectDiscovery chaos JSON，diff 上次，scope 擴展 alert
+3. `scripts/cve_poc_github_diff.py` — GitHub API 搜尋 `CVE-2026-*` repo created in last 24h
+
+Acceptance: 任一 diff 命中 → 寫進 `handoff/continuous_alerts/<YYYYMMDD>.jsonl`，operator_inbox 自動引用。
+
+### P5 — 第一個 live bounty 落地（operator 主導）
+
+兩條路任選或並行：
+
+**A. <program-name> Account B role mutation 路徑**
+- Run card: `programs/<program-redacted>/notes/program-redacted_first_bounty_run_card_permission_controls_20260527.md`
+- Operator 把 Account B 從一個 resource group 移除（不要動 admin permission set），用 safe phrase 回 `<program-name> control ready`
+- Agent 跑 removed-stale-access 測試（B 嘗試 direct URL 存取已移除 resource）
+- 命中 → candidate evidence packet → operator 最終批准送出
+
+**B. Discourse / Hex / Frontegg fresh intake**
+- 用 `docs/strategy/live_bounty/hackerone_first_scope_intake_20260525.md` 模板做 passive policy intake
+- Operator signup 後進 A2 surface map
+- Bundle 沿用 `docs/strategy/live_bounty/live_bounty_attack_class_matrix_20260526.md` Matrix 1-5
+
+Acceptance: 至少一個 lane 7 天內推進到 candidate evidence 或 `no_finding_closeout` 加明確 next-program decision。
+
+## Standing Rules
+
+### 必須做
+
+- 任何新 script / detector / runner 先做 OSS 偵察（`docs/policy/oss_recon_gate.md`），記錄 `adopt | wrap | adapt | reference-only | write-custom`
+- 任何 worker 輸出必須含 worker identity / context read attestation / validation / verdict（`docs/policy/multi_agent_tactical_review_memory_sync_rule_20260526.md`）
+- 任何 target-touching 動作必須通過 `programs/<slug>/scope.json` + `config/scope.txt` + `safe_target`
+- 任何 evidence packet 寫進 `handoff/live_bounty_evidence/<slug>/<lane>/` 並通過 `scripts/evidence-redaction-check.py`
+- Schedule 啟用時更新 `handoff/current_navigation.md` 的 cron 區塊
+
+### 不可以做
+
+- **不要再開新的 policy / tactical direction 變體檔**。修正方向就 edit 既有檔。`docs/policy/tactical_freedom_platform_direction_20260526.md` 是定論
+- **不要再用日期後綴開新 navigation 檔**。`handoff/active_strategy_queue.md` 等是 single-source，更新就 edit
+- **不要把 worker handoff 留在 `handoff/` 根目錄**。新任務寫 `handoff/current/`，完成 archive 到 `handoff/archive/<phase>/`
+- **不要無 operator 同意做 account state mutation**（<program-name> Account B 降權、Discourse 邀請等）。Mutation 走 `docs/strategy/live_bounty/live_bounty_account_ab_operator_action_card_20260526.md` safe-phrase 流程
+- **不要把 ChatGPT Pro Codex 額度透過 Hermes 中轉**（adapter 壞）。Codex CLI 直接 invoke
+- **不要把 Claude Max OAuth 餵進 hermes anthropic provider**（Anthropic 4/4 後禁止 third-party OAuth）
+- **不要 silent overwrite `handoff/accepted_changes.md`**（append-only）
+
+## Backlog (可直接認領，每件 ≤ 4 小時)
+
+| # | 任務 | 路徑 | Worker |
+|---|---|---|---|
+| 1 | HAProxy 33555 fingerprint | `scripts/detectors/haproxy_cve_2026_33555.py` | Claude Code Impl |
+| 2 | Apache httpd batch fingerprint | `scripts/detectors/apache_httpd_latest_batch.py` | Claude Code Impl |
+| 3 | Tomcat 11.0.21 fingerprint | `scripts/detectors/tomcat_11_0_21_batch.py` | Claude Code Impl |
+| 4 | OpenSSL 3.0.18 fingerprint | `scripts/detectors/openssl_3_0_18_batch.py` | Claude Code Impl |
+| 5 | daily_sweep chainer | `scripts/daily_sweep.py` | Codex (deterministic) |
+| 6 | operator_inbox builder | `scripts/build_operator_inbox.py` | Claude Code Impl |
+| 7 | disclose.io diff | `scripts/disclose_io_diff.py` | Codex |
+| 8 | chaos JSON diff | `scripts/chaos_bugbounty_diff.py` | Codex |
+| 9 | CVE PoC GitHub diff | `scripts/cve_poc_github_diff.py` | Codex |
+| 10 | bundle metadata index | `tools/bundle_index.py` | Claude Code Impl |
+| 11 | vuln-intel→bundle coverage diff | `tools/vuln_intel_to_bundle_index.py` | Claude Code Impl |
+| 12 | phase4a/4b/p2/p3 review chain archive 搬遷 | `handoff/archive/<phase>/` | Hermes shell script |
+| 13 | handoff/INDEX.md rewrite ≤30 行 | `handoff/INDEX.md` | Cowork (rewrite) |
+| 14 | accepted_changes.md per-phase rotate | `handoff/accepted_changes_p<N>.md` | Hermes shell script |
+| 15 | Hermes 後端切換 grok-4.3 | `bin/hermes` + `.hermes/config` | Codex |
+| 16 | IBB pathway 文件 + 接入指南 | `docs/strategy/live_bounty/internet_bug_bounty_pathway.md` | Cowork |
+| 17 | Bugcrowd / Intigriti / YesWeHack 平台帳號 intake template | `docs/strategy/live_bounty/multi_platform_intake_template.md` | Cowork |
+
+## What NOT to Build Next
+
+以下類型不要產出，會增加 process gravity：
+
+- 新的 multi-party review / decision policy 變體
+- 新的 schema / contract（除非有具體 module 即將用）
+- 額外 OSS Recon Gate 拓展
+- 任何 governance-first 抽象層
+- 額外 review tier 細分
+- 新的 tactical preview / risk rebalance / freedom direction 變體
+- 任何在 `handoff/` 根目錄的 root-level 新檔
+
+如果你（任何 agent）覺得需要寫上面任一類，**停下來，把該想法加在本檔 Backlog 後**，等 P1-P5 完成且 operator_inbox 跑通後再評估。
+
+## 記憶與檔案紀律
+
+| 檔 | 目標大小 | 紀律 |
+|---|---|---|
+| `handoff/active_strategy_queue.md` | ≤ 5KB | 超過剪到 `handoff/archive/nav_snapshots/` |
+| `handoff/current_navigation.md` | ≤ 5KB | 同上 |
+| `handoff/current_artifact_index.md` | ≤ 5KB | 同上 |
+| `handoff/accepted_changes.md` | 近 14 天 | 歷史 rotate 進 `handoff/accepted_changes_p<N>.md` |
+| `programs/<slug>/lane_state.json` | 無上限 | 真實 lane state，allowed to grow |
+| `programs/<slug>/notes/*.md` | 單檔 ≤ 10KB | 過長拆 |
+| `docs/policy/*` | edit, no new | 任何新 policy 想法寫成 edit proposal 而非新檔 |
+| `docs/strategy/platform/*` | edit, no new | 同上 |
+
+## Agent 接新任務 checklist
+
+1. 讀本文件
+2. 讀 `.hermes.md` 安全與 routing
+3. 讀對應 `programs/<slug>/scope.json` + `lane_state.json`（如果是 target 相關）
+4. 對照 `docs/strategy/live_bounty/proof_library_live_bounty_bridge_20260525.md` 找合適 bundle
+5. 從 Backlog (P1-P17) 認領一件，或拿 operator 指派的任務
+6. 寫 worker artifact（含 worker identity / context read attestation / validation / verdict）
+7. 完成後 `bash ./bin/hermes review` 通過 → append `handoff/accepted_changes.md`
+8. 如動到 navigation / policy，**edit 既有檔，不開新檔**
+9. 如是 target-touching，停在 operator gate，回報 safe phrase
+
+## 變更管理
+
+本文件每 7 天 review 一次。修改方式：**edit 本檔**，不要開 `engineering_direction_20260603.md` 變體。如整份方向重大改變，把當前版本 `mv` 到 `docs/strategy/platform/archive/engineering_direction_<date>.md`，新版用同檔名重寫。
+
+
+
+## FILE: handoff/current/worktree_cleanup_index_20260528.md
+
+# Worktree Cleanup Index — 2026-05-28
+
+Status: active cleanup checkpoint
+Boundary: offline repository organization only. No live target contact, no scan/fuzz/exploit/callback/OAST, no credential handling, no account mutation, no report submission.
+
+## Decision
+
+Clean in place. Do not reset, do not `git clean -fdx`, and do not create a replacement repository as the main line.
+
+## Active files added/updated in this cleanup pass
+
+- `docs/ENGINEERING_INDEX.md` — top-level minimal engineering index and future read order.
+- `docs/policy/README.md` — active policy set and archived/superseded policy list.
+- `docs/policy/repo_hygiene_policy.md` — cleanup rules, no-reset/no-clean boundary, archive/quarantine discipline.
+- `handoff/INDEX.md` — active handoff root rules and archive locations.
+- `handoff/current_artifact_index.md` — now points to the engineering index and policy archive.
+- `README.md` — quick entrypoints now point to the engineering index and policy/handoff indexes.
+
+## Policy files archived, not deleted
+
+Moved to `docs/policy/archive/2026-05-cleanup/`:
+
+- `CLAUDE_CODEX_ROUTING_POLICY.md`
+- `memory_coexistence_policy.md`
+- `periodic_third_party_review_process.md`
+- `program_policy_dry_run_closeout_20260519.md`
+- `p3_13_module_risk_tier_policy_result.md`
+- `p3_15_manifest_profile_policy_crosswalk_20260520.md`
+- `phase4b_lab_fast_lane_policy_20260521.md`
+- `architecture_review_next_schema_contracts_20260526.md`
+- `tactical_risk_rebalance_20260526.md`
+
+Rationale: these are historical, superseded, phase-specific, or folded into the active policy set. They remain available for provenance.
+
+## Root handoff files archived, not deleted
+
+Moved to `handoff/archive/phase_history/2026-05-27-root-handoff/`:
+
+- `after_syfe_no_email_target_decision_20260527.md`
+- `dual_track_agent_synthesis_20260527.md`
+- `h1_freshness_first_target_shortlist_20260527.md`
+- `h1_next_target_quick_triage_after_front_park_20260527.md`
+- `latest_rce_cve_lane_2026_20260527.md`
+- `latest_vuln_lane_correction_2026_recent_20260527.md`
+- `nextjs_cve_2025_29927_detector_run_card.md`
+
+Rationale: root `handoff/` should remain a current collaboration surface, not a dated-document dump.
+
+## Deliberately not touched
+
+- `config/scope.txt`
+- `programs/<slug>/scope.json`
+- `programs/<slug>/lane_state*.json`
+- `handoff/live_bounty_evidence/`
+- `reports/`
+- `logs/`
+- `scans/`
+- `loot/`
+- `<artifact-output-dir>/`
+- browser/session/local profile material
+- raw evidence or sensitive runtime material
+
+## Future rule
+
+New policy/strategy/handoff material must either update an existing active file or be created under a clearly indexed current/archive location. Root-level dated sprawl is not allowed.
+
+codex
+1. **Worker identity**
+
+Codex，角色：read-only direction reviewer / secondary engineering reviewer。
+
+2. **Context read attestation**
+
+已依 embedded context packet 閱讀以下內容：`.hermes.md`、`PROJECT_CHARTER.md`、`docs/ENGINEERING_INDEX.md`、`docs/policy/README.md`、`docs/policy/repo_hygiene_policy.md`、`docs/policy/memory_and_strategy_routing.md`、`handoff/INDEX.md`、`handoff/current_navigation.md`、`handoff/active_strategy_queue.md`、`handoff/current_artifact_index.md`、`docs/strategy/platform/engineering_direction_20260527.md`、`handoff/current/worktree_cleanup_index_20260528.md`。  
+未使用本機工具，未修改檔案。
+
+3. **Verdict: APPROVE_WITH_CHANGES**
+
+願景是 coherent：它已經從「資安筆記 / expert workbench」明確收斂成「授權 bug bounty automation platform + capability library」。核心 loop、Hermes/operator 分工、安全邊界、repo placement、handoff discipline 都一致。
+
+需要調整的是優先順序：30 天內不要追求完整 continuous recon OS，也不要同時開太多 detector/script/scheduler 支線。先把「lane state → candidate → evidence/no-finding → operator inbox」跑通一次，否則 repo 會再次變成 policy、strategy、detector 半成品堆疊。
+
+4. **48h / 7d / 14d / 30d / 90d recommended sequence**
+
+**48h**：完成 worktree cleanup 成 reviewable commits；只保留 active truth；跑 `hermes review` 與最近 smoke tests；明確標記每個 live lane 為 `PARK` / `PASSIVE_ONLY` / `blocked_operator_action` / `no_finding`。不要新增 policy 變體或 root handoff 檔。
+
+**7d**：做出可用的 operator inbox v0。每天只輸出 3–5 個決策，每個有 context、default action、operator gate。至少一條 lane 進入 candidate evidence、no-finding closeout、或明確 PARK/KILL。
+
+**14d**：跑完一次完整閉環：scope/policy intake → lane_state → bundle/detector dry-run 或 passive check → evidence/no-finding packet → review → inbox → report draft 或 closeout。
+
+**30d**：穩定 2–3 個 reusable bundles/detectors、redaction check、report draft builder、artifact/path integrity check、dry-run recurring substrate。live passive checks 只能在 scope/policy/budget/stop-before 都可機器檢查後加入。
+
+**90d**：再成熟成 recurring intel + detector library + lane state machine + evidence/report pipeline + operator inbox + submission tracking 的 bug bounty operating system。這時才考慮更完整 scheduling、metrics、weekly/monthly cadence。
+
+5. **Essential capabilities**
+
+- Machine-readable `scope.json`、`lane_state.json`、candidate schema。
+- Operator inbox：少量、高品質、可決策，不是 log dump。
+- Evidence packet：scope reference、positive/negative controls、expected-vs-observed、redaction、cleanup notes。
+- Detector harness：metadata-only、local-lab、live-passive、fixture tests、candidate JSON。
+- Single live-lane discipline：一次只推一條 target-touching lane 到結論。
+- Artifact/path integrity checks，避免 handoff 指到 stale 或 sensitive paths。
+- Report draft pipeline，但 final submit 永遠 operator gate。
+- Repo hygiene：edit active files、archive historical files、no root sprawl。
+
+6. **Non-goals for the next 30 days**
+
+- Web UI、SaaS/multi-tenant、distributed scanner。
+- 自製 vuln DB、自製 ML ranking、自製大型 recon framework。
+- 新 review tier、新 policy 變體、新 tactical direction 變體。
+- Scheduler 啟用 live target automation。
+- OAST/callback/tunnel、fuzzing、exploit triggering、DAST。
+- OAuth/integration/channel/API-token setup automation。
+- 多 program 同時消耗 operator scarce gates。
+- 追求大量 CVE detector 數量而沒有 inbox/evidence consumption path。
+
+7. **Risks and hard stops**
+
+最大工程風險是「substrate-first sprawl」：detectors、scripts、policies、strategy docs 持續增加，但沒有 candidate/evidence/report closeout。第二風險是 handoff/root 檔案再度膨脹，使 Hermes 無法判斷 current truth。
+
+硬停點：scope 不明、program rules 不明、需要 auth/OTP/CAPTCHA/phone/payment/KYC/OAuth/API token、可能觸及非 owned/customer data、需要 state mutation、live active scan/fuzz/exploit/callback/OAST、report promotion/submission。這些都必須停在 operator gate。
+
+8. **Questions Hermes should ask the operator**
+
+- 30 天內成功的最低標準是「第一個 report draft」還是「穩定每天 operator inbox」？
+- <program-redacted> 若持續卡 human check，是否明確 PARK，並指定下一條 Tier A lane？
+- Operator 願意每天處理幾個 inbox decisions？建議上限 3–5。
+- 目前最能接受的 live proof 類型是 access-control/lifecycle、passive CVE exposure、還是 report automation/no-finding closeout？
+- 哪些 program 可用 owned A/B/C accounts？哪些需要完全避免帳號 mutation？
+- Scheduler 在 30 天內是否只能 dry-run/passive-local，還是允許 scoped passive live checks？
+- Report draft 的品質門檻：informational 也可，還是只追 medium+ impact？
+
+9. **Disagreement with Hermes proposal**
+
+同意 Hermes 的大方向，但建議把 3–7 天的重點改成「operator inbox v0 + 一條 lane closeout」，不要先追多個 daily sweep detector。`engineering_direction_20260527.md` 的 P1 detector 清單太容易把 repo 拉回工具堆疊；它應降級到 Tier B，等 inbox/evidence pipeline 能消化候選後再擴張。
+tokens used
+32,477
+1. **Worker identity**
+
+Codex，角色：read-only direction reviewer / secondary engineering reviewer。
+
+2. **Context read attestation**
+
+已依 embedded context packet 閱讀以下內容：`.hermes.md`、`PROJECT_CHARTER.md`、`docs/ENGINEERING_INDEX.md`、`docs/policy/README.md`、`docs/policy/repo_hygiene_policy.md`、`docs/policy/memory_and_strategy_routing.md`、`handoff/INDEX.md`、`handoff/current_navigation.md`、`handoff/active_strategy_queue.md`、`handoff/current_artifact_index.md`、`docs/strategy/platform/engineering_direction_20260527.md`、`handoff/current/worktree_cleanup_index_20260528.md`。  
+未使用本機工具，未修改檔案。
+
+3. **Verdict: APPROVE_WITH_CHANGES**
+
+願景是 coherent：它已經從「資安筆記 / expert workbench」明確收斂成「授權 bug bounty automation platform + capability library」。核心 loop、Hermes/operator 分工、安全邊界、repo placement、handoff discipline 都一致。
+
+需要調整的是優先順序：30 天內不要追求完整 continuous recon OS，也不要同時開太多 detector/script/scheduler 支線。先把「lane state → candidate → evidence/no-finding → operator inbox」跑通一次，否則 repo 會再次變成 policy、strategy、detector 半成品堆疊。
+
+4. **48h / 7d / 14d / 30d / 90d recommended sequence**
+
+**48h**：完成 worktree cleanup 成 reviewable commits；只保留 active truth；跑 `hermes review` 與最近 smoke tests；明確標記每個 live lane 為 `PARK` / `PASSIVE_ONLY` / `blocked_operator_action` / `no_finding`。不要新增 policy 變體或 root handoff 檔。
+
+**7d**：做出可用的 operator inbox v0。每天只輸出 3–5 個決策，每個有 context、default action、operator gate。至少一條 lane 進入 candidate evidence、no-finding closeout、或明確 PARK/KILL。
+
+**14d**：跑完一次完整閉環：scope/policy intake → lane_state → bundle/detector dry-run 或 passive check → evidence/no-finding packet → review → inbox → report draft 或 closeout。
+
+**30d**：穩定 2–3 個 reusable bundles/detectors、redaction check、report draft builder、artifact/path integrity check、dry-run recurring substrate。live passive checks 只能在 scope/policy/budget/stop-before 都可機器檢查後加入。
+
+**90d**：再成熟成 recurring intel + detector library + lane state machine + evidence/report pipeline + operator inbox + submission tracking 的 bug bounty operating system。這時才考慮更完整 scheduling、metrics、weekly/monthly cadence。
+
+5. **Essential capabilities**
+
+- Machine-readable `scope.json`、`lane_state.json`、candidate schema。
+- Operator inbox：少量、高品質、可決策，不是 log dump。
+- Evidence packet：scope reference、positive/negative controls、expected-vs-observed、redaction、cleanup notes。
+- Detector harness：metadata-only、local-lab、live-passive、fixture tests、candidate JSON。
+- Single live-lane discipline：一次只推一條 target-touching lane 到結論。
+- Artifact/path integrity checks，避免 handoff 指到 stale 或 sensitive paths。
+- Report draft pipeline，但 final submit 永遠 operator gate。
+- Repo hygiene：edit active files、archive historical files、no root sprawl。
+
+6. **Non-goals for the next 30 days**
+
+- Web UI、SaaS/multi-tenant、distributed scanner。
+- 自製 vuln DB、自製 ML ranking、自製大型 recon framework。
+- 新 review tier、新 policy 變體、新 tactical direction 變體。
+- Scheduler 啟用 live target automation。
+- OAST/callback/tunnel、fuzzing、exploit triggering、DAST。
+- OAuth/integration/channel/API-token setup automation。
+- 多 program 同時消耗 operator scarce gates。
+- 追求大量 CVE detector 數量而沒有 inbox/evidence consumption path。
+
+7. **Risks and hard stops**
+
+最大工程風險是「substrate-first sprawl」：detectors、scripts、policies、strategy docs 持續增加，但沒有 candidate/evidence/report closeout。第二風險是 handoff/root 檔案再度膨脹，使 Hermes 無法判斷 current truth。
+
+硬停點：scope 不明、program rules 不明、需要 auth/OTP/CAPTCHA/phone/payment/KYC/OAuth/API token、可能觸及非 owned/customer data、需要 state mutation、live active scan/fuzz/exploit/callback/OAST、report promotion/submission。這些都必須停在 operator gate。
+
+8. **Questions Hermes should ask the operator**
+
+- 30 天內成功的最低標準是「第一個 report draft」還是「穩定每天 operator inbox」？
+- <program-redacted> 若持續卡 human check，是否明確 PARK，並指定下一條 Tier A lane？
+- Operator 願意每天處理幾個 inbox decisions？建議上限 3–5。
+- 目前最能接受的 live proof 類型是 access-control/lifecycle、passive CVE exposure、還是 report automation/no-finding closeout？
+- 哪些 program 可用 owned A/B/C accounts？哪些需要完全避免帳號 mutation？
+- Scheduler 在 30 天內是否只能 dry-run/passive-local，還是允許 scoped passive live checks？
+- Report draft 的品質門檻：informational 也可，還是只追 medium+ impact？
+
+9. **Disagreement with Hermes proposal**
+
+同意 Hermes 的大方向，但建議把 3–7 天的重點改成「operator inbox v0 + 一條 lane closeout」，不要先追多個 daily sweep detector。`engineering_direction_20260527.md` 的 P1 detector 清單太容易把 repo 拉回工具堆疊；它應降級到 Tier B，等 inbox/evidence pipeline 能消化候選後再擴張。

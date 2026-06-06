@@ -1,0 +1,135 @@
+{
+  "schema_version": "1.0",
+  "program": {
+    "slug": "<program-slug>",
+    "name": "<program-redacted> (VDP)",
+    "platform": "<bug-bounty-platform>",
+    "url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "authorization_reference": "Public <bug-bounty-platform> VDP policy page metadata reviewed on 2026-05-25 via https://<bug-bounty-platform>.com/<program-slug>?type=team. Target-touching work remains blocked until selected assets are explicitly mirrored into config/scope.txt and the operator approves the single-lane dry-run packet.",
+    "policy_acknowledged_at": "2026-05-25",
+    "program_contact": "<bug-bounty-platform> program: <program-slug>",
+    "status": "scope_confirmed_dry_run_gate_passed_manual_target_touching_pending_identity_strategy"
+  },
+  "scope": {
+    "in_scope": [
+      {
+        "type": "url",
+        "value": "https://login.<program-redacted>.com/research/signup",
+        "notes": "Policy explicitly says to use this path for new account signup. Candidate first-lane asset; do not navigate until operator confirms adding exact host/path to config/scope.txt."
+      },
+      {
+        "type": "url",
+        "value": "https://login.<program-redacted>.com/research/login",
+        "notes": "Policy explicitly says to use this path for research login. Candidate first-lane asset; do not navigate until operator confirms adding exact host/path to config/scope.txt."
+      },
+      {
+        "type": "domain",
+        "value": "login.<program-redacted>.com",
+        "notes": "Derived only from explicit research signup/login URLs; selected solely for auth/session/account-entry lane, pending operator confirmation."
+      }
+    ],
+    "reference_only": [
+      {
+        "type": "url",
+        "value": "https://www.<program-redacted>.com/docs/quickstart/",
+        "notes": "Policy references product documentation; reference-only for understanding intended use, not a selected test target."
+      },
+      {
+        "type": "url",
+        "value": "https://www.<program-redacted>.com/api/welcome/",
+        "notes": "Policy references API documentation; reference-only for understanding intended use, not a selected test target."
+      },
+      {
+        "type": "url",
+        "value": "https://www.<program-redacted>.com/docs/actions/tools/run-script/",
+        "notes": "Policy references run-script documentation; reference-only. Run-script testing is blocked for first lane."
+      },
+      {
+        "type": "url",
+        "value": "https://www.<program-redacted>.com/security/",
+        "notes": "Policy references security information; reference-only."
+      }
+    ],
+    "out_of_scope": [
+      {"type": "finding_class", "value": "https_tls_security_headers", "reason": "Policy lists HTTPS / TLS security headers suggestions out of scope."},
+      {"type": "action", "value": "direct_testing_of_third_parties", "reason": "Policy lists direct testing of third parties out of scope."},
+      {"type": "finding_class", "value": "spf_dmarc_dkim_dnssec_suggestions", "reason": "Policy lists SPF / DMARC / DKIM / DNSSEC suggestions out of scope."},
+      {"type": "finding_class", "value": "banner_or_version_disclosure", "reason": "Policy lists banner/version disclosure out of scope."},
+      {"type": "action", "value": "social_engineering_phishing_spam", "reason": "Policy lists social engineering / phishing / spam out of scope."},
+      {"type": "action", "value": "dos_ddos_or_service_disruption", "reason": "Policy says do not disrupt services (DoS/DDoS)."},
+      {"type": "action", "value": "non_owned_account_or_data_access_modification_destruction", "reason": "Policy says do not access, modify, or destroy accounts/data that do not belong to you."},
+      {"type": "action", "value": "public_disclosure_without_consent", "reason": "Policy says do not disclose vulnerabilities outside the VDP."}
+    ],
+    "idn_handling": "punycode_only"
+  },
+  "techniques": {
+    "allowed": [
+      "manual_low_speed_research_account_signup_login_if_operator_confirms",
+      "owned_account_auth_session_profile_surface_mapping",
+      "owned_tenant_or_team_empty_state_observation",
+      "detailed_reproducible_report_preparation_if_report_ready"
+    ],
+    "conditionally_allowed_later": [
+      "account_owned_access_control_checks_with_positive_and_negative_controls",
+      "team_tenant_isolation_checks_only_after_account_model_is_understood",
+      "api_checks_only_after policy and documentation review plus operator approval"
+    ],
+    "forbidden_or_blocked_for_first_lane": [
+      "scanner_fuzzer_dast",
+      "dos_ddos_or_rate_limit_testing",
+      "external_callbacks_oast_webhooks",
+      "third_party_integrations",
+      "workflow_or_automation_execution",
+      "secrets_or_credentials_storage",
+      "run_script_feature_testing",
+      "cross_tenant_access_attempts_without_owned_account_controls",
+      "non_owned_account_or_data_access",
+      "public_disclosure",
+      "social_engineering_phishing_spam"
+    ],
+    "automation_permitted": false,
+    "automation_notes": "First lane remains manual/noVNC/browser-assisted only. The policy mentions Burp/ZAP header configuration, but no automated scanner/fuzzer/DAST permission was observed."
+  },
+  "session_layer": {
+    "required_account_identity": "Use <bug-bounty-platform> email alias <researcher-alias-email> OR add X-<bug-bounty-platform>-Research: [H1 username] header when testing.",
+    "required_headers": {
+      "X-<bug-bounty-platform>-Research": "[H1 username]"
+    },
+    "header_notes": "Browser-only steps may not set custom headers unless using a proxy. If not using the <bug-bounty-platform> alias, configure the header in Burp/ZAP before target-touching requests. Do not store the operator's real email, alias, or cookies in repo artifacts.",
+    "account_rule": "Only interact with accounts owned by the operator or explicitly permitted by the account holder. Operator handles CAPTCHA/OTP/email verification locally."
+  },
+  "rate_limits": {
+    "max_concurrency": 1,
+    "request_delay_ms": 5000,
+    "notes": "Conservative project default; no explicit numeric rate limit observed in policy intake. Stop on CAPTCHA, account warning, rate limiting, bot detection, or policy ambiguity."
+  },
+  "first_lane": {
+    "name": "researcher_account_auth_session_profile_workspace_empty_state_surface_map",
+    "selected_assets_pending_confirmation": [
+      "https://login.<program-redacted>.com/research/signup",
+      "https://login.<program-redacted>.com/research/login",
+      "login.<program-redacted>.com"
+    ],
+    "goal": "Complete legal workflow practice with minimal owned-account auth/session/profile/empty-state mapping; expected status no_finding or surface_only unless clear owned-account impact appears.",
+    "blocked_state_changes": [
+      "external integrations",
+      "webhooks",
+      "workflow execution",
+      "run-script",
+      "secrets/API keys",
+      "tenant/team invitation or other-user interaction",
+      "public sharing"
+    ]
+  },
+  "reporting_rules": {
+    "one_vulnerability_per_report": true,
+    "detailed_reproducible_steps_required": true,
+    "duplicates_first_reproducible_report_only": true,
+    "impact_focus": "Policy asks researchers to consider real-world impact such as privilege escalation, sensitive information disclosure, or ability to affect resources not owned by the tenant/team."
+  },
+  "expiration": {
+    "valid_from": "2026-05-25",
+    "valid_until": "2026-06-24",
+    "notes": "Re-check <bug-bounty-platform> policy before target-touching work after this date or if <bug-bounty-platform> shows updates."
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "syfe_signup_api_precondition_review",
+  "created_at": "2026-05-27",
+  "evidence": [
+    {
+      "id": "h1_scope_policy_capture_20260527",
+      "type": "policy_scope_reference",
+      "source": "https://<bug-bounty-platform>.com/syfe_bbp and /policy_scopes",
+      "summary": "H1 page showed Gold Standard Safe Harbor, Platform Standards, Managed by <bug-bounty-platform>, Collaboration Enabled, Retesting, 9 in-scope bounty-eligible assets, production signup requirement for @researcher-alias.example, and production X-<bug-bounty-platform>-Research header guidance.",
+      "sensitivity": "non_secret_program_metadata",
+      "artifact": "programs/<program-slug>/scope.json"
+    },
+    {
+      "id": "prod_signup_field_map_20260527",
+      "type": "passive_ui_map",
+      "source": "https://www.<program-slug>.com/create-account?utm_source=bug_bounty&medium=bug_bounty",
+      "summary": "Production signup page exposes Email, Password, marketing checkbox, SIGN UP button, Google signup, Apple signup, login link, T&C and Privacy links. No form submission performed.",
+      "sensitivity": "no_secrets_no_customer_data",
+      "artifact": "programs/<program-slug>/candidate_packet_20260527.md"
+    },
+    {
+      "id": "uat_signup_field_map_20260527",
+      "type": "passive_ui_map",
+      "source": "https://uat-bugbounty.nonprod.<program-slug>.com/create-account",
+      "summary": "UAT signup page exposes Email, Password, marketing checkbox, SIGN UP button, Google signup, Apple signup, login link, T&C and Privacy links. No form submission performed.",
+      "sensitivity": "no_secrets_no_customer_data",
+      "artifact": "programs/<program-slug>/candidate_packet_20260527.md"
+    },
+    {
+      "id": "frontend_api_config_20260527",
+      "type": "passive_frontend_static_review",
+      "source": "UAT Next.js static bundle loaded by create-account page",
+      "summary": "UAT frontend config includes NEXT_PUBLIC_BASEAPI_URL=https://api-uat-bugbounty.nonprod.<program-slug>.com and signup flow references /auth/signup, MFA/email verification OTP endpoints, and reCAPTCHA Enterprise signup action. This is candidate routing info only, not proof.",
+      "sensitivity": "public_client_bundle_no_secrets_stored",
+      "artifact": "programs/<program-slug>/candidate_packet_20260527.md"
+    },
+    {
+      "id": "api_root_fixed_path_check_20260527",
+      "type": "low_rate_fixed_path_http_check",
+      "source": "Single root GETs with X-<bug-bounty-platform>-Research header where applicable",
+      "summary": "api-uat-bugbounty.nonprod.<program-slug>.com root returned JSON 404 Requested resource not found; mark8.<program-slug>.com root returned JSON 401 Unauthorized; api.<program-slug>.com root returned Cloudflare challenge 403. No auth, fuzzing, scanning, or customer data involved.",
+      "sensitivity": "headers_and_status_only_no_tokens",
+      "artifact": "programs/<program-slug>/candidate_packet_20260527.md"
+    }
+  ]
+}

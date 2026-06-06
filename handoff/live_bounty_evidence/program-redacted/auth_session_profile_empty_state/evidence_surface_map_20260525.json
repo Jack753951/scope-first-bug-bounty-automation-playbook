@@ -1,0 +1,102 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "auth_session_profile_empty_state",
+  "status": "surface_only",
+  "request_budget": {
+    "planned": 25,
+    "used": 10
+  },
+  "observations": [
+    {
+      "type": "identity_gate",
+      "label": "hackerone_alias_signup_login",
+      "value": "operator completed alias-based signup/login locally; no password, OTP, verification link, cookie, token, or raw email recorded",
+      "sensitive": false
+    },
+    {
+      "type": "owned_workspace",
+      "label": "generated_tines_workspace",
+      "value": "post-login owned workspace loaded in browser; exact tenant slug not promoted to global scope config",
+      "sensitive": false
+    },
+    {
+      "type": "surface",
+      "label": "stories_dashboard",
+      "value": "one onboarding story visible with dashboard filters/search/new story controls and help panels",
+      "sensitive": false
+    },
+    {
+      "type": "surface",
+      "label": "story_editor",
+      "value": "onboarding story visible with sample weather/email nodes; publish and execution-related controls were not used",
+      "sensitive": false
+    },
+    {
+      "type": "empty_state",
+      "label": "credentials",
+      "value": "no credentials; new/plus controls visible but not used",
+      "sensitive": false
+    },
+    {
+      "type": "empty_state",
+      "label": "resources",
+      "value": "no resources; new/plus controls visible but not used",
+      "sensitive": false
+    },
+    {
+      "type": "surface",
+      "label": "users_settings",
+      "value": "one tenant owner visible with invite/new controls; raw account identity omitted",
+      "sensitive": true
+    },
+    {
+      "type": "empty_state",
+      "label": "api_keys",
+      "value": "no API keys; new/plus controls visible but not used",
+      "sensitive": false
+    },
+    {
+      "type": "surface",
+      "label": "authentication_settings",
+      "value": "session timeout/recovery-code/SSO/user-provisioning controls visible; unlock/mutation controls not used",
+      "sensitive": false
+    },
+    {
+      "type": "surface",
+      "label": "workbench",
+      "value": "chat/workbench with templates/stories/MCP surfaces and many not-connected tool templates visible; no prompts or tools executed",
+      "sensitive": false
+    }
+  ],
+  "positive_evidence": [
+    "Alias-based signup/login gate completed and authenticated browser session persisted into the <program-redacted> app.",
+    "Owned workspace, dashboard, story editor, credentials/resources/API-key empty states, users/settings, authentication settings, and workbench surfaces were reachable via normal UI.",
+    "Credentials, resources, and API keys appeared empty in the newly created tenant.",
+    "Authentication/security setting changes appeared gated by unlock or explicit mutation controls; Hermes did not mutate them."
+  ],
+  "negative_controls": [
+    "No story publish/run/play or workflow execution was performed.",
+    "No credentials, resources, API keys, integrations, webhooks, callbacks, or users were created.",
+    "No Workbench chat prompt, AI tool execution, MCP connection, or integration connection was used.",
+    "No raw HTTP probing was performed against the generated workspace subdomain because it is not mirrored into config/scope.txt.",
+    "No non-owned data, cross-tenant tests, report submission, password/OTP/cookie/token/API key storage, or raw email retention occurred."
+  ],
+  "redactions": [
+    "Raw account name/email omitted from markdown and JSON evidence.",
+    "Verification link, OTP, password, cookies, tokens, and API-key material were not requested or stored.",
+    "Temporary noVNC screenshots with possible account identifiers were moved out of handoff/ into ignored local storage; promoted markdown/JSON evidence remains redacted."
+  ],
+  "candidate_signals": [],
+  "blocked_states": [
+    "workflow_execution_blocked",
+    "publish_or_run_story_blocked",
+    "credential_resource_api_key_creation_blocked",
+    "integration_webhook_callback_blocked",
+    "invite_or_multi_user_testing_blocked",
+    "profile_page_pii_review_deferred",
+    "raw_http_workspace_subdomain_probe_blocked_until_scope_mirrored_or_plan_approved"
+  ],
+  "next_learning_seed": "Close <program-redacted> first owned-account lane as no_finding/surface_only; any later lane should be separately planned around read-only profile review, API policy review, or second-owned-account controls without workflow execution or integrations.",
+  "updated_at": "2026-05-25"
+}

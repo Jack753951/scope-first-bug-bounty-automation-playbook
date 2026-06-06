@@ -1,0 +1,56 @@
+{
+  "errors": [],
+  "limits": {
+    "depth": 1,
+    "rate_limit": 2,
+    "timeout": 5
+  },
+  "output_dir": "/home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z",
+  "run_mode": "execute_script_allowed",
+  "safety": {
+    "callbacks": false,
+    "local_lab_only": true,
+    "promotes_findings": false,
+    "raw_body_capture": false,
+    "requires_execute_lab_approved_for_script_write": true,
+    "supported_tools_only": [
+      "ffuf",
+      "httpx",
+      "katana",
+      "nuclei"
+    ]
+  },
+  "schema_version": "external_tool_lab_plan/0.1-trial",
+  "status": "ok",
+  "steps": [
+    {
+      "command": "curl -sS -I --max-time 5 http://<lab-ip>:3000 | sed -n '1,12p' > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/pre_health.txt",
+      "id": "pre_health",
+      "network_touching": true,
+      "tool": "pre_health"
+    },
+    {
+      "command": "cat > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/nuclei-local-header-observer.yaml <<'YAML'\nid: local-juice-shop-security-headers\ninfo:\n  name: Local lab security header observation\n  author: hermes\n  severity: info\n  tags: local-lab,headers\nhttp:\n  - method: GET\n    path:\n      - '{{BaseURL}}/'\n    matchers:\n      - type: status\n        status:\n          - 200\nYAML\nnuclei -u http://<lab-ip>:3000 -t /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/nuclei-local-header-observer.yaml -jsonl -o /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/nuclei.jsonl -timeout 5 -retries 0 -rl 2 -interactions-cache-size 1 -omit-raw -disable-update-check -silent -no-color > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/nuclei.stdout 2> /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/nuclei.stderr",
+      "id": "nuclei_local_header_observer",
+      "network_touching": true,
+      "tool": "nuclei"
+    },
+    {
+      "command": "printf 'ftp\\nassets\\nrest\\napi\\nadministration\\nrobots.txt\\nsecurity.txt\\n' > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/phase4a_tiny_wordlist.txt && ffuf -w /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/phase4a_tiny_wordlist.txt -u http://<lab-ip>:3000/FUZZ -of json -o /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/ffuf.json -rate 2 -timeout 5 -maxtime 30 -s > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/ffuf.stdout 2> /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/ffuf.stderr",
+      "id": "ffuf_tiny_content_discovery",
+      "network_touching": true,
+      "tool": "ffuf"
+    },
+    {
+      "command": "curl -sS -I --max-time 5 http://<lab-ip>:3000 | sed -n '1,12p' > /home/kali/phase4a-calibration/juice-shop-nuclei-ffuf-20260520T123255Z/post_health.txt",
+      "id": "post_health",
+      "network_touching": true,
+      "tool": "post_health"
+    }
+  ],
+  "target_url": "http://<lab-ip>:3000",
+  "tools": [
+    "nuclei",
+    "ffuf"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.0",
+  "seed_id": "tines_automation_vdp_auth_session_profile_empty_state_learning_seed",
+  "program_slug": "<program-slug>",
+  "lane_id": "auth_session_profile_empty_state",
+  "source_evidence": "handoff/live_bounty_evidence/<program-slug>/auth_session_profile_empty_state/evidence_surface_map_20260525.json",
+  "outcome": "surface_only",
+  "negative_findings": [
+    {
+      "hypothesis": "Close <program-redacted> first owned-account lane as no_finding/surface_only; any later lane should be separately planned around read-only profile review, API policy review, or second-owned-account controls without workflow execution or integrations.",
+      "evidence": "hackerone_alias_signup_login; generated_tines_workspace; stories_dashboard",
+      "confidence": "medium",
+      "do_not_retry_without": [
+        "workflow_execution_blocked",
+        "publish_or_run_story_blocked",
+        "credential_resource_api_key_creation_blocked",
+        "integration_webhook_callback_blocked",
+        "invite_or_multi_user_testing_blocked",
+        "profile_page_pii_review_deferred",
+        "raw_http_workspace_subdomain_probe_blocked_until_scope_mirrored_or_plan_approved"
+      ]
+    }
+  ],
+  "missing_prerequisites": [
+    "workflow_execution_blocked",
+    "publish_or_run_story_blocked",
+    "credential_resource_api_key_creation_blocked",
+    "integration_webhook_callback_blocked",
+    "invite_or_multi_user_testing_blocked",
+    "profile_page_pii_review_deferred",
+    "raw_http_workspace_subdomain_probe_blocked_until_scope_mirrored_or_plan_approved"
+  ],
+  "target_selection_updates": [
+    "prefer targets/lanes where the missing prerequisite is available before repeating this path"
+  ],
+  "next_attack_path_seeds": [
+    {
+      "title": "Retry only after missing controls exist",
+      "rationale": "Close <program-redacted> first owned-account lane as no_finding/surface_only; any later lane should be separately planned around read-only profile review, API policy review, or second-owned-account controls without workflow execution or integrations.",
+      "required_prerequisites": [
+        "workflow_execution_blocked",
+        "publish_or_run_story_blocked",
+        "credential_resource_api_key_creation_blocked",
+        "integration_webhook_callback_blocked",
+        "invite_or_multi_user_testing_blocked",
+        "profile_page_pii_review_deferred",
+        "raw_http_workspace_subdomain_probe_blocked_until_scope_mirrored_or_plan_approved"
+      ],
+      "preferred_roles": [
+        "adversarial-planner",
+        "boundary-engineer",
+        "evidence-critic"
+      ],
+      "route": "new_target"
+    }
+  ],
+  "updated_at": "2026-05-26",
+  "target_touching": false
+}

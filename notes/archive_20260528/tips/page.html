@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Tips</title>
+</head><body>1.<br/>
+滲透實戰小技巧:<br/>
+<ul><li style="list-style-type: none">在 Kali 中，當你使用 nmap 掃描完目標，結果可能很亂。</li>
+<li style="list-style-type: none">專業人員會這樣用： nmap -sV <lab-ip> | grep "open" | <b>tee</b>&nbsp;scan_result.txt</li>
+<li style="list-style-type: none">這裡多了一個<b>&nbsp;tee </b>指令。它的作用像水管的 <b>T 型接頭</b>：</li>
+<li style="list-style-type: none">讓結果<b>顯示在螢幕上</b>讓你即時看。</li>
+<li style="list-style-type: none">同時把結果<b>存進檔案</b>&nbsp;scan_result.txt 備份。</li>
+<li style="list-style-type: none"></li>
+</ul>
+2. <br/>
+Hack小撇步 (Security Tips):<br/>
+<ul><li style="list-style-type: none"><b>隱身輸入</b>：在 echo 指令前加一個 <b>空格</b>，該指令就不會記錄在 .zsh_history。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>變數保護</b>：如果內容包含 $，請用 <b>單引號 ' '</b>&nbsp;包裹，防止被系統誤判為變數。</li>
+<li style="list-style-type: none"></li>
+</ul>
+<br/>
+&nbsp;3.<br/>
+偽裝「數位指紋」:<br/>
+<ul><li style="list-style-type: none"><b>指令</b>：sudo macchanger -r eth0 (把 eth0 換成你的網卡名)</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>樂趣</b>：這會隨機更改你的硬體位址 (MAC Address)，讓路由器以為你是另一台全新的裝置。</li>
+<li style="list-style-type: none"></li>
+</ul>
+4.<br/>
+指令查找:<br/>
+explainshell.com可以找到指令延伸和解釋<br/>
+<br/>
+<br/>
+5.<br/>
+找檔案:<br/>
+<br/>
+在進行資安工作時，這是一個非常經典的流程：<br/>
+<br/>
+<ul><li style="list-style-type: none"><b>情境</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">你剛解碼（decode）出一個特定的工具或下載了一個新的 Payload。</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>問題</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">你忘了存到哪個資料夾了。</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><b>動作</b>：</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none">先執行 sudo updatedb（讓系統知道新檔案在哪裡）。</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">接著執行 locate MySecretPayload。</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>結果</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">路徑立刻出現在螢幕上，不需要等 find 慢慢跑。</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+</ul>
+&nbsp;<ul><li style="list-style-type: none"></li>
+</ul>
+&nbsp;<br/>
+<br/>
+&nbsp;</body></html>

@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "checkpoint_id": "third_target_contact_checkpoint_20260526",
+  "target_candidate": {
+    "program_slug": "<program-redacted>",
+    "program_name": "<program-name>",
+    "source_artifact": "handoff/program-redacted_target_selection_preview_20260526.md",
+    "status": "front_owned_account_created_post_auth_surface_map_started"
+  },
+  "agent_capability_substrate": {
+    "worker_attestation_gate": "present",
+    "role_vocabulary_gate": "present",
+    "role_synthesis_helper": "scripts/attack-path-role-synthesize.py",
+    "kali_readiness_state": "handoff/kali_vm_operations_state.json",
+    "no_finding_learning_seed_log": "handoff/live_bounty_learning_seeds.jsonl",
+    "review_gate": "bash ./bin/hermes review"
+  },
+  "contact_readiness": {
+    "scope_authorized_for_selected_hosts": true,
+    "autonomous_target_touching_allowed": true,
+    "autonomous_target_touching_blocker": "external_channel_connect_invite_api_token_callback_and_non_owned_data_boundaries_remain_blocked",
+    "scope_confirmed_from_logged_in_hackerone": true,
+    "scope_csv_local_copy": "setting/local/hackerone_scope/<program-redacted>/scopes_for_program-redacted_at_2026-05-26_08_10_14_UTC.csv",
+    "program_scope_file": "programs/<program-redacted>/scope.json",
+    "global_scope_entries_added": [
+      "<in-scope-host>",
+      "<in-scope-host>"
+    ],
+    "dry_run_gate": {
+      "app_frontapp_com": "passed",
+      "api2_frontapp_com": "passed",
+      "front_com_out_of_scope_control": "failed_closed"
+    },
+    "current_gate": "post_signup_dashboard_setup_guide_external_shared_channel_connection_gate",
+    "safe_next_operator_prompt": "No action needed for passive mapping. If later approving Account B, owned mailbox/channel connection, invite, webhook/callback, or API token handling, do it locally and do not paste secrets/tokens/verification links into chat/repo.",
+    "next_autonomous_agent_action_after_gate": "Continue passive browser-only <program-name> surface mapping and candidate packet refinement; stop before channel connection, invites, token/API actions, integrations/callbacks, outbound messages, customer data, billing/payment/support/KYC, scanner/fuzzer/DAST, or report submission."
+  },
+  "formal_contact_checkpoint_definition": {
+    "reached_when": [
+      "agent substrate tests pass",
+      "hermes review passes",
+      "logged-in <bug-bounty-platform> scope CSV is captured",
+      "program scope and global scope are updated for confirmed in-scope hosts",
+      "dry-run in-scope pass and out-of-scope fail-closed controls pass",
+      "Kali/noVNC first contact reaches the target's signup/auth gate without scanning or automation"
+    ],
+    "current_state": "post_auth_passive_surface_mapping_paused_at_external_channel_gate"
+  },
+  "safety_boundary": [
+    "manual/noVNC only",
+    "no scanner/fuzzer/DAST",
+    "no exploit/callback/OAST/tunnel",
+    "no customer or non-owned data",
+    "no customer messages or support/chat interaction",
+    "no credential/token/API key/cookie storage",
+    "no report submission"
+  ],
+  "updated_at": "2026-05-26",
+  "runtime_readiness": {
+    "vm": "<attacker-vm> running",
+    "ssh": "reachable at <lab-ip>:22 via project-local key/config",
+    "novnc": "reachable from Windows at http://127.0.0.1:6080/vnc.html?autoconnect=1&resize=scale",
+    "desktop_mode": "Xvfb/Xfce fallback session; physical :0 LightDM greeter was not attachable by kali user x11vnc due Xauthority",
+    "target_page_opened_in_this_pass": true,
+    "readiness_artifact": "handoff/program-redacted_pre_contact_ready_checkpoint_20260526.md",
+    "latest_evidence": "setting/local/screenshots/program-redacted_live_20260526/dashboard_channel_connect_gate.png",
+    "attacker_flow_packet": "handoff/program-redacted_authorized_attacker_flow_packet_20260526.md"
+  }
+}

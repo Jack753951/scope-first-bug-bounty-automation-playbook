@@ -1,0 +1,9 @@
+{
+  "slug": "clouds",
+  "candidate_flag": null,
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["solver"],
+  "candidate_count": 0,
+  "solver_timed_out": true,
+  "checker_only_success": false
+}

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/no_finding_learning_seed.schema.json",
+  "title": "No-finding learning seed",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "seed_id", "program_slug", "lane_id", "source_evidence", "outcome", "negative_findings", "missing_prerequisites", "target_selection_updates", "next_attack_path_seeds", "updated_at", "target_touching"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "seed_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"},
+    "program_slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"},
+    "lane_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"},
+    "source_evidence": {"type": "string", "minLength": 1},
+    "outcome": {"enum": ["no_finding", "surface_only", "blocked_operator_action", "blocked_awaiting_scope", "blocked_no_owned_object", "not_report_ready"]},
+    "negative_findings": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/negative_finding"}},
+    "missing_prerequisites": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "target_selection_updates": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "next_attack_path_seeds": {"type": "array", "items": {"$ref": "#/$defs/next_seed"}},
+    "updated_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"},
+    "target_touching": {"const": false}
+  },
+  "$defs": {
+    "negative_finding": {
+      "type": "object", "additionalProperties": false,
+      "required": ["hypothesis", "evidence", "confidence", "do_not_retry_without"],
+      "properties": {
+        "hypothesis": {"type": "string", "minLength": 1},
+        "evidence": {"type": "string", "minLength": 1},
+        "confidence": {"enum": ["low", "medium", "high"]},
+        "do_not_retry_without": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "next_seed": {
+      "type": "object", "additionalProperties": false,
+      "required": ["title", "rationale", "required_prerequisites", "preferred_roles", "route"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "rationale": {"type": "string", "minLength": 1},
+        "required_prerequisites": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "preferred_roles": {"type": "array", "items": {"enum": ["adversarial-planner", "boundary-engineer", "implementation-worker", "deterministic-reviewer", "safety-reviewer", "evidence-critic", "final-synthesizer"]}},
+        "route": {"enum": ["new_target", "same_target_after_operator_gate", "local_simulation", "reference_only"]}
+      }
+    }
+  }
+}

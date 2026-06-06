@@ -1,0 +1,50 @@
+{
+  "artifacts": [
+    {
+      "content_type": "application/json",
+      "name": "run.json",
+      "relative_path": "runs/20260516T020304Z_runner/preview/run.json",
+      "sha256": "931c99bc93af35435d114e3185009dc5bccb71cbb1c24022457a0a86d48909c4",
+      "size_bytes": 117
+    },
+    {
+      "content_type": "application/json",
+      "name": "module_inputs.json",
+      "relative_path": "runs/20260516T020304Z_runner/preview/module_inputs.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size_bytes": 3
+    },
+    {
+      "content_type": "application/json",
+      "name": "module_results.json",
+      "relative_path": "runs/20260516T020304Z_runner/preview/module_results.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "size_bytes": 3
+    },
+    {
+      "content_type": "application/json",
+      "name": "bundle_consistency.json",
+      "relative_path": "runs/20260516T020304Z_runner/preview/bundle_consistency.json",
+      "sha256": "3921d7aec4570ddbeaf58b70a040728581c85b04932a723217d1dc14d299c914",
+      "size_bytes": 221
+    }
+  ],
+  "bundle_consistency": {
+    "relative_path": "runs/20260516T020304Z_runner/preview/bundle_consistency.json",
+    "sha256": "3921d7aec4570ddbeaf58b70a040728581c85b04932a723217d1dc14d299c914",
+    "status": "ok",
+    "verdict": "allow"
+  },
+  "created_at_utc": "2026-05-16T02:04:04Z",
+  "preview_mode": {
+    "dry_run": true,
+    "include_module_io_preview": true,
+    "persist_preview_bundle": true
+  },
+  "producer": {
+    "name": "module_runner",
+    "version": "0.1.0"
+  },
+  "run_id": "20260516T020304Z_runner",
+  "schema_version": "preview_manifest/1.0"
+}

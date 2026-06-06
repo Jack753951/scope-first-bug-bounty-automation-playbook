@@ -1,0 +1,51 @@
+> Public sanitized edition: sensitive personal, target, path, IP, alias, advisory, and run-specific evidence fields are redacted. This repository does not authorize live testing.
+
+Verdict: ACCEPT_FOR_CODEX
+Tier: T3
+
+Boundary Summary:
+- Strictly offline/local. No network clients, no subprocess against external hosts, no scanner/module runtime wiring.
+- All generated artifacts land under `setting/local/ctf/<slug>/` (ignored path); no writes to `config/scope.txt`, `loot/`, credentials, scheduler, deployment, or billing.
+- Tooling is workflow scaffolding only — does not classify exploitability, does not auto-promote candidates, does not call into existing scanner/module IO.
+
+OSS Recon Gate Notes:
+- Output shape should borrow vocabulary from established result schemas without copying them wholesale:
+  - SARIF result `level` (`none|note|warning|error`) and `kind` (`pass|fail|review|open`) — closest analogue to hint/candidate/verified/needs_second_review; map our four states to a `kind`-like field, not a severity.
+  - Nuclei template metadata — keep `category`, `tags`, `requires_scope`-style flags flat and string-valued for forward compatibility.
+  - DefectDojo finding states (`active|verified|false_positive|out_of_scope`) — informs the `verified` vs `needs_second_review` split; explicitly do NOT adopt severity/CVSS yet.
+  - Semgrep severity/confidence — adopt `confidence` (low/medium/high) as a separate axis from status; do not collapse into status.
+- Treat `ctf_verifier_metadata.yaml` as a non-binding template in P2.17. Promote to a versioned JSON Schema only after two real verifiers consume it.
+
+Recommended Scope:
+- `scripts/ctf_prepare_challenge.py`: creates `setting/local/ctf/<slug>/`, writes `challenge.json` (slug, category, source, kali_required flag, created_at), writes `solve_notes.md` with embedded output-side review checklist. Idempotent; refuses to overwrite without `--force`.
+- `scripts/ctf_review_decision.py`: pure function over a JSON input file; emits structured JSON with fields `{status, confidence, triggers[], reasons[], input_hash}`. Status ∈ {hint, candidate, verified, needs_second_review}. No I/O beyond stdin/file in + stdout/file out.
+- `templates/ctf_verifier_metadata.yaml`: template only, with a header comment marking it non-binding and unversioned.
+- `tests/fixtures/ctf_review_decision/`: at least the six fixtures already enumerated in the backlog, each pinned to a deterministic expected-output JSON sibling.
+- Docs: short README in `scripts/` section noting Kali-first policy for any external interaction; no changes to `config/scope.txt`.
+
+Required Acceptance Tests:
+- `verified_normal_flag.json` → status `verified`, no triggers.
+- `no_wrapper_flag_verified.json` → status `needs_second_review`, trigger `abnormal_format`.
+- `ui_only_candidate_needs_review.json` → `needs_second_review`, trigger `ui_or_checker_only`.
+- `multiple_candidates_needs_review.json` → `needs_second_review`, trigger `multiple_candidates`.
+- `solver_timeout_needs_review.json` → `needs_second_review`, trigger `solver_timeout`.
+- `external_writeup_only_needs_review.json` → `needs_second_review`, trigger `external_source_only`.
+- Idempotency test: rerunning `ctf_prepare_challenge.py` on existing slug without `--force` exits non-zero and writes nothing.
+- Determinism test: identical input JSON → byte-identical decision JSON.
+- Boundary test: decision helper rejects/ignores any input field attempting to specify a network target or scope override (no-op, not action).
+
+Forbidden Changes:
+- No network/HTTP/socket usage; no `subprocess` calls to external hosts; no scanner/module runtime imports.
+- No edits to `config/scope.txt`, `loot/`, scheduler, deployment, billing, OAuth/token settings, or `modules/_schema/` schemas.
+- No promotion of `ctf_verifier_metadata.yaml` to a JSON Schema or registry entry in this slice.
+- No CVSS/severity scoring, exploitability claims, or finding-state machine wiring.
+- No integration with `program_policy_boundary`, `preview_ledger`, `preview_manifest`, or `security_headers_baseline` work-in-flight.
+- No auto-creation of slugs from URLs/hosts; slug must be operator-supplied.
+
+Codex Task Notes:
+- Implement as two standalone scripts with `argparse`; no shared package required yet.
+- Decision helper: encode triggers as a stable enum list in code; output `triggers` sorted for determinism.
+- `confidence` axis (low/medium/high) is separate from `status`; default to `low` unless input asserts otherwise — do not infer.
+- Include the required Claude Code safety footer in the Codex task prompt verbatim.
+- Add a one-paragraph note in `handoff/accepted_changes.md` recording the worker route (Claude Code MAX/OAuth) and verification result per `model_usage_routing_policy.md`.
+- Defer schema-ification, verifier registration, and any cross-link to `program_policy_boundary` until P2.18+ review.

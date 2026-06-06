@@ -1,0 +1,452 @@
+{
+    "artifacts": {
+        "active_script_plan": {
+            "execution_default": "plan_only",
+            "intensity": "max-lab",
+            "safety_limits": [
+                "local lab only",
+                "no brute force",
+                "no external callback",
+                "no database extraction",
+                "no OS shell",
+                "no recursive download",
+                "no promotion above candidate without human review"
+            ],
+            "status": "planned",
+            "steps": [
+                {
+                    "command": "./scripts/headers_audit.sh --yes -o <out>/headers http://<lab-ip>:3000",
+                    "id": "headers_audit",
+                    "purpose": "browser security header triage",
+                    "risk": "low",
+                    "tool": "headers_audit.sh"
+                },
+                {
+                    "command": "./scripts/cors_audit.sh --yes -o <out>/cors http://<lab-ip>:3000",
+                    "id": "cors_audit",
+                    "purpose": "credentialed CORS triage",
+                    "risk": "low",
+                    "tool": "cors_audit.sh"
+                },
+                {
+                    "command": "nikto -h http://<lab-ip>:3000 -nointeractive -maxtime 2m -Tuning xb -output <out>/nikto.txt",
+                    "id": "nikto_bounded",
+                    "purpose": "bounded web-server baseline; triage only",
+                    "risk": "moderate",
+                    "tool": "nikto"
+                },
+                {
+                    "command": "GET http://<lab-ip>:3000/ftp/ and record status/title/filenames only",
+                    "id": "ftp_metadata_only",
+                    "purpose": "metadata-only directory listing verification; no recursive download",
+                    "risk": "low",
+                    "tool": "custom_verifier"
+                },
+                {
+                    "command": "single-reflection marker checks against one known Juice Shop search/fragment interaction on http://<lab-ip>:3000; no payload sweep",
+                    "id": "xss_marker_triage",
+                    "purpose": "bounded XSS signal check with inert marker only",
+                    "risk": "moderate",
+                    "tool": "xss_finder.sh/manual"
+                },
+                {
+                    "command": "single-endpoint SQL error triage against lab login/search surface on http://<lab-ip>:3000; no database extraction",
+                    "id": "sqli_error_triage",
+                    "purpose": "bounded SQLi signal check; no dump or shell",
+                    "risk": "moderate",
+                    "tool": "sqli_triage.sh/manual"
+                }
+            ]
+        },
+        "baseline_recon": {
+            "execution_default": "plan_only",
+            "status": "planned",
+            "steps": [
+                {
+                    "command": "curl -sS -I http://<lab-ip>:3000",
+                    "id": "curl_head",
+                    "risk": "low",
+                    "tool": "curl"
+                },
+                {
+                    "command": "whatweb http://<lab-ip>:3000",
+                    "id": "whatweb",
+                    "risk": "low",
+                    "tool": "whatweb"
+                },
+                {
+                    "command": "nmap -sV -Pn -p 3000 <lab-ip>",
+                    "id": "nmap_single_port",
+                    "risk": "low",
+                    "tool": "nmap"
+                }
+            ]
+        },
+        "candidate_review_gap_report": {
+            "errors": [],
+            "finding_gaps": [
+                {
+                    "finding_id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+                    "gap_codes": [
+                        "MANUAL_VERIFICATION_REQUIRED",
+                        "SCANNER_OUTPUT_ONLY"
+                    ],
+                    "module_id": "phase4a.lab_manual_triage",
+                    "review_state": "reviewer_decision_required",
+                    "target_value": "http://<lab-ip>:3000/ftp/"
+                },
+                {
+                    "finding_id": "phase4a.juiceshop.security_headers_missing.candidate",
+                    "gap_codes": [
+                        "INFO_SEVERITY_REPORT_BLOCKED",
+                        "MANUAL_VERIFICATION_REQUIRED",
+                        "SCANNER_OUTPUT_ONLY"
+                    ],
+                    "module_id": "phase4a.headers_audit",
+                    "review_state": "not_ready",
+                    "target_value": "http://<lab-ip>:3000/"
+                }
+            ],
+            "schema_version": "candidate_review_gap_report/0.1-trial",
+            "source_schema_version": "candidate_review_packet/0.1-trial",
+            "status": "ok",
+            "summary": {
+                "blocked_count": 2,
+                "finding_count": 2,
+                "gap_code_counts": {
+                    "INFO_SEVERITY_REPORT_BLOCKED": 1,
+                    "MANUAL_VERIFICATION_REQUIRED": 2,
+                    "SCANNER_OUTPUT_ONLY": 2
+                },
+                "not_ready_count": 1,
+                "reviewer_decision_required_count": 1
+            }
+        },
+        "candidate_review_packet": {
+            "errors": [],
+            "findings": [
+                {
+                    "classifications": {
+                        "cvss_vector": null,
+                        "cwe": [
+                            "CWE-548"
+                        ],
+                        "owasp": [
+                            "OWASP Top 10 A05:2021 Security Misconfiguration"
+                        ]
+                    },
+                    "confidence": "medium",
+                    "evidence_ref_count": 2,
+                    "id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+                    "manual_verification_required": true,
+                    "references": [
+                        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+                    ],
+                    "remediation": "Disable public directory listings and remove internal artifacts from public web roots. For this lab, confirm the exposure is intentional Juice Shop training behavior.",
+                    "report_readiness": "reviewer_decision_required",
+                    "review_questions": [
+                        {
+                            "key": "cwe_classification_check",
+                            "text": "Confirm CWE classifications CWE-548 accurately describe the observed condition."
+                        },
+                        {
+                            "key": "evidence_sufficiency",
+                            "text": "Confirm the 2 attached evidence refs are redacted and sufficient for the report kind."
+                        },
+                        {
+                            "key": "manual_verification_executed",
+                            "text": "Confirm an authorized response has been manually inspected per verification_guidance before drafting."
+                        },
+                        {
+                            "key": "policy_decision_freshness",
+                            "text": "Confirm source.policy_decision_sha256 '0000000000000000000000000000000000000000000000000000000000000000' is still the current allow artifact for module_id 'phase4a.lab_manual_triage'."
+                        },
+                        {
+                            "key": "scope_in_authorized_scope",
+                            "text": "Confirm target.value 'http://<lab-ip>:3000/ftp/' (type=url) is within the program's authorized scope at the run window."
+                        },
+                        {
+                            "key": "severity_calibration",
+                            "text": "Compare severity_hint='low' against the program's severity rubric (program-specific, not platform-defined)."
+                        },
+                        {
+                            "key": "status_guardrail",
+                            "text": "This packet does NOT promote status from 'candidate'. Promotion to confirmed/verified is a separate human step."
+                        }
+                    ],
+                    "scanner_output_only": true,
+                    "severity_hint": "low",
+                    "source": {
+                        "module_id": "phase4a.lab_manual_triage",
+                        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                        "run_id": "phase4a-juice-shop-20260520"
+                    },
+                    "status": "candidate",
+                    "summary": "Nikto and bounded metadata-only verification identified /ftp/ as a real directory listing route. robots.txt disallows /ftp. This remains lab-only candidate evidence, not a real-program confirmed finding.",
+                    "target": {
+                        "type": "url",
+                        "value": "http://<lab-ip>:3000/ftp/"
+                    },
+                    "title": "Lab candidate: /ftp/ directory listing exposed on Juice Shop",
+                    "verification_guidance": "Manual lab-only verification: confirm /ftp/ returns a directory index, record filenames/sizes only, do not recursively download, and do not handle secrets/loot."
+                },
+                {
+                    "classifications": {
+                        "cvss_vector": null,
+                        "cwe": [
+                            "CWE-693"
+                        ],
+                        "owasp": [
+                            "OWASP ASVS V14.4"
+                        ]
+                    },
+                    "confidence": "high",
+                    "evidence_ref_count": 1,
+                    "id": "phase4a.juiceshop.security_headers_missing.candidate",
+                    "manual_verification_required": true,
+                    "references": [
+                        "https://owasp.org/www-project-secure-headers/"
+                    ],
+                    "remediation": "Add context-appropriate browser security headers. Enable HSTS only after HTTPS is correctly deployed.",
+                    "report_readiness": "not_ready",
+                    "review_questions": [
+                        {
+                            "key": "cwe_classification_check",
+                            "text": "Confirm CWE classifications CWE-693 accurately describe the observed condition."
+                        },
+                        {
+                            "key": "evidence_sufficiency",
+                            "text": "Confirm the 1 attached evidence refs are redacted and sufficient for the report kind."
+                        },
+                        {
+                            "key": "manual_verification_executed",
+                            "text": "Confirm an authorized response has been manually inspected per verification_guidance before drafting."
+                        },
+                        {
+                            "key": "policy_decision_freshness",
+                            "text": "Confirm source.policy_decision_sha256 '0000000000000000000000000000000000000000000000000000000000000000' is still the current allow artifact for module_id 'phase4a.headers_audit'."
+                        },
+                        {
+                            "key": "scope_in_authorized_scope",
+                            "text": "Confirm target.value 'http://<lab-ip>:3000/' (type=url) is within the program's authorized scope at the run window."
+                        },
+                        {
+                            "key": "severity_calibration",
+                            "text": "Compare severity_hint='info' against the program's severity rubric (program-specific, not platform-defined)."
+                        },
+                        {
+                            "key": "status_guardrail",
+                            "text": "This packet does NOT promote status from 'candidate'. Promotion to confirmed/verified is a separate human step."
+                        }
+                    ],
+                    "scanner_output_only": true,
+                    "severity_hint": "info",
+                    "source": {
+                        "module_id": "phase4a.headers_audit",
+                        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+                        "run_id": "phase4a-juice-shop-20260520"
+                    },
+                    "status": "candidate",
+                    "summary": "Headers audit observed missing CSP, Referrer-Policy, Permissions-Policy, COOP, COEP, and HSTS while X-Content-Type-Options and X-Frame-Options were present. This is informational unless chained to concrete impact.",
+                    "target": {
+                        "type": "url",
+                        "value": "http://<lab-ip>:3000/"
+                    },
+                    "title": "Lab candidate: multiple recommended security headers missing on Juice Shop root",
+                    "verification_guidance": "Review headers across representative paths and only escalate if the missing header enables a demonstrated impact chain."
+                }
+            ],
+            "schema_version": "candidate_review_packet/0.1-trial",
+            "status": "ok",
+            "summary": {
+                "candidate_count": 2,
+                "input_count": 1,
+                "modules": [
+                    "phase4a.headers_audit",
+                    "phase4a.lab_manual_triage"
+                ],
+                "targets": [
+                    "http://<lab-ip>:3000/",
+                    "http://<lab-ip>:3000/ftp/"
+                ]
+            }
+        },
+        "candidate_verification_plan": {
+            "errors": [],
+            "schema_version": "candidate_verification_plan/0.1-trial",
+            "source_schema_version": "candidate_review_gap_report/0.1-trial",
+            "status": "ok",
+            "summary": {
+                "blocked_count": 1,
+                "check_item_count": 5,
+                "finding_count": 2,
+                "needs_manual_review_count": 1,
+                "source_gap_code_counts": {
+                    "INFO_SEVERITY_REPORT_BLOCKED": 1,
+                    "MANUAL_VERIFICATION_REQUIRED": 2,
+                    "SCANNER_OUTPUT_ONLY": 2
+                }
+            },
+            "verification_plans": [
+                {
+                    "check_items": [
+                        {
+                            "action_kind": "manual_verification_notes",
+                            "code": "CHECK_MANUAL_VERIFICATION_NOTES",
+                            "prompt": "Record human verification notes from an authorized review before any downstream action.",
+                            "source_gap_code": "MANUAL_VERIFICATION_REQUIRED"
+                        },
+                        {
+                            "action_kind": "non_scanner_corroboration",
+                            "code": "CHECK_NON_SCANNER_CORROBORATION",
+                            "prompt": "Add non-scanner corroboration or explain why the scanner-only signal is insufficient.",
+                            "source_gap_code": "SCANNER_OUTPUT_ONLY"
+                        }
+                    ],
+                    "finding_id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+                    "module_id": "phase4a.lab_manual_triage",
+                    "plan_state": "needs_manual_review",
+                    "target_value": "http://<lab-ip>:3000/ftp/"
+                },
+                {
+                    "check_items": [
+                        {
+                            "action_kind": "severity_rationale",
+                            "code": "CHECK_INFO_SEVERITY_RATIONALE",
+                            "prompt": "Document why this informational item matters, or keep it out of downstream escalation.",
+                            "source_gap_code": "INFO_SEVERITY_REPORT_BLOCKED"
+                        },
+                        {
+                            "action_kind": "manual_verification_notes",
+                            "code": "CHECK_MANUAL_VERIFICATION_NOTES",
+                            "prompt": "Record human verification notes from an authorized review before any downstream action.",
+                            "source_gap_code": "MANUAL_VERIFICATION_REQUIRED"
+                        },
+                        {
+                            "action_kind": "non_scanner_corroboration",
+                            "code": "CHECK_NON_SCANNER_CORROBORATION",
+                            "prompt": "Add non-scanner corroboration or explain why the scanner-only signal is insufficient.",
+                            "source_gap_code": "SCANNER_OUTPUT_ONLY"
+                        }
+                    ],
+                    "finding_id": "phase4a.juiceshop.security_headers_missing.candidate",
+                    "module_id": "phase4a.headers_audit",
+                    "plan_state": "blocked",
+                    "target_value": "http://<lab-ip>:3000/"
+                }
+            ]
+        },
+        "lab_report_draft_plan": "# Phase 4A Lab Report Draft Plan\n\nTarget: http://<lab-ip>:3000\nClassification: LAB ONLY / not for bug-bounty submission\n\n## Required sections\n- Executive summary\n- Scope and rules of engagement\n- Methodology\n- Detailed candidate findings\n- False positives and excluded observations\n- Report-readiness gate result\n- Next manual verification actions\n\n## Gate summary\n- Findings: 2\n- Needs manual review: 1\n- Blocked: 1\n\nNo item may be submitted externally until a human records a verified finding decision.\n",
+        "model_review_script_selection": {
+            "decision_outputs": [
+                "selected_scripts",
+                "rejected_scripts_with_reason",
+                "manual_verification_needed",
+                "candidate_vs_false_positive_assessment"
+            ],
+            "intensity": "max-lab",
+            "prompt_sections": [
+                "authorized scope summary",
+                "baseline recon observations",
+                "false-positive risks",
+                "candidate next-script choices",
+                "explicit deny list",
+                "required reportability decision"
+            ],
+            "reviewer_route": "model_review_required_before_next_script_batch",
+            "status": "planned",
+            "target_url": "http://<lab-ip>:3000"
+        },
+        "report_readiness_gate": {
+            "errors": [],
+            "gate_results": [
+                {
+                    "block_reasons": [],
+                    "finding_id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+                    "gate_actions": [
+                        "GATE_COMPLETE_MANUAL_CHECKS"
+                    ],
+                    "gate_state": "needs_manual_review",
+                    "module_id": "phase4a.lab_manual_triage",
+                    "target_value": "http://<lab-ip>:3000/ftp/"
+                },
+                {
+                    "block_reasons": [
+                        "BLOCK_INFO_SEVERITY",
+                        "BLOCK_MANUAL_VERIFICATION_REQUIRED",
+                        "BLOCK_SCANNER_OUTPUT_ONLY"
+                    ],
+                    "finding_id": "phase4a.juiceshop.security_headers_missing.candidate",
+                    "gate_actions": [
+                        "GATE_COMPLETE_MANUAL_CHECKS",
+                        "GATE_KEEP_OUT_OF_REPORT"
+                    ],
+                    "gate_state": "blocked",
+                    "module_id": "phase4a.headers_audit",
+                    "target_value": "http://<lab-ip>:3000/"
+                }
+            ],
+            "schema_version": "report_readiness_gate/0.1-trial",
+            "source_schema_version": "candidate_verification_plan/0.1-trial",
+            "status": "ok",
+            "summary": {
+                "blocked_count": 1,
+                "finding_count": 2,
+                "gate_action_counts": {
+                    "GATE_COMPLETE_MANUAL_CHECKS": 2,
+                    "GATE_KEEP_OUT_OF_REPORT": 1
+                },
+                "needs_manual_review_count": 1
+            }
+        },
+        "scope_gate": {
+            "scope_class": "local_lab_only",
+            "status": "allow",
+            "target": {
+                "host": "<lab-ip>",
+                "port": "3000",
+                "scheme": "http",
+                "scope_class": "local_lab_only",
+                "url": "http://<lab-ip>:3000"
+            }
+        }
+    },
+    "errors": [],
+    "run_mode": "plan_only",
+    "schema_version": "phase4a_lab_workflow/0.1-trial",
+    "source_schema_versions": [
+        "candidate_review_packet/0.1-trial",
+        "candidate_review_gap_report/0.1-trial",
+        "candidate_verification_plan/0.1-trial",
+        "report_readiness_gate/0.1-trial"
+    ],
+    "stage_order": [
+        "scope_gate",
+        "baseline_recon",
+        "model_review_script_selection",
+        "active_script_plan",
+        "candidate_review_packet",
+        "candidate_review_gap_report",
+        "candidate_verification_plan",
+        "report_readiness_gate",
+        "lab_report_draft_plan"
+    ],
+    "status": "ok",
+    "summary": {
+        "blocked_count": 1,
+        "candidate_count": 2,
+        "gap_finding_count": 2,
+        "gate_result_count": 2,
+        "input_count": 1,
+        "needs_manual_review_count": 1,
+        "script_step_count": 6,
+        "verification_plan_count": 2
+    },
+    "target": {
+        "host": "<lab-ip>",
+        "port": "3000",
+        "scheme": "http",
+        "scope_class": "local_lab_only",
+        "url": "http://<lab-ip>:3000"
+    }
+}

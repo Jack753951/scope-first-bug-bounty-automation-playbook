@@ -1,0 +1,53 @@
+{
+  "errors": [],
+  "input_path": "tests/fixtures/external_tools/live_juice_shop_20260520/httpx.jsonl",
+  "observations": [
+    {
+      "http": {
+        "content_length": 9903,
+        "response_time": null,
+        "status_code": 200,
+        "title": "OWASP Juice Shop",
+        "webserver": null
+      },
+      "id": "httpx:3637f3e3bed68bc2",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from httpx JSONL; not a finding and not reportable by itself."
+      ],
+      "relationship": "http_service_metadata",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source_line": {
+        "number": 1,
+        "sha256": "3637f3e3bed68bc2cd7565f1fff64fc9e707abc0f7d2b2f37bc99d7fe9fc205e"
+      },
+      "status": "observation",
+      "target": {
+        "host": "<lab-ip>",
+        "port": "3000",
+        "scheme": "http",
+        "url": "http://<lab-ip>:3000"
+      },
+      "technologies": [],
+      "tool": {
+        "name": "httpx",
+        "version": null
+      }
+    }
+  ],
+  "safety": {
+    "imports_response_bodies": false,
+    "network_io": false,
+    "promotes_findings": false,
+    "subprocess_execution": false
+  },
+  "schema_version": "external_tool_observations/0.1-trial",
+  "status": "ok",
+  "summary": {
+    "dropped_count": 0,
+    "error_count": 0,
+    "imported_count": 1
+  },
+  "tool": "httpx"
+}

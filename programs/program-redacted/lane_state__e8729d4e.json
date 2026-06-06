@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "auth_session_profile_empty_state",
+  "lane_title": "Auth/session/profile/workspace empty-state first flow",
+  "autonomy_level": "A2",
+  "operator_decision": "KILL",
+  "machine_state": "NO_FINDING_CLOSEOUT",
+  "state": "NO_FINDING_CLOSEOUT",
+  "status": "no_finding",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "global_scope_entries": [
+      "login.<program-redacted>.com"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "manual_noVNC_signup_login",
+      "normal_UI_login_logout_observation",
+      "owned_account_surface_map",
+      "owned_workspace_empty_state_inventory",
+      "no_finding_or_candidate_closeout"
+    ],
+    "blocked_actions": [
+      "scanner",
+      "fuzzer",
+      "DAST",
+      "DoS_or_rate_limit_testing",
+      "callbacks_or_webhooks",
+      "third_party_integrations",
+      "workflow_execution",
+      "run_script_testing",
+      "secrets_or_api_key_storage",
+      "cross_tenant_testing",
+      "non_owned_data_access",
+      "public_disclosure",
+      "report_submission"
+    ],
+    "identity_strategy": "hackerone_alias_completed_by_operator_no_secret_retention"
+  },
+  "operator_gates": [
+    "HackerOne_alias_signup_login_completed_locally_by_operator",
+    "future_lanes_require_new_operator_approval_before_deeper_testing"
+  ],
+  "stop_conditions": [
+    "captcha",
+    "otp_or_email_verification",
+    "account_warning_or_bot_block",
+    "unexpected_third_party_data",
+    "policy_or_scope_ambiguity",
+    "candidate_could_be_report_ready",
+    "stronger_technique_needed",
+    "lane_complete_or_exhausted"
+  ],
+  "next_autonomous_action": "none_lane_closed_as_no_finding_surface_only",
+  "next_operator_action": "review checkpoint; choose a separately approved next <program-redacted> lane only if desired",
+  "artifacts": {
+    "dry_run_packet": "programs/<program-slug>/notes/tines_automation_vdp_phase5a_dry_run_packet_20260525.md",
+    "evidence_dir": "handoff/live_bounty_evidence/<program-slug>/auth_session_profile_empty_state",
+    "latest_evidence": "handoff/live_bounty_evidence/<program-slug>/auth_session_profile_empty_state/evidence_surface_map_20260525.json",
+    "surface_map": "programs/<program-slug>/notes/tines_automation_vdp_owned_account_surface_map_20260525.md"
+  },
+  "learning": {
+    "preview_references": [
+      "OWASP WSTG authentication/session management references",
+      "PortSwigger authentication/session/access-control labs as safe reference-only test cases",
+      "<program-redacted> VDP policy metadata requiring <bug-bounty-platform> alias or X-<bug-bounty-platform>-Research header"
+    ],
+    "next_preview_seed": "First <program-redacted> owned-account auth/session/profile/workspace empty-state lane is closed as no_finding/surface_only. Any later <program-redacted> lane should be separately planned around read-only profile review, API policy review, or second-owned-account controls without workflow execution or integrations.",
+    "reusable_capability": "noVNC owned-account live-bounty surface-map checkpoint with machine-readable evidence and no-finding closeout"
+  },
+  "updated_at": "2026-05-27"
+}

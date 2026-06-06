@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "program_url": "https://<bug-bounty-platform>.com/<program-slug>",
+  "last_checked": "2026-05-29",
+  "authorization_basis": "<bug-bounty-platform> <program-redacted> Bug Bounty Program scope page; operator explicitly authorized a sandbox-only lane on 2026-05-29.",
+  "assets": [
+    {
+      "asset": "manage-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "High",
+      "notes": "Sandbox Merchant Dashboard <program-name>-end. Updated on H1 scope page 2026-05-28; 0 resolved reports visible. Primary first-bounty web target."
+    },
+    {
+      "asset": "api-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Sandbox Merchant Dashboard API used by manage-sandbox and integrations. Use only low-speed owned-account requests; no scanner/fuzzer/DAST."
+    },
+    {
+      "asset": "pay-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "Critical",
+      "notes": "Sandbox API/payment billing request workflow asset related to Merchant Dashboard. Use owned sandbox flows only."
+    },
+    {
+      "asset": "payer-details-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "High",
+      "notes": "Sandbox payer-details workflow for updating bank details after merchant-initiated URL. Updated 2025-03-28; 0 resolved reports visible."
+    },
+    {
+      "asset": "oauth-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "High",
+      "notes": "Sandbox authentication component for <program-redacted> for Xero."
+    },
+    {
+      "asset": "connect-sandbox.<program-redacted>.com",
+      "type": "Domain",
+      "coverage": "in_scope",
+      "bounty": "eligible",
+      "max_severity": "High",
+      "notes": "Sandbox Merchant Dashboard OpenID authentication component."
+    }
+  ],
+  "program_rules_summary": {
+    "allowed_baseline": [
+      "Use only operator-owned accounts, objects, and sandbox data.",
+      "Prefer sandbox assets over production assets where H1 says to test sandbox deployment.",
+      "Manual/low-speed browser-assisted testing only unless operator explicitly approves a higher autonomy level."
+    ],
+    "hard_stops": [
+      "production_testing_without_explicit_operator_scope_update",
+      "scanner_fuzzer_dast_or_endpoint_bruteforce",
+      "dos_or_resource_exhaustion",
+      "data_corruption_or_disruptive_actions",
+      "customer_or_non_owned_data",
+      "billing_payment_kyc_bank_connection_real_financial_flows",
+      "api_token_or_secret_storage",
+      "callback_oast_tunnel_webhook_or_integration_setup",
+      "report_submission_without_operator_approval"
+    ],
+    "out_of_scope_controls": [
+      "Production equivalents such as manage.<program-redacted>.com, api.<program-redacted>.com, pay.<program-redacted>.com, oauth.<program-redacted>.com, connect.<program-redacted>.com, and payer-details.<program-redacted>.com are out of scope for this lane.",
+      "Ineligible or out-of-scope H1 assets are intentionally omitted from config/scope.txt."
+    ]
+  }
+}

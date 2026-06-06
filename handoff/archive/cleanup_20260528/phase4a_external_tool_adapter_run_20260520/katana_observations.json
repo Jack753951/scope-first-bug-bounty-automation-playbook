@@ -1,0 +1,530 @@
+{
+  "errors": [],
+  "input_path": "tests/fixtures/external_tools/live_juice_shop_20260520/katana.jsonl",
+  "observations": [
+    {
+      "http": {
+        "content_length": 9903,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:09862b3543075963",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 1,
+        "sha256": "09862b35430759633f6f5f57f745dbc17dc4beb96c1fb89f7d50f9cfb37ca515"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 20700,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:b2a0874a92e5e17e",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 2,
+        "sha256": "b2a0874a92e5e17eb8561e3d426e12deb6c3b77bf82d74b074e5560889ed6097"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/scripts.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": null,
+        "method": "GET",
+        "status_code": null
+      },
+      "id": "katana:7b374f50adc7b67b",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 3,
+        "sha256": "7b374f50adc7b67b8113be7eb9ce425ba2483a4acace1e5adeb0aed9ce1c82bf"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/%7B%7Bhref%7D%7D"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": null,
+        "method": "GET",
+        "status_code": null
+      },
+      "id": "katana:8e40b01e6fcf2269",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 4,
+        "sha256": "8e40b01e6fcf2269c299ec4a8a1ec7fe171547b73c1ff4cd9472a5f23c28f265"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/%7B%7Bhref%7D%7D"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 783771,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:7036939aac221b5b",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 5,
+        "sha256": "7036939aac221b5bd40c259eea8f0597a3d6147cb716f16fb134fbdeb2a57be9"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/main.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 34585,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:86c13b7f562a1f53",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 6,
+        "sha256": "86c13b7f562a1f53351bd871e84c6fa2639508c0325ffd1081680fc861ad54de"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/polyfills.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 138723,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:1ba9334eb0056901",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 7,
+        "sha256": "1ba9334eb0056901313fafcd2f9459efda4f80331161c6268db9f86b86585381"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-7AKA75AX.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 547,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:f9e323a99ec606e1",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 8,
+        "sha256": "f9e323a99ec606e166dd5199d60ae10e9b8e9c4d2d795409c188030bede9099f"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-SI2GTEZM.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 33140,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:507268943377ed1f",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 9,
+        "sha256": "507268943377ed1f205079cf452c296d7fff6260295393ac05b77f0ddc01eb10"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-ZO2KHBRB.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 77556,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:89e23ec0124990c4",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 10,
+        "sha256": "89e23ec0124990c4778d05461193ae37e1e58a1f67f2830824705b74f5933f31"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-UNFVUBM2.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 147271,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:4d70c4b899d4bc7b",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 11,
+        "sha256": "4d70c4b899d4bc7bfe7ab781792616dd0f3550bfe5ccd5fd6e1e789c6eb8a472"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-524KQQJQ.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 41204,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:c652eb78e71b2e11",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 12,
+        "sha256": "c652eb78e71b2e1197653a47ae8e1b22534f752b8c385e192f9d1c3a6c3d624f"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-7O3TTE7G.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 96609,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:b916fbc9574bf4a5",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 13,
+        "sha256": "b916fbc9574bf4a5f7b8b11a14a6ca32b3d6f37fd16b5db4830dd33c7ea0e407"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-JCQ5N7PA.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 944,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:0a62b70b496491d3",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 14,
+        "sha256": "0a62b70b496491d36a8a07f6393c20a53c28c40854279b3e99d0e55fbd91d657"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-PX7UKXVL.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 1007,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:d63735515c459c2e",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 15,
+        "sha256": "d63735515c459c2e34340aac8398f6d031e553861f098daf4f049f9f36469d61"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-GNBEOV4E.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 9725,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:31a91f55d2e7bc15",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 16,
+        "sha256": "31a91f55d2e7bc1548cdba6df66058f9589e99b49db12b1f5a129c74818957e1"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/chunk-SCY7YOCS.js"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    },
+    {
+      "http": {
+        "content_length": 151316,
+        "method": "GET",
+        "status_code": 200
+      },
+      "id": "katana:7167b92927b4c068",
+      "manual_review_required": true,
+      "notes": [
+        "Imported offline from katana JSONL; importer does not follow discovered URLs."
+      ],
+      "relationship": "discovered_url",
+      "run_id": "phase4a-external-juice-shop-20260520",
+      "scanner_output_only": true,
+      "source": {
+        "url": null
+      },
+      "source_line": {
+        "number": 17,
+        "sha256": "7167b92927b4c0685d97bdaaefb6f666f6eadd5cd12a4776151e39a75d85e4fc"
+      },
+      "status": "observation",
+      "target": {
+        "url": "http://<lab-ip>:3000/styles.css"
+      },
+      "tool": {
+        "name": "katana",
+        "version": null
+      }
+    }
+  ],
+  "safety": {
+    "imports_response_bodies": false,
+    "network_io": false,
+    "promotes_findings": false,
+    "subprocess_execution": false
+  },
+  "schema_version": "external_tool_observations/0.1-trial",
+  "status": "ok",
+  "summary": {
+    "dropped_count": 0,
+    "error_count": 0,
+    "imported_count": 17
+  },
+  "tool": "katana"
+}

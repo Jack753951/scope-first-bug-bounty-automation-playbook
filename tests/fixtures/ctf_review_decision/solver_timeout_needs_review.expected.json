@@ -1,0 +1,14 @@
+{
+  "confidence": "low",
+  "ignored_fields": [],
+  "input_hash": "5a9703152ee68c84b4e03b0af1b8665642e8b821fde545fcd03e96c271f30970",
+  "reasons": [
+    "confidence capped at low because status is needs_second_review",
+    "solver_timed_out flag asserted"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "needs_second_review",
+  "triggers": [
+    "solver_timeout"
+  ]
+}

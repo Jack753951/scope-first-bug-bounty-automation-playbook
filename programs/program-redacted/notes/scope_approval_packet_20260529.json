@@ -1,0 +1,79 @@
+{
+  "schema_version": "scope_approval_packet/0.1",
+  "program_slug": "<program-slug>",
+  "program": "<program-slug>",
+  "platform": "<bug-bounty-platform>",
+  "source_url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+  "observed_at": "2026-05-29",
+  "boundary": "Offline approval packet only. This file does not authorize live target testing, edit config/scope.txt, create/broaden programs/<slug>/scope.json, or approve account/API-token/OAuth/webhook/payment/KYC actions.",
+  "global_scope_path": "config/scope.txt",
+  "global_scope_errors": [],
+  "global_scope_warnings": [],
+  "already_in_global_scope": [],
+  "needs_operator_scope_approval": [
+    {
+      "asset": "us.identity.<program-redacted>.com",
+      "kind": "domain",
+      "scope_entry": "us.identity.<program-redacted>.com",
+      "host": "us.identity.<program-redacted>.com",
+      "scope_hint": "in_scope_context",
+      "source_line": "us.identity.<program-redacted>.com OAuth/OIDC endpoints; critical eligible; 0 resolved reports",
+      "reason": "candidate appears in passive policy intake but is not in config/scope.txt"
+    },
+    {
+      "asset": "app.<program-redacted>",
+      "kind": "domain",
+      "scope_entry": "app.<program-redacted>",
+      "host": "app.<program-redacted>",
+      "scope_hint": "in_scope_context",
+      "source_line": "app.<program-redacted> web app; critical eligible; 15 resolved reports",
+      "reason": "candidate appears in passive policy intake but is not in config/scope.txt"
+    },
+    {
+      "asset": "cloud.<program-redacted>.com",
+      "kind": "domain",
+      "scope_entry": "cloud.<program-redacted>.com",
+      "host": "cloud.<program-redacted>.com",
+      "scope_hint": "in_scope_context",
+      "source_line": "cloud.<program-redacted>.com Konnect management console; critical eligible; 4 resolved reports",
+      "reason": "candidate appears in passive policy intake but is not in config/scope.txt"
+    }
+  ],
+  "wildcard_requires_exact_host_narrowing": [
+    {
+      "asset": "*.api.<program-redacted>.com",
+      "kind": "wildcard",
+      "scope_entry": "*.api.<program-redacted>.com",
+      "host": "*.api.<program-redacted>.com",
+      "scope_hint": "in_scope_context",
+      "source_line": "*.api.<program-redacted>.com Konnect APIs; critical eligible; 0 resolved reports",
+      "reason": "wildcard policy asset requires exact-host narrowing before config/scope.txt approval"
+    }
+  ],
+  "source_or_local_only": [],
+  "blocked_or_out_of_scope": [
+    {
+      "asset": "*.<program-redacted>.com",
+      "kind": "wildcard",
+      "scope_entry": "*.<program-redacted>.com",
+      "host": "*.<program-redacted>.com",
+      "scope_hint": "in_scope_context",
+      "source_line": "subdomain takeover on *.<program-redacted>.com; high eligible but requires successful control and explicit boundary",
+      "reason": "asset appears in out-of-scope/high-risk policy context"
+    }
+  ],
+  "invalid_or_unsupported": [],
+  "suggested_config_scope_entries": [
+    "us.identity.<program-redacted>.com",
+    "app.<program-redacted>",
+    "cloud.<program-redacted>.com"
+  ],
+  "operator_gates": [
+    "operator approval before editing config/scope.txt",
+    "operator approval before creating or broadening programs/<slug>/scope.json",
+    "operator approval before any live target first-contact beyond passive policy/public-doc reading",
+    "separate approval for account signup/login/OTP/CAPTCHA/password/phone/payment/KYC",
+    "separate approval for API-token/OAuth app/webhook/integration creation or handling"
+  ],
+  "recommended_next_step": "Ask operator to approve or reject the exact suggested config/scope.txt entries; do not touch live assets before approval."
+}

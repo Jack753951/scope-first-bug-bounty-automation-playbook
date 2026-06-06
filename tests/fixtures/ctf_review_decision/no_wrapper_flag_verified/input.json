@@ -1,0 +1,13 @@
+{
+  "slug": "some-assembly-required-4",
+  "candidate_flag": "missing_wrapper_value",
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["solver"],
+  "candidate_count": 1,
+  "solver_timed_out": false,
+  "checker_only_success": false,
+  "verifier": {
+    "kind": "deterministic_replay"
+  },
+  "claimed_confidence": "high"
+}

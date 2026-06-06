@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/hacklab/evidence.schema.json",
+  "title": "Hacklab Evidence Artifact",
+  "description": "Versioned contract for local evidence metadata. Evidence must be redacted before repository-safe references are written; raw sensitive data belongs outside git-controlled artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "finding_id",
+    "kind",
+    "captured_at_utc",
+    "source",
+    "target",
+    "storage",
+    "summary",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "evidence/1.0" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+    "finding_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+    "kind": { "type": "string", "enum": ["http_exchange", "screenshot", "log_excerpt", "tool_output", "metadata"] },
+    "captured_at_utc": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tool", "module_id", "run_id"],
+      "properties": {
+        "tool": { "type": "string", "minLength": 1, "maxLength": 120 },
+        "module_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+        "run_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$" }
+      }
+    },
+    "target": { "$ref": "#/$defs/target" },
+    "storage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256", "redacted"],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^runs/[A-Za-z0-9][A-Za-z0-9._:-]{2,127}/evidence/[A-Za-z0-9][A-Za-z0-9._/-]{0,255}$",
+          "not": { "pattern": "(^|/)\\.\\.(/|$)" }
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "redacted": { "type": "boolean", "const": true }
+      }
+    },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 1000 },
+    "metadata": {
+      "type": "object",
+      "maxProperties": 20,
+      "propertyNames": {
+        "not": {
+          "pattern": "[Aa][Uu][Tt][Hh][Oo][Rr][Ii][Zz][Aa][Tt][Ii][Oo][Nn]|[Cc][Oo][Oo][Kk][Ii][Ee]|[Ss][Ee][Tt]-[Cc][Oo][Oo][Kk][Ii][Ee]|[Tt][Oo][Kk][Ee][Nn]|[Ss][Ee][Cc][Rr][Ee][Tt]|[Pp][Aa][Ss][Ss][Ww][Oo][Rr][Dd]|[Pp][Aa][Ss][Ss][Ww][Dd]|[Aa][Pp][Ii][_\\-]?[Kk][Ee][Yy]|[Cc][Rr][Ee][Dd][Ee][Nn][Tt][Ii][Aa][Ll]|[Rr][Aa][Ww]|[Bb][Oo][Dd][Yy]|[Rr][Ee][Qq][Uu][Ee][Ss][Tt]|[Rr][Ee][Ss][Pp][Oo][Nn][Ss][Ee]|[Hh][Ee][Aa][Dd][Ee][Rr]|[Bb][Ee][Aa][Rr][Ee][Rr]"
+        }
+      },
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string", "maxLength": 500, "not": { "pattern": "[Aa][Uu][Tt][Hh][Oo][Rr][Ii][Zz][Aa][Tt][Ii][Oo][Nn]|[Bb][Ee][Aa][Rr][Ee][Rr]|[Ss][Ee][Tt]-[Cc][Oo][Oo][Kk][Ii][Ee]|[Cc][Oo][Oo][Kk][Ii][Ee]|[Pp][Aa][Ss][Ss][Ww][Oo][Rr][Dd]|[Pp][Aa][Ss][Ss][Ww][Dd]|[Aa][Pp][Ii][_\\-]?[Kk][Ee][Yy]|[Tt][Oo][Kk][Ee][Nn]|[Ss][Ee][Cc][Rr][Ee][Tt]|[Ss][Ee][Ss][Ss][Ii][Oo][Nn]" } },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "null" }
+        ]
+      }
+    }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": { "type": "string", "enum": ["url", "domain", "ip", "cidr"] },
+        "value": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    }
+  }
+}

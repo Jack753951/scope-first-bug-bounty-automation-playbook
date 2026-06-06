@@ -1,0 +1,14 @@
+{
+  "confidence": "low",
+  "ignored_fields": [],
+  "input_hash": "a5098fbb9db57957f64ba220cc5561cf0342ab6a5d6f4884372221ee3574f2c9",
+  "reasons": [
+    "candidate_sources contained only UI/checker tags",
+    "confidence capped at low because status is needs_second_review"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "needs_second_review",
+  "triggers": [
+    "ui_or_checker_only"
+  ]
+}

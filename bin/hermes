@@ -1,0 +1,391 @@
+#!/usr/bin/env bash
+# =============================================================================
+# hermes — terminal CLI for the hermes-as-primary bug-bounty platform
+# =============================================================================
+# Hermes (GPT-5.5) is the primary autonomous driver. This script is a thin
+# operator helper for invoking Hermes from a terminal: it loads required
+# context, builds a loop-specific prompt, and prints it to stdout for piping
+# into the operator's preferred model CLI (codex / claude / openai / etc).
+#
+# This script does NOT invoke a model directly. It prepares the prompt and
+# stays out of the model-CLI decision. Operator pipes:
+#
+#   bin/hermes prompt daily-sweep | codex exec ...
+#
+# State / log / digest writes are done by Hermes itself in response to the
+# prompt, not by this script.
+#
+# Subcommands:
+#   hermes status                    Show queue, last-run state, parked lanes.
+#   hermes doctor                    Check files, tools, integrity.
+#   hermes bootstrap-state           Initialize hermes/state/*.json if missing.
+#   hermes prompt <loop> [args]      Print the full prompt for a loop.
+#                                    loop = daily-sweep | hourly-diff |
+#                                           minute-alerts | hunt <slug> |
+#                                           on-trigger
+#   hermes log <event-json>          Append a JSON line to hermes_log.jsonl.
+#   hermes help                      This help.
+#
+# Bootstrap note: this script was written by Claude (Claude Code) during the
+# 2026-05-28 hermes-as-primary restructure as a bootstrap exception. Per
+# /hermes/policies/consult_codex.md, future modifications to bin/ should go
+# through Codex with operator review. See accepted_changes.md for the record.
+# =============================================================================
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+STATE_DIR="$REPO_ROOT/hermes/state"
+HERMES_STATE="$STATE_DIR/hermes_state.json"
+HERMES_LOG="$STATE_DIR/hermes_log.jsonl"
+HERMES_BUDGET="$STATE_DIR/budget.json"
+
+# ---- colour ----------------------------------------------------------------
+if [[ -t 1 ]]; then
+  G=$'\033[0;32m'; Y=$'\033[1;33m'; R=$'\033[0;31m'; C=$'\033[0;36m'; RST=$'\033[0m'
+else
+  G=""; Y=""; R=""; C=""; RST=""
+fi
+
+# ---- helpers ---------------------------------------------------------------
+die()  { echo "${R}error:${RST} $*" >&2; exit 1; }
+warn() { echo "${Y}warn:${RST} $*" >&2; }
+ok()   { echo "${G}ok:${RST} $*"; }
+note() { echo "${C}note:${RST} $*"; }
+
+now_iso() {
+  date -u +"%Y-%m-%dT%H:%M:%SZ"
+}
+
+today() {
+  date -u +"%Y-%m-%d"
+}
+
+require_file() {
+  [[ -f "$1" ]] || die "missing required file: $1"
+}
+
+# ---- required reads --------------------------------------------------------
+# Core canon — every loop loads these.
+REQUIRED_READS_BASE=(
+  "SAFETY.md"
+  "INDEX.md"
+  ".hermes.md"
+  "hermes/policies/autonomous_actions.md"
+  "hermes/policies/stop_conditions.md"
+  "handoff/current_navigation.md"
+  "handoff/live_bounty_lane_queue.json"
+)
+
+# Consult policies — loaded only when a loop may trigger an external call.
+REQUIRED_READS_CLAUDE=("hermes/policies/consult_claude.md")
+REQUIRED_READS_CODEX=("hermes/policies/consult_codex.md")
+
+# ---- subcommands -----------------------------------------------------------
+
+cmd_help() {
+  cat <<'EOF'
+hermes — terminal CLI for the hermes-as-primary bug-bounty platform
+
+Hermes (GPT-5.5) is the primary autonomous driver. This script prepares
+prompts and inspects state; it does NOT invoke a model. Operator pipes the
+prompt into their preferred model CLI:
+
+  bin/hermes prompt daily-sweep | codex exec ...
+  bin/hermes prompt daily-sweep | claude -p ...
+
+Subcommands:
+  hermes status                    Show queue, last-run state, parked lanes.
+  hermes doctor                    Check files, tools, integrity.
+  hermes bootstrap-state           Initialize hermes/state/*.json (idempotent).
+  hermes prompt <loop> [args]      Print the full prompt for a loop.
+                                   loop = daily-sweep | hourly-diff |
+                                          minute-alerts | hunt <slug> |
+                                          on-trigger
+  hermes log '<json>'              Append a JSON line to hermes_log.jsonl.
+  hermes help                      This help.
+
+See /.hermes.md, /INDEX.md, /SAFETY.md for full project canon.
+EOF
+}
+
+cmd_doctor() {
+  echo "${C}== hermes doctor ==${RST}"
+  echo "repo root: $REPO_ROOT"
+  echo "branch:    $(git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "<not a git repo>")"
+  echo
+  echo "required reads (base):"
+  local missing=0
+  for f in "${REQUIRED_READS_BASE[@]}"; do
+    if [[ -f "$REPO_ROOT/$f" ]]; then
+      echo "  ${G}+${RST} $f"
+    else
+      echo "  ${R}-${RST} $f  (MISSING)"
+      missing=$((missing + 1))
+    fi
+  done
+  echo "consult policies (on-demand):"
+  for f in "${REQUIRED_READS_CLAUDE[@]}" "${REQUIRED_READS_CODEX[@]}"; do
+    [[ -f "$REPO_ROOT/$f" ]] && echo "  ${G}+${RST} $f" || echo "  ${R}-${RST} $f  (MISSING)"
+  done
+  echo
+  echo "state files:"
+  for f in hermes_state.json hermes_log.jsonl budget.json; do
+    if [[ -f "$STATE_DIR/$f" ]]; then
+      echo "  ${G}+${RST} hermes/state/$f"
+    else
+      echo "  ${Y}~${RST} hermes/state/$f  (not initialized — run: hermes bootstrap-state)"
+    fi
+  done
+  echo
+  echo "tools (optional, for hourly_diff):"
+  for tool in subfinder httpx nuclei jq python3 git; do
+    if command -v "$tool" >/dev/null 2>&1; then
+      echo "  ${G}+${RST} $tool"
+    else
+      echo "  ${Y}-${RST} $tool  (not on PATH)"
+    fi
+  done
+  echo
+  [[ $missing -eq 0 ]] && ok "doctor passed" || die "doctor failed: $missing required file(s) missing"
+}
+
+cmd_bootstrap_state() {
+  mkdir -p "$STATE_DIR"
+
+  if [[ -f "$HERMES_STATE" ]]; then
+    warn "hermes_state.json already exists; not overwriting"
+  else
+    cat > "$HERMES_STATE" <<EOF
+{
+  "schema_version": "1.0",
+  "started_at": "$(now_iso)",
+  "loops": {
+    "minute_alerts": {"last_run_at": null, "last_status": null},
+    "hourly_diff":   {"last_run_at": null, "last_status": null},
+    "daily_sweep":   {"last_run_at": null, "last_status": null}
+  }
+}
+EOF
+    ok "wrote $HERMES_STATE"
+  fi
+
+  if [[ -f "$HERMES_BUDGET" ]]; then
+    warn "budget.json already exists; not overwriting"
+  else
+    cat > "$HERMES_BUDGET" <<EOF
+{
+  "schema_version": "1.0",
+  "billing_model": "subscription",
+  "daily_token_soft_cap": 500000,
+  "claude_call_cap_per_day": 12,
+  "codex_call_cap_per_day": 12,
+  "current_day": "$(today)",
+  "tokens_used_today": 0,
+  "claude_calls_today": 0,
+  "codex_calls_today": 0,
+  "notes": "Subscription model. Caps are behavior gates against runaway loops, not billing controls. Trip a stop condition if exceeded."
+}
+EOF
+    ok "wrote $HERMES_BUDGET"
+  fi
+
+  if [[ ! -f "$HERMES_LOG" ]]; then
+    : > "$HERMES_LOG"
+    ok "created empty $HERMES_LOG"
+  else
+    warn "hermes_log.jsonl already exists; not touching"
+  fi
+}
+
+cmd_status() {
+  echo "${C}== hermes status ==${RST}"
+  echo "branch:    $(git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD 2>/dev/null || echo "<not a git repo>")"
+  echo "now:       $(now_iso)"
+  echo
+
+  if [[ -f "$HERMES_STATE" ]]; then
+    echo "${C}-- loop state --${RST}"
+    if command -v jq >/dev/null 2>&1; then
+      jq -r '.loops | to_entries[] | "  \(.key): last_run=\(.value.last_run_at // "never") status=\(.value.last_status // "n/a")"' "$HERMES_STATE"
+    else
+      cat "$HERMES_STATE"
+    fi
+  else
+    warn "hermes/state/hermes_state.json not initialized (run: hermes bootstrap-state)"
+  fi
+  echo
+
+  if [[ -f "$HERMES_BUDGET" ]]; then
+    echo "${C}-- budget --${RST}"
+    if command -v jq >/dev/null 2>&1; then
+      jq -r '"  billing: \(.billing_model)\n  tokens today: \(.tokens_used_today)/\(.daily_token_soft_cap) soft cap\n  claude calls today: \(.claude_calls_today)/\(.claude_call_cap_per_day)\n  codex  calls today: \(.codex_calls_today)/\(.codex_call_cap_per_day)"' "$HERMES_BUDGET"
+    else
+      cat "$HERMES_BUDGET"
+    fi
+  fi
+  echo
+
+  local queue="$REPO_ROOT/handoff/live_bounty_lane_queue.json"
+  if [[ -f "$queue" ]]; then
+    echo "${C}-- active lanes --${RST}"
+    if command -v jq >/dev/null 2>&1; then
+      jq -r '.lanes[] | "  [\(.priority)] \(.program_slug) (\(.status)) -> \(.state_file)"' "$queue"
+    else
+      cat "$queue"
+    fi
+  fi
+  echo
+
+  local inbox
+  inbox="$(ls -1t "$REPO_ROOT/handoff"/operator_inbox_*.md 2>/dev/null | head -1 || true)"
+  if [[ -n "$inbox" ]]; then
+    echo "${C}-- latest inbox --${RST}"
+    echo "  $(basename "$inbox")"
+  fi
+}
+
+# ---- prompt builder --------------------------------------------------------
+
+print_required_context() {
+  # Args: heading, then file paths.
+  local heading="$1"; shift
+  echo "## $heading"
+  echo
+  echo "Required reads (full file contents follow below). You must hold these in context before reasoning."
+  echo
+  for f in "$@"; do
+    echo "- \`$f\`"
+  done
+  echo
+  for f in "$@"; do
+    if [[ -f "$REPO_ROOT/$f" ]]; then
+      echo "### File: $f"
+      echo ""
+      echo "\`\`\`"
+      cat "$REPO_ROOT/$f"
+      echo "\`\`\`"
+      echo ""
+    fi
+  done
+}
+
+print_state_snapshot() {
+  echo "## Current state snapshot"
+  echo
+  if [[ -f "$HERMES_STATE" ]]; then
+    echo "### \`hermes/state/hermes_state.json\`"
+    echo '```json'
+    cat "$HERMES_STATE"
+    echo '```'
+    echo
+  fi
+  for lane in "$REPO_ROOT"/programs/*/lane_state.json "$REPO_ROOT"/programs/*/lane_state_*.json; do
+    [[ -f "$lane" ]] || continue
+    local rel="${lane#"$REPO_ROOT/"}"
+    echo "### \`$rel\`"
+    echo '```json'
+    cat "$lane"
+    echo '```'
+    echo
+  done
+}
+
+cmd_prompt() {
+  local loop="${1:-}"
+  [[ -n "$loop" ]] || die "usage: hermes prompt <daily-sweep|hourly-diff|minute-alerts|hunt|on-trigger>"
+
+  case "$loop" in
+    daily-sweep)
+      echo "# Hermes daily-sweep prompt — $(today)"
+      echo
+      echo "You are Hermes. Execute daily sweep per \`hermes/loops/daily_sweep.md\`. Operator-gated decisions → \`handoff/operator_inbox_$(today | tr -d '-').md\`; do not execute."
+      echo
+      print_required_context "Context" "${REQUIRED_READS_BASE[@]}" "hermes/loops/daily_sweep.md"
+      print_state_snapshot
+      echo "## Output expectations"
+      echo
+      echo "1. Write \`hermes/digests/$(today).md\` per \`hermes/digests/README.md\` shape."
+      echo "2. Regenerate \`handoff/operator_inbox_$(today | tr -d '-').md\`."
+      echo "3. Append events to \`hermes/state/hermes_log.jsonl\`."
+      echo "4. Update \`hermes/state/hermes_state.json.loops.daily_sweep\`."
+      echo "5. Update lane_state.json passive transitions only."
+      echo "6. Stop condition trip → halt step, inbox, continue rest."
+      echo
+      echo "No Claude/Codex calls in this loop unless an on-trigger explicitly requires."
+      ;;
+    hourly-diff)
+      echo "# Hermes hourly-diff prompt — $(now_iso)"
+      echo
+      echo "You are Hermes. Hourly differential recon per \`hermes/loops/hourly_diff.md\`. Scope intersect strict (config/scope.txt × programs/<slug>/scope.json). Passive + low-impact only."
+      echo
+      print_required_context "Context" "${REQUIRED_READS_BASE[@]}" "hermes/loops/hourly_diff.md"
+      ;;
+    minute-alerts)
+      echo "# Hermes minute-alerts prompt — $(now_iso)"
+      echo
+      echo "You are Hermes. Run minute-alerts intake per \`hermes/loops/minute_alerts.md\`. Pure ETL; no probes; no LLM-heavy reasoning."
+      echo
+      print_required_context "Context" "${REQUIRED_READS_BASE[@]}" "hermes/loops/minute_alerts.md"
+      ;;
+    hunt)
+      local slug="${2:-}"
+      [[ -n "$slug" ]] || die "usage: hermes prompt hunt <slug>"
+      local lane="$REPO_ROOT/programs/$slug/lane_state.json"
+      [[ -f "$lane" ]] || lane="$(ls "$REPO_ROOT/programs/$slug"/lane_state*.json 2>/dev/null | head -1)"
+      [[ -f "$lane" ]] || die "no lane_state for slug: $slug"
+      local scope="$REPO_ROOT/programs/$slug/scope.json"
+      echo "# Hermes hunt prompt — $slug — $(now_iso)"
+      echo
+      echo "You are Hermes. Prepare hunt session for \`$slug\` per \`hermes/loops/on_trigger.md\` § 4. Hermes prepares; Claude executes. Build call brief at \`hermes/calls/$(date -u +%Y-%m-%dT%H-%M)_claude_hunt_$slug.md\` per \`hermes/policies/consult_claude.md\`."
+      echo
+      print_required_context "Context" "${REQUIRED_READS_BASE[@]}" "${REQUIRED_READS_CLAUDE[@]}" "hermes/loops/on_trigger.md"
+      echo "## Lane state"
+      echo '```json'; cat "$lane"; echo '```'
+      if [[ -f "$scope" ]]; then
+        echo "## Lane scope"
+        echo '```json'; cat "$scope"; echo '```'
+      fi
+      ;;
+    on-trigger)
+      echo "# Hermes on-trigger prompt — $(now_iso)"
+      echo
+      echo "You are Hermes. Evaluate triggers per \`hermes/loops/on_trigger.md\` (priority: stop conditions, scope shrink, redaction failure, unsuspend, CVE match, scope grow, candidate, operator hunt)."
+      echo
+      print_required_context "Context" "${REQUIRED_READS_BASE[@]}" "${REQUIRED_READS_CLAUDE[@]}" "${REQUIRED_READS_CODEX[@]}" "hermes/loops/on_trigger.md"
+      ;;
+    *)
+      die "unknown loop: $loop"
+      ;;
+  esac
+}
+
+cmd_log() {
+  local json="${1:-}"
+  [[ -n "$json" ]] || die "usage: hermes log '<json-event>'"
+  [[ -f "$HERMES_LOG" ]] || die "hermes_log.jsonl missing (run: hermes bootstrap-state)"
+  # Validate JSON via python if available; else accept as-is.
+  if command -v python3 >/dev/null 2>&1; then
+    echo "$json" | python3 -c "import json, sys; json.loads(sys.stdin.read())" \
+      || die "argument is not valid JSON"
+  fi
+  echo "$json" >> "$HERMES_LOG"
+  ok "appended to $HERMES_LOG"
+}
+
+# ---- dispatch --------------------------------------------------------------
+sub="${1:-help}"
+shift || true
+
+case "$sub" in
+  help|-h|--help)        cmd_help ;;
+  doctor)                cmd_doctor ;;
+  bootstrap-state)       cmd_bootstrap_state ;;
+  status)                cmd_status ;;
+  prompt)                cmd_prompt "$@" ;;
+  log)                   cmd_log "$@" ;;
+  *)                     die "unknown subcommand: $sub  (try: hermes help)" ;;
+esac

@@ -1,0 +1,95 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-redacted>",
+  "lane_id": "owned_account_signup_profile_workspace_surface_map",
+  "status": "surface_only",
+  "request_budget": {
+    "planned": 0,
+    "used": 0
+  },
+  "observations": [
+    {
+      "type": "account_state",
+      "label": "account_b_signup",
+      "value": "operator completed Account B signup/auth locally; Hermes observed only post-auth UI state after completion",
+      "sensitive": false
+    },
+    {
+      "type": "onboarding",
+      "label": "primary_team",
+      "value": "onboarding step 1 selected Customer Support as low-risk non-secret profile customization",
+      "sensitive": false
+    },
+    {
+      "type": "onboarding",
+      "label": "channels_tools",
+      "value": "step 2 listed Email/Chat/Slack/WhatsApp/Voice/SMS/Social media/Other and prior support-tool yes/no; skipped without connecting external channels",
+      "sensitive": false
+    },
+    {
+      "type": "onboarding",
+      "label": "shared_inbox_creation",
+      "value": "step 3 created default owned shared inbox labels Support and Support - Priority from recommended setup; no customer data or external channel connected",
+      "sensitive": false
+    },
+    {
+      "type": "channel_gate",
+      "label": "shared_email_connection",
+      "value": "step 4 offered Gmail Account and Office 365 User Mailbox connection plus channel settings link; skipped/set up later; current dashboard still prompts Connect your first shared channel",
+      "sensitive": false
+    },
+    {
+      "type": "setup_guide",
+      "label": "remaining_tasks",
+      "value": "setup guide marks first shared inbox completed and lists Connect shared channel, Automate workflows/rules, Discover Topics, Invite team as remaining gates",
+      "sensitive": false
+    },
+    {
+      "type": "workspace_surface",
+      "label": "left_navigation",
+      "value": "visible owned Account B workspace surfaces include Open/Drafts/Later/Done/More, Shared Customer Support with Support and Support - Priority, Sandbox, demo Support/Analytics/Live Chat, setup guide, trial banner",
+      "sensitive": false
+    },
+    {
+      "type": "settings_surface",
+      "label": "settings_hover",
+      "value": "settings icon visible; passive click/hover did not open settings page in captured state; no setting mutation occurred",
+      "sensitive": false
+    }
+  ],
+  "positive_evidence": [
+    "Account B can reach authenticated <program-name> dashboard after operator completed signup/auth gate.",
+    "Owned shared inbox labels were created by onboarding: Customer Support group with Support and Support - Priority visible in left nav.",
+    "External channel connection remains a visible hard gate, not completed.",
+    "Setup guide exposes remaining proof-relevant surfaces without needing external communication: channel connect, rules/workflows, Topics, team invite."
+  ],
+  "negative_controls": [
+    "No Gmail/Office 365/OAuth/mailbox/channel connection was initiated or completed.",
+    "No invite, outbound message, discussion, comment, workflow/rule activation, API token creation, API call, scanner/fuzzer/DAST, or report submission was performed.",
+    "Visible inbox state showed inbox zero/no conversations; no customer/non-owned data was accessed.",
+    "Screenshots are kept in ignored local storage only and must be redacted before sharing because browser/account labels may be visible."
+  ],
+  "redactions": [
+    "Do not record or share phone numbers, OTPs, passwords, cookies, tokens, API keys, verification links, or raw account alias values.",
+    "Treat screenshots with account initials/names, workspace labels, browser URL IDs, and trial/account banners as local-only unless separately redacted.",
+    "Use labels Account A, Account B, owned workspace, owned shared inbox rather than raw identifiers in broad handoff artifacts."
+  ],
+  "candidate_signals": [
+    "Shared inbox membership/visibility and default recommended inbox creation are worth preserving as a future owned A/B permission-candidate family.",
+    "Rules/workflow automation and Topics are proof-relevant but remain blocked until explicit approval for state-changing activation or adequate passive-only documentation mapping.",
+    "Team invite remains a high-value boundary candidate but blocked without explicit invite/role action approval and owned recipient plan.",
+    "Channel/OAuth/API/UI mismatch families remain blocked until explicit token/channel handling and redaction plan exists."
+  ],
+  "blocked_states": [
+    "External channel/OAuth/mailbox connection",
+    "Invite/team membership or role mutation",
+    "Workflow/rule save or activation",
+    "Topics activation dependent on connected shared channel",
+    "API token creation/API calls",
+    "Outbound messages/comments/discussions/customer interaction",
+    "Scanner/fuzzer/DAST or target-touching scripts",
+    "Report submission or report-ready evidence promotion"
+  ],
+  "next_learning_seed": "<program-name> Account B authenticated dashboard is surface_only: onboarding created owned shared inbox labels and exposed channel/workflow/topics/invite gates. Next safe work is passive UI/docs mapping or an operator-approved owned A/B proof boundary; no external channel/invite/workflow/API/report actions.",
+  "updated_at": "2026-05-26T15:36:14Z"
+}

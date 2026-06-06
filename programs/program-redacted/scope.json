@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "program": {
+    "slug": "<program-slug>",
+    "name": "<program-redacted>, Inc.",
+    "platform": "<bug-bounty-platform>",
+    "url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "authorization_reference": "<bug-bounty-platform> <program-redacted>, Inc. bounty policy/scope page viewed through logged-in Kali/noVNC session; operator approved <program-redacted> exact-host scope/lane gate on 2026-05-29.",
+    "policy_version": "2026-05-29-h1-visible-policy",
+    "policy_acknowledged_at": "2026-05-29T04:10:00Z",
+    "program_contact": "<bug-bounty-platform> program: <program-slug>"
+  },
+  "scope": {
+    "in_scope": [
+      {
+        "type": "domain",
+        "value": "bug-bounty-rest.k8s.tools-001.d-use-1.<program-redacted>-dev.com",
+        "notes": "REST API used to manage the dashboard. Public docs referenced by policy: https://www.<program-redacted>.com/docs/api/basics. Exact bug-bounty environment only."
+      },
+      {
+        "type": "domain",
+        "value": "bug-bounty-dashboard.k8s.tools-001.d-use-1.<program-redacted>-dev.com",
+        "notes": "Dashboard URL. Policy says only test accounts you own or have explicit permission to test."
+      },
+      {
+        "type": "domain",
+        "value": "bug-bounty-api.k8s.tools-001.d-use-1.<program-redacted>-dev.com",
+        "notes": "Not the REST API; different endpoints/docs per public <program-redacted> docs. CORS on this host is explicitly intended open per policy and not reportable."
+      }
+    ],
+    "out_of_scope": [
+      {
+        "type": "domain",
+        "value": "dashboard.<program-redacted>.com",
+        "reason": "Out-of-scope production control for fail-closed dry-run checks."
+      },
+      {
+        "type": "wildcard",
+        "value": "*.<program-redacted>.com",
+        "reason": "All other <program-redacted> domains are out of scope for this exact-host lane unless separately approved."
+      }
+    ],
+    "idn_handling": "punycode_only"
+  },
+  "techniques": {
+    "allowed": [
+      "http_probe"
+    ],
+    "forbidden": [
+      "subdomain_enumeration",
+      "port_scan",
+      "service_fingerprint",
+      "directory_bruteforce",
+      "vulnerability_scan_passive",
+      "vulnerability_scan_active",
+      "intrusive_fuzz",
+      "dos",
+      "credential_brute_force",
+      "social_engineering",
+      "physical",
+      "malware",
+      "callback_payloads"
+    ],
+    "automation_permitted": false,
+    "automation_notes": "Dry-run gate and manual low-speed browser navigation only. No scanners/fuzzers/DAST; API token/webhook/integration actions require separate operator approval."
+  },
+  "rate_limits": {
+    "max_concurrency": 1,
+    "request_delay_ms": 5000
+  },
+  "testing_windows": {
+    "always": false,
+    "timezone": "UTC",
+    "allowed": [
+      {
+        "days": [
+          "Mon",
+          "Tue",
+          "Wed",
+          "Thu",
+          "Fri",
+          "Sat",
+          "Sun"
+        ],
+        "start": "00:00",
+        "end": "23:59"
+      }
+    ]
+  },
+  "expiration": {
+    "valid_from": "2026-05-29T00:00:00Z",
+    "valid_until": "2026-06-28T00:00:00Z"
+  }
+}

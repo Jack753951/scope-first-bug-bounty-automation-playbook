@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/hacklab/module_profile.schema.json",
+  "title": "Hacklab module profile contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "profile_id",
+    "name",
+    "description",
+    "mode_allowlist",
+    "risk_level_allowlist",
+    "target_type_allowlist",
+    "technique_tag_allowlist",
+    "execution_constraints",
+    "output_constraints",
+    "required_safety_gates_true",
+    "required_safety_gates_false"
+  ],
+  "properties": {
+    "schema_version": {"const": "module_profile/1.0"},
+    "profile_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$"},
+    "name": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "mode_allowlist": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["dry-run"]}
+    },
+    "risk_level_allowlist": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["info", "low", "medium", "high"]}
+    },
+    "target_type_allowlist": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"enum": ["url", "domain", "ip", "cidr"]}
+    },
+    "technique_tag_allowlist": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "passive.http_headers",
+          "passive.tls_metadata",
+          "passive.dns_metadata",
+          "passive.content_metadata",
+          "active.http_get",
+          "active.tcp_connect",
+          "active.dns_lookup",
+          "active.web_content_check"
+        ]
+      }
+    },
+    "execution_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supports_dry_run", "requires_network", "network_access", "target_touching", "destructive", "intrusive"],
+      "properties": {
+        "supports_dry_run": {"const": true},
+        "requires_network": {"const": false},
+        "network_access": {"const": "none"},
+        "target_touching": {"const": false},
+        "destructive": {"const": false},
+        "intrusive": {"const": false}
+      }
+    },
+    "output_constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["emits_findings_allowed", "emits_evidence_allowed"],
+      "properties": {
+        "emits_findings_allowed": {"const": false},
+        "emits_evidence_allowed": {"const": false}
+      }
+    },
+    "required_safety_gates_true": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    },
+    "required_safety_gates_false": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string"}
+    }
+  }
+}

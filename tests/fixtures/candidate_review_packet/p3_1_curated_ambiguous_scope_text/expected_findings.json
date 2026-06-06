@@ -1,0 +1,45 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "p3_1_curated.ambiguous_scope_text.candidate.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.ambiguous_scope_text.candidate",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.ambiguous_scope_text",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-ambiguous_scope_text"
+    },
+    "status": "candidate",
+    "summary": "Synthetic candidate uses an allowed-looking asset but the guidance mentions an excluded administrative path, requiring a reviewer decision.",
+    "target": {
+      "type": "domain",
+      "value": "ambiguous-scope.example.test"
+    },
+    "title": "P3.1 synthetic ambiguous scope text candidate",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: target value is illustrative, but the observation text references /admin-preview on an excluded subpath; reviewer must decide scope before any downstream action."
+  }
+]

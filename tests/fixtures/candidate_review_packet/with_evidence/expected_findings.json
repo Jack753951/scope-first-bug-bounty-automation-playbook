@@ -1,0 +1,45 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "review_packet_self_test.with_evidence.http_excerpt",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "6ffb4fc29641e2a5f7221d433fd348856e986d366a97438afa587e78d42d1998"
+      }
+    ],
+    "id": "review_packet_self_test.with_evidence.candidate",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Self-test fixture: a candidate finding that carries a single redacted evidence ref so report_readiness becomes reviewer_decision_required.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "self_test.candidate_review_packet",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "self-test.candidate-review-packet"
+    },
+    "status": "candidate",
+    "summary": "Self-test fixture exercising the reviewer_decision_required branch of the report-readiness rubric.",
+    "target": {
+      "type": "domain",
+      "value": "selftest.example.test"
+    },
+    "title": "Self-test: with evidence (reviewer decision required)",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Self-test fixture only: manually inspect the authorized capture before drafting."
+  }
+]

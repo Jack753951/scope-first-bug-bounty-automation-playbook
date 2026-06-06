@@ -1,0 +1,55 @@
+{
+  "phase": "P2-15 offline preview ledger / archive index",
+  "verdict": "PASS",
+  "review_tier_confirmed": "T3",
+  "blocking_issues": [],
+  "non_blocking_recommendations": [
+    {
+      "area": "schema",
+      "issue": "The schema's preview_manifest_path regex uses `^runs/<safe_id>/preview/preview_manifest\\.json$` and a top-level `not` pattern, but the JSON Schema does not bind the path's <run_id> segment to entries[].run_id; cross-field equality is enforced only by the validator. Consider noting this in a schema comment so future schema-only consumers do not assume the regex alone guarantees the path/run_id binding.",
+      "blocking": false
+    },
+    {
+      "area": "validator",
+      "issue": "_chain_has_symlink walks `absolute().parents` rather than `resolve(strict=False).parents`; on Windows, junction/reparse points in intermediate path segments that are not symlinks per os.path.islink() could be missed. The current behavior matches the direction doc (symlink-only, fail-closed on OSError), but a brief comment clarifying that NTFS junctions/reparse points are out of scope for P2-15 would aid future readers.",
+      "blocking": false
+    },
+    {
+      "area": "validator",
+      "issue": "Direction doc specifies `--repo-root` may default to the ledger file's parent when that parent matches a `runs/` container heuristic, otherwise required. Implementation marks `--repo-root` as `required=True` with no default. Stricter behavior than the doc's permissive heuristic — acceptable as 'stricter rule wins', but worth noting so the README does not later claim auto-detection.",
+      "blocking": false
+    },
+    {
+      "area": "tests",
+      "issue": "test_strict_json_parse_denials writes `'{\"schema_version\":\"preview_ledger/1.0\"} x'` to assert trailing-data rejection, but the surfaced code is `PREVIEW_LEDGER_JSON_INVALID`, not a dedicated trailing-data code. Direction doc lists trailing data and non-UTF-8 as distinct denials; consider a typed code (e.g., PREVIEW_LEDGER_TRAILING_DATA) for triage clarity. Non-blocking — denial behavior is correct.",
+      "blocking": false
+    },
+    {
+      "area": "tests",
+      "issue": "test_unknown_fields_denied_at_all_object_levels does not separately exercise an unknown field inside `entries[]` while also asserting it is denied at the unknown-field code (it does, but only with one variant). Consider adding a parametrized subTest matrix that proves all three object levels reject the same unknown field name to lock in `additionalProperties: false` regression coverage.",
+      "blocking": false
+    },
+    {
+      "area": "validator",
+      "issue": "`_validate_notes` checks `NOTE_TEXT_RE.fullmatch` after substring checks. The allowed character class permits `.` and digits, so a token like `1.2.3` (also matched by NOTE_HOST_RE) is denied — good. But a single short label without a dot (e.g., `localhost`) passes both NOTE_HOST_RE (requires at least one dot) and NOTE_TEXT_RE. This is the documented behavior (host indicators require dotted tokens), but the direction doc mentions `host-like token` ambiguously. Document the precise definition in modules/_schema/README.md if not already there.",
+      "blocking": false
+    },
+    {
+      "area": "validator",
+      "issue": "`load_json_strict` uses `raw_decode` then checks trailing whitespace-stripped data. Confirm that a BOM-prefixed UTF-8 ledger (rare but possible from Windows editors) is either explicitly rejected or explicitly accepted — current behavior depends on `data.decode('utf-8')` which preserves the BOM and would cause `raw_decode` to fail with JSONDecodeError → PREVIEW_LEDGER_JSON_INVALID. Acceptable, but worth a note.",
+      "blocking": false
+    }
+  ],
+  "safety_boundary_assessment": {
+    "status": "clean",
+    "notes": "Implementation honors the schema_plus_validator boundary exactly: no builder, no module_runner wiring, no CI/hook integration, no scope/dry-run/live-mode changes, no findings/evidence/upload/sync fields. Validator is read-only — recomputes SHA-256 over bytes only and never writes, repairs, or moves files. Static-import test enforces absence of socket/urllib/http/subprocess/threading/multiprocessing. Symlink chain check is fail-closed on OSError (treats None as denial). Errors use _type_name() placeholders for `observed` (no raw content echo). Closed schema (additionalProperties:false) at top-level, producer, and each entry. Strict-equal version literals enforced for both preview_ledger/1.0 and per-entry preview_manifest/1.0. Path safety enforces exact equality to runs/<run_id>/preview/preview_manifest.json plus post-resolve containment under repo_root/runs. Notes field is redaction-safe with a deny-list and a positive character allowlist. Inner-artifact integrity is correctly deferred to the preview_manifest validator — ledger validator only hashes the preview_manifest.json bytes. Pure-function snapshot test asserts bundle/ledger mtimes and contents unchanged after validation."
+  },
+  "validation_assessment": {
+    "status": "adequate",
+    "notes": "Coverage matches direction doc test_requirements: golden valid fixture, empty-entries valid case, per-required-field missing denials at top-level and producer, additionalProperties denials at three object levels (with one entry-level case), schema_version drift and per-entry observed-version drift, unsafe ledger_id and run_id, path-shape variants (.. , leading /, backslash, drive, //, /./, foreign run_id), duplicate run_id with both indices in the error, hash/size mismatches, missing manifest, symlink denials for ledger file, preview manifest file, preview dir, run dir (with proper Windows skip), timestamp future + ordering + non-RFC3339, entry_count mismatch, boolean-vs-integer for entry_count and size_bytes, duplicate JSON keys, trailing data, non-UTF-8, notes redaction-safety positive and negative cases, pure-function filesystem snapshot, static forbidden-imports, and CLI single-line JSON / nonzero-exit shape. Committed golden fixture at tests/fixtures/preview_ledger/1.0/valid_minimal/ correctly references its sibling preview_manifest.json by sha256 b5af431…815f0 and size 1697. Codex reports 22 tests OK, 4 symlink-skipped, and full discovery passes 188 OK / 8 skipped."
+  },
+  "architecture_fit": {
+    "status": "aligned",
+    "notes": "Fits cleanly alongside preview_manifest/1.0: ledger is a binding manifest-of-manifests index that defers inner-artifact integrity to the preview_manifest validator (correct layering, no re-runs). Validator CLI output mirrors the preview_manifest validator convention with its own validation schema_version (preview_ledger_validation/1.0) and single-line JSON, enabling future agent-assisted consumers to consume both without re-parsing prose. Schema lives next to preview_manifest.schema.json under modules/_schema/, fixtures co-locate under tests/fixtures/preview_ledger/1.0/ and reuse the preview_manifest valid_minimal target as a single source of truth. Out-of-scope deferrals (builder to P2-16, preview_manifest_validation_status, ledger_digest, agent-assisted triage) are respected. The schema's exact-path regex plus closed object plus duplicate-run-id guard plus exact-equality preview_manifest path check defends against repurposing the ledger as a generic write/publish channel. Strict-equal version negotiation is consistent with the preview_manifest/1.0 contract rule. No regressions observed in module_runner/preview_manifest test suites (per Codex's 38-test and 188-test runs)."
+  }
+}

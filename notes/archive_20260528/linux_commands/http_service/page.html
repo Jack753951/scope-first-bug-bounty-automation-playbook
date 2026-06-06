@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>http service</title>
+</head><body><b><i><span style="font-size: 14pt">sudo service apache2 start:<br/>
+</span></i></b><br/>
+開啟網頁伺服器讓vm成為網站主機<ul><li style="list-style-type: none">核心原理 (Concept)</li>
+<li style="list-style-type: none"><ul><li></li>
+<li><b>Apache2</b>&nbsp;是一款開源的 HTTP 網頁伺服器軟體。執行此指令後，你的 Kali Linux 會從一台純工具機轉變為一台「主機 (Host)」。</li>
+<li></li>
+<li></li>
+<li>它會開始監聽系統的 80 埠 (HTTP)，等待其他設備連線來讀取網頁檔案。</li>
+<li></li>
+</ul>
+</li>
+<li style="list-style-type: none">實戰指令 (Commands)</li>
+<li style="list-style-type: none"><ul><li></li>
+<li><b>啟動服務</b>：sudo service apache2 start</li>
+<li></li>
+<li></li>
+<li><b>停止服務</b>：sudo service apache2 stop</li>
+<li></li>
+<li></li>
+<li><b>重啟服務</b>：sudo service apache2 restart</li>
+<li></li>
+<li></li>
+<li><b>查看狀態</b>：sudo service apache2 status</li>
+<li></li>
+</ul>
+</li>
+<li style="list-style-type: none">檔案存放位置</li>
+<li style="list-style-type: none"><ul><li></li>
+<li><b>預設路徑</b>：/var/www/html/</li>
+<li></li>
+<li></li>
+<li>所有放進這個資料夾的檔案（如 .html, .php, .exe, .sh），只要知道你的 IP 就能被連線端下載或瀏覽。</li>
+<li></li>
+</ul>
+</li>
+<li style="list-style-type: none">滲透測試用途 (Pentest Use Cases)</li>
+<li style="list-style-type: none"><ul><li></li>
+<li><b>惡意程式載點</b>：在攻擊成功後，從受害者機器下指令（如 certutil 或 wget）連回你的 Kali 下載後門工具。</li>
+<li></li>
+<li></li>
+<li><b>釣魚演練</b>：架設一個偽造的登入介面，測試目標是否會輸入憑據。</li>
+<li></li>
+<li></li>
+<li><b>漏洞驗證 (PoC)</b>：某些漏洞（如 SSRF 或遠端檔案包含 RFI）需要受害者機器主動請求攻擊者的網頁伺服器。</li>
+<li></li>
+</ul>
+</li>
+<li style="list-style-type: none">驗證清單 (SOP)</li>
+<li style="list-style-type: none"><ul><li></li>
+<li>在 Kali 執行 sudo service apache2 start。</li>
+<li></li>
+<li></li>
+<li>打開主機 Windows 的瀏覽器，網址輸入 http://[你的Kali_IP]。</li>
+<li></li>
+<li></li>
+<li>若看到 "Apache2 Debian Default Page"，代表伺服器已成功對外開放。</li>
+<li></li>
+</ul>
+</li>
+<li style="list-style-type: none">關鍵陷阱 (Pitfalls)</li>
+<li style="list-style-type: none"><ul><li></li>
+<li><b>安全性風險</b>：開啟服務後，你的 Kali 也暴露在網路上。若資料夾內放了敏感檔案，同網段的人也可能下載。</li>
+<li></li>
+<li></li>
+<li><b>連接埠衝突</b>：如果 80 埠已被其他工具（如 Nginx）占用，啟動會失敗。可用 sudo netstat -tulpn | grep :80 檢查。</li>
+<li></li>
+</ul>
+</li>
+</ul>
+<br/>
+<i><b><span style="font-size: 14pt">python3 -m http.server 80<br/>
+</span></b></i><br/>
+[服務管理] Python HTTP 模組伺服器核心原理 (Concept)<ul><li></li>
+<li>這是 Python 內建的簡單 HTTP 伺服器。</li>
+<li></li>
+<li></li>
+<li>它與 Apache2 的不同之處在於：<b>Apache2 是系統服務</b>（在背景跑，適合長期存放網頁），而 <b>Python 伺服器是臨時進程</b>（在終端機跑，關掉視窗就消失）。</li>
+<li></li>
+<li></li>
+<li>它會直接以「當下所在的資料夾」作為網站根目錄。</li>
+<li></li>
+</ul>
+實戰指令 (Commands)<ul><li></li>
+<li><b>啟動服務（Python 3）</b>：python3 -m http.server 80</li>
+<li></li>
+<li></li>
+<li><b>指定連接埠（如果 80 被占用）</b>：python3 -m http.server 8080</li>
+<li></li>
+<li></li>
+<li><b>背景執行</b>：python3 -m http.server 80 &amp;</li>
+<li></li>
+</ul>
+滲透測試用途 (Pentest Use Cases)<ul><li></li>
+<li><b>快速檔案傳輸</b>：當你在 Kali 寫好一個腳本，不想移動到 /var/www/html/，直接在腳本資料夾執行此指令，就能讓受害者機器下載。</li>
+<li></li>
+<li></li>
+<li><b>接收數據</b>：在某些測試中，你可以觀察受害者機器是否有嘗試連回你的伺服器，來判斷指令是否成功執行。</li>
+<li></li>
+<li></li>
+<li><b>無須設定</b>：不像 Apache 需要編輯設定檔，這個指令隨開即用，非常適合在 CTF 或滲透測試中爭分奪秒時使用。</li>
+<li></li>
+</ul>
+驗證清單 (SOP)<ul><li></li>
+<li>在 Kali 的某個資料夾下執行指令。</li>
+<li></li>
+<li></li>
+<li>在 Windows 或其他機器瀏覽器輸入 http://[Kali_IP]。</li>
+<li></li>
+<li></li>
+<li>你會直接看到一個<b>文件列表 (Directory Listing)</b>，顯示該資料夾內的所有檔案。</li>
+<li></li>
+</ul>
+關鍵陷阱 (Pitfalls)<ul><li></li>
+<li><b>目錄洩漏</b>：如果你在 /home/kali 下執行，連線者可以看到你所有的個人資料，這有極大的資安風險。</li>
+<li></li>
+<li></li>
+<li><b>非持久性</b>：一旦按下 Ctrl+C 或關閉終端機，伺服器就會立刻停止，正在傳輸的檔案也會中斷。</li>
+<li></li>
+<li></li>
+<li><b>功能有限</b>：它不支援執行 PHP 或處理複雜的資料庫邏輯，僅適合「傳輸檔案」。</li>
+<li></li>
+</ul>
+與 Apache2 的對比 (Oikatsuo 追加鰹魚)<ul><li></li>
+<li><b>Apache2</b>：穩定、功能強、適合架設假網站（Phishing Page）。</li>
+<li></li>
+<li></li>
+<li><b>Python Server</b>：快速、方便、適合暫時性的檔案搬運（File Transfer）。</li>
+<li></li>
+</ul>
+&nbsp;<ul><li style="list-style-type: none">&nbsp;</li>
+</ul>
+</body></html>

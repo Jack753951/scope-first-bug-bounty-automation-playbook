@@ -1,0 +1,10 @@
+{
+  "slug": "web-easy-redirect",
+  "candidate_flag": "picoCTF{ui_observed_flag}",
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["ui_checker"],
+  "candidate_count": 1,
+  "solver_timed_out": false,
+  "checker_only_success": true,
+  "claimed_confidence": "medium"
+}

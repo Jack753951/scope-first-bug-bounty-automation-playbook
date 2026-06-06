@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-05-28T01:55:00Z",
+  "window_hours": 24,
+  "keywords": ["nginx", "apache", "tomcat", "openssl", "haproxy", "envoy", "traefik"],
+  "source": "OpenCVE + NVD (NVD API blocked at proxy)",
+  "data_quality_note": "cve_watch.py failed due to 403 tunnel block on services.nvd.nist.gov; brief built from OpenCVE vendor pages and live web search.",
+  "entries_in_window": [
+    {
+      "id": "<specific-cve-id>",
+      "cvss": 5.3,
+      "severity": "Medium",
+      "published": "2026-05-27",
+      "vendor": "Apache",
+      "product": "apache-airflow-providers-fab",
+      "preauth": true,
+      "description": "LDAP filter injection in Airflow FAB Auth Manager; unauthenticated attacker can exfiltrate directory data or bypass auth.",
+      "fix": "apache-airflow-providers-fab >= 3.6.4 or disable LDAP backend",
+      "bb_value": "moderate — pre-auth, common internet exposure"
+    },
+    {
+      "id": "<specific-cve-id>",
+      "cvss": 8.1,
+      "severity": "High",
+      "published": "2026-05-27",
+      "vendor": "Apache",
+      "product": "apache-airflow-providers-google",
+      "preauth": false,
+      "description": "ComputeEngineSSHHook disables SSH host-key verification by default; MITM between Airflow worker and GCE VM.",
+      "fix": "apache-airflow-providers-google >= 22.0.0",
+      "bb_value": "low — requires network position"
+    },
+    {
+      "id": "<specific-cve-id>",
+      "cvss": 7.2,
+      "severity": "High",
+      "published": "2026-05-27",
+      "vendor": "Apache",
+      "product": "syncope",
+      "preauth": false,
+      "description": "Groovy class static-initializer sandbox escape via Implementations entitlements (admin).",
+      "fix": "Syncope 4.0.6 / 4.1.1",
+      "bb_value": "low — admin required"
+    },
+    {
+      "id": "<specific-cve-id>",
+      "cvss": 7.5,
+      "severity": "High",
+      "published": "2026-05-26",
+      "vendor": "Apache",
+      "product": "tomcat",
+      "preauth": false,
+      "description": "Incomplete fix for <specific-cve-id> allows bypass of EncryptInterceptor on Tomcat 11.0.20 / 10.1.53 / 9.0.116 cluster comms.",
+      "fix": "Tomcat 11.0.21 / 10.1.54 / 9.0.117",
+      "bb_value": "low — clustering / network-position attack"
+    }
+  ],
+  "still_active_outside_window": [
+    {
+      "id": "<specific-cve-id>",
+      "name": "nginx Rift",
+      "cvss": 9.2,
+      "severity": "Critical",
+      "preauth": true,
+      "exploitation_status": "active in the wild",
+      "affected": "nginx Open Source 0.6.27 - 1.30.0, NGINX Plus R32 - R36",
+      "chain": "recon_pipeline.py -> nginx_rift_scanner.py"
+    },
+    {
+      "id": "<specific-cve-id>",
+      "name": "nginx-poolslip",
+      "cvss": 9.0,
+      "severity": "Critical",
+      "preauth": true,
+      "exploitation_status": "active in the wild",
+      "affected": "NGINX Plus and Open Source ngx_http_rewrite_module"
+    }
+  ]
+}

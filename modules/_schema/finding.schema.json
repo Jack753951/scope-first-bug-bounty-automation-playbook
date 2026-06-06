@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/hacklab/finding.schema.json",
+  "title": "Hacklab Candidate Finding",
+  "description": "Versioned contract for automated candidate findings. Automation must not emit confirmed findings; human/agent review is required before reporting.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "id",
+    "status",
+    "title",
+    "summary",
+    "target",
+    "source",
+    "severity_hint",
+    "confidence",
+    "triage",
+    "evidence",
+    "references",
+    "classifications",
+    "remediation",
+    "verification_guidance"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "finding/1.0" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+    "status": {
+      "type": "string",
+      "enum": ["candidate", "needs_verification", "no_observation", "not_applicable", "error"]
+    },
+    "title": { "type": "string", "minLength": 1, "maxLength": 200 },
+    "summary": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "target": { "$ref": "#/$defs/target" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["module_id", "run_id", "policy_decision_sha256"],
+      "properties": {
+        "module_id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+        "run_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{2,127}$" },
+        "policy_decision_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "severity_hint": { "type": "string", "enum": ["info", "low", "medium", "high", "critical"] },
+    "confidence": { "type": "string", "enum": ["low", "medium", "high"] },
+    "triage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scanner_output_only", "manual_verification_required"],
+      "properties": {
+        "scanner_output_only": { "type": "boolean", "const": true },
+        "manual_verification_required": { "type": "boolean", "const": true }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidence_ref" }
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^https?://[^\\s]+$" }
+    },
+    "classifications": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cwe": { "type": "array", "items": { "type": "string", "pattern": "^CWE-[0-9]+$" } },
+        "owasp": { "type": "array", "items": { "type": "string", "minLength": 1, "maxLength": 120 } },
+        "cvss_vector": { "type": "string", "maxLength": 160 }
+      }
+    },
+    "remediation": { "type": "string", "minLength": 1, "maxLength": 2000 },
+    "verification_guidance": { "type": "string", "minLength": 1, "maxLength": 2000 }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "value"],
+      "properties": {
+        "type": { "type": "string", "enum": ["url", "domain", "ip", "cidr"] },
+        "value": { "type": "string", "minLength": 1, "maxLength": 500 }
+      }
+    },
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "sha256", "redacted"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{2,127}$" },
+        "kind": { "type": "string", "enum": ["http_exchange", "screenshot", "log_excerpt", "tool_output", "metadata"] },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "redacted": { "type": "boolean", "const": true }
+      }
+    }
+  }
+}

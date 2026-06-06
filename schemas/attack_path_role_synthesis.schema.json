@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/attack_path_role_synthesis.schema.json",
+  "title": "Attack path role synthesis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "synthesis_id", "program_slug", "source_packets", "role_inputs", "conflicts", "decision", "updated_at", "target_touching"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "synthesis_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"},
+    "program_slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"},
+    "source_packets": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "role_inputs": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/role_input"}},
+    "conflicts": {"type": "array", "items": {"$ref": "#/$defs/conflict"}},
+    "decision": {"$ref": "#/$defs/decision"},
+    "updated_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"},
+    "target_touching": {"const": false}
+  },
+  "$defs": {
+    "role": {"enum": ["adversarial-planner", "boundary-engineer", "implementation-worker", "deterministic-reviewer", "safety-reviewer", "evidence-critic", "final-synthesizer", "other"]},
+    "verdict": {"enum": ["PASS", "APPROVED", "REQUEST_CHANGES", "BLOCKED", "FAIL", "WARN", "SKIP", "INCOMPLETE"]},
+    "role_input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "artifact", "verdict", "candidate_ids", "claims", "blockers"],
+      "properties": {
+        "role": {"$ref": "#/$defs/role"},
+        "artifact": {"type": "string", "minLength": 1},
+        "verdict": {"$ref": "#/$defs/verdict"},
+        "candidate_ids": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "claims": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "conflict": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conflict_id", "type", "candidate_id", "roles", "summary", "resolution", "reason"],
+      "properties": {
+        "conflict_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"},
+        "type": {"enum": ["authorization", "evidence", "impact", "feasibility", "scope", "role_disagreement", "overclaim"]},
+        "candidate_id": {"type": "string", "minLength": 1},
+        "roles": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/role"}},
+        "summary": {"type": "string", "minLength": 1},
+        "resolution": {"enum": ["accept", "downgrade", "park", "block", "needs_operator", "needs_local_simulation"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["selected_candidate_id", "decision", "reason", "required_next_artifact", "needs_kali_readiness_check", "learning_seed_if_blocked"],
+      "properties": {
+        "selected_candidate_id": {"type": "string"},
+        "decision": {"enum": ["select_bounded_lane", "park_preserve", "blocked_awaiting_scope", "blocked_awaiting_operator", "switch_target", "needs_local_simulation", "no_selection"]},
+        "reason": {"type": "string", "minLength": 1},
+        "required_next_artifact": {"type": "string"},
+        "needs_kali_readiness_check": {"type": "boolean"},
+        "learning_seed_if_blocked": {"type": "string"}
+      }
+    }
+  }
+}

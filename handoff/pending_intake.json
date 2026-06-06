@@ -1,0 +1,313 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-05-29",
+  "boundary": "Pre-lane intake. Candidates listed here have no active live lane yet. Driver creates a lane only after operator supplies/approves scope facts and any config/scope.txt changes; no target testing is authorized by this file.",
+  "candidates": [
+    {
+      "slug": "<program-slug>",
+      "platform": "<bug-bounty-platform>",
+      "program": "<program-redacted> Bug Bounty Program",
+      "source": "logged-in H1 Opportunity Discovery + policy scope page",
+      "url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes",
+      "observed_at": "2026-05-29",
+      "status": "parked_no_finding_current_candidate",
+      "score": {
+        "freshness_0_3": 3,
+        "self_signup_0_2": 1,
+        "free_plan_0_2": 2,
+        "low_priv_control_0_3": 2,
+        "owned_object_0_3": 2,
+        "scope_clarity_0_2": 2,
+        "operator_cost_low_0_3": 1,
+        "access_control_surface_0_3": 3,
+        "api_or_direct_url_surface_0_2": 2,
+        "total_0_23": 18
+      },
+      "signals": [
+        "H1 shows updated bounty program with scope changes on 2026-05-28.",
+        "Sandbox merchant dashboard/API/auth/payer-detail assets are in scope and bounty-eligible.",
+        "Scope includes API/direct-URL/auth surfaces suitable for auth-role, IDOR, invite/lifecycle, and API/UI mismatch bundles.",
+        "Several high-value sandbox assets have 0 resolved reports, including manage-sandbox and payer-details-sandbox."
+      ],
+      "candidate_assets": [
+        "manage-sandbox.<program-redacted>.com",
+        "api-sandbox.<program-redacted>.com",
+        "pay-sandbox.<program-redacted>.com",
+        "payer-details-sandbox.<program-redacted>.com",
+        "oauth-sandbox.<program-redacted>.com",
+        "connect-sandbox.<program-redacted>.com"
+      ],
+      "blocked_before": [
+        "config/scope.txt authorization for any <program-redacted> host",
+        "programs/<program-slug>/scope.json creation/broadening",
+        "account/signup/OTP/CAPTCHA/phone/payment/API-token gates",
+        "any live target testing beyond passive policy reading"
+      ],
+      "recommended_decision": "do_not_reopen_without_new_distinct_hypothesis",
+      "recommended_next_step": "Reference only; Account B role-lifecycle/webhook boundary candidate reached no-finding checkpoint."
+    },
+    {
+      "slug": "syfe_bbp",
+      "platform": "<bug-bounty-platform>",
+      "program": "<program-slug>",
+      "source": "logged-in H1 Opportunity Discovery",
+      "url": "https://<bug-bounty-platform>.com/syfe_bbp?type=team",
+      "observed_at": "2026-05-29",
+      "status": "parked_operator_resource_gate",
+      "score": {
+        "total_0_23": null
+      },
+      "signals": [
+        "Private opportunity visible under available private opportunities.",
+        "H1 page says up to 1 private opportunity per 30 days and shows Claim your spot."
+      ],
+      "blocked_before": [
+        "scarce private-opportunity claim requires explicit operator approval"
+      ],
+      "recommended_decision": "park_until_operator_claim_decision"
+    },
+    {
+      "slug": "intigriti_dashboard_recommendations",
+      "platform": "intigriti",
+      "program": "Dashboard recommended VDPs",
+      "source": "logged-in Intigriti researcher dashboard",
+      "url": "https://app.intigriti.com/researcher/dashboard",
+      "observed_at": "2026-05-29",
+      "status": "lower_priority_reference",
+      "score": {
+        "total_0_23": 8
+      },
+      "signals": [
+        "Dashboard recommended Dropbox VDP, Magnific VDP, <program-redacted>, and Signicat Responsible Disclosure.",
+        "Visible recommendations appear responsible-disclosure/VDP oriented rather than paid first-bounty targets."
+      ],
+      "recommended_decision": "reference_only_unless_H1_top_candidate_blocks"
+    },
+    {
+      "slug": "<program-slug>",
+      "platform": "<bug-bounty-platform>",
+      "program": "<program-redacted>, Inc.",
+      "source": "logged-in H1 Opportunity Discovery + policy/scope page via Kali/noVNC CDP visible text",
+      "url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+      "observed_at": "2026-05-29",
+      "status": "parked_auth_unavailable",
+      "score": {
+        "freshness_0_3": 2,
+        "self_signup_0_2": 2,
+        "free_plan_0_2": 2,
+        "low_priv_control_0_3": 3,
+        "owned_object_0_3": 3,
+        "scope_clarity_0_2": 2,
+        "operator_cost_low_0_3": 2,
+        "access_control_surface_0_3": 3,
+        "api_or_direct_url_surface_0_2": 2,
+        "total_0_23": 21
+      },
+      "signals": [
+        "Dedicated bug-bounty environment with only three explicit in-scope assets.",
+        "Policy gives H1-alias test-account pattern and extra-user pattern (+1/+2), reducing account-control ambiguity.",
+        "In-scope REST API, dashboard URL, and API host map directly to auth-role, removed/downgraded stale access, API/UI mismatch, and owned-object IDOR bundles.",
+        "Gold Standard, response efficiency 98%, launched May 2025, overview updated Apr 6 2026; 90-day reports/bounties show activity.",
+        "No phone/payment/KYC gate observed in policy text; email confirmation remains operator/human gate."
+      ],
+      "candidate_assets": [
+        "https://bug-bounty-rest.k8s.tools-001.d-use-1.<program-redacted>-dev.com/",
+        "https://bug-bounty-dashboard.k8s.tools-001.d-use-1.<program-redacted>-dev.com/",
+        "https://bug-bounty-api.k8s.tools-001.d-use-1.<program-redacted>-dev.com/"
+      ],
+      "bundle_fit": [
+        "auth-role-separation",
+        "removed-downgraded-stale-access",
+        "api-ui-permission-mismatch",
+        "object-ownership-idor",
+        "invite-membership-lifecycle"
+      ],
+      "blocked_before": [
+        "operator approval to create programs/<program-slug> scope/lane artifacts and add selected exact hosts to config/scope.txt",
+        "operator/H1 alias signup/email-confirmation gate",
+        "API token/webhook/integration actions remain separate explicit gates",
+        "no automated scanners; no SSRF per policy"
+      ],
+      "recommended_decision": "park_until_valid_owned_account_or_signup_route",
+      "recommended_next_step": "Do not spend more cycles unless operator provides a working owned <program-redacted> bug-bounty account/signup route; preserve bundles for future."
+    },
+    {
+      "slug": "<program-slug>",
+      "platform": "<bug-bounty-platform>",
+      "program": "<program-redacted> Taiwan",
+      "source": "logged-in H1 opportunity + policy/scope page",
+      "url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+      "observed_at": "2026-05-29",
+      "status": "strong_candidate_needs_scope_whitelist_decision",
+      "score": {
+        "freshness_0_3": 3,
+        "self_signup_0_2": 1,
+        "free_plan_0_2": 1,
+        "low_priv_control_0_3": 2,
+        "owned_object_0_3": 3,
+        "scope_clarity_0_2": 2,
+        "operator_cost_low_0_3": 1,
+        "access_control_surface_0_3": 3,
+        "api_or_direct_url_surface_0_2": 1,
+        "total_0_23": 17
+      },
+      "signals": [
+        "Scope updated May 5 2026; 45 domains + mobile, many 0 resolved reports.",
+        "Marketplace/member/partner/payment surfaces create high-value hypotheses.",
+        "Earlier prepared run card exists, but live execution is constrained by current 10-host config/scope subset unless operator broadens."
+      ],
+      "bundle_fit": [
+        "object-ownership-idor",
+        "api-ui-permission-mismatch",
+        "metadata-only-leak"
+      ],
+      "blocked_before": [
+        "operator-only config/scope.txt broadening for additional exact hosts",
+        "account/order/payment/seller/phone gates; no customer data"
+      ],
+      "recommended_decision": "park_behind_braze_or_scope_broadening"
+    },
+    {
+      "slug": "meesho_bbp",
+      "platform": "<bug-bounty-platform>",
+      "program": "Meesho",
+      "source": "logged-in H1 policy/scope page",
+      "url": "https://<bug-bounty-platform>.com/meesho_bbp/policy_scopes?type=team",
+      "observed_at": "2026-05-29",
+      "status": "candidate_parked_high_friction",
+      "score": {
+        "total_0_23": 16
+      },
+      "signals": [
+        "Scope includes prod.meeshoapi.com API, supplier.meesho.com, affiliate.meesho.com, admin.meeshosupply.com with some 0-report surfaces.",
+        "Marketplace/order/supplier gates likely raise operator cost via phone/OTP/order/payment/business verification."
+      ],
+      "bundle_fit": [
+        "api-ui-permission-mismatch",
+        "object-ownership-idor",
+        "supplier/admin role boundary"
+      ],
+      "recommended_decision": "park_until_lower_friction_targets_fail"
+    },
+    {
+      "slug": "whatnot",
+      "platform": "<bug-bounty-platform>",
+      "program": "Whatnot",
+      "source": "logged-in H1 policy page",
+      "url": "https://<bug-bounty-platform>.com/whatnot?type=team",
+      "observed_at": "2026-05-29",
+      "status": "candidate_parked_marketplace_friction",
+      "score": {
+        "total_0_23": 15
+      },
+      "signals": [
+        "Open scope, high bounty, overview updated May 18 2026, explicit H1 alias account rule.",
+        "Marketplace live commerce means phone/payment/shipping/chat/seller gates likely; mature program."
+      ],
+      "bundle_fit": [
+        "owned object IDOR",
+        "marketplace role boundary",
+        "metadata-only leak"
+      ],
+      "recommended_decision": "park_as_roi_fallback"
+    },
+    {
+      "slug": "banco_plata",
+      "platform": "<bug-bounty-platform>",
+      "program": "Banco Plata",
+      "source": "logged-in H1 opportunity + policy/scope page",
+      "url": "https://<bug-bounty-platform>.com/banco_plata/policy_scopes?type=team",
+      "observed_at": "2026-05-29",
+      "status": "candidate_parked_fintech_gate_risk",
+      "score": {
+        "total_0_23": 13
+      },
+      "signals": [
+        "Fresh/open-scope fintech with low visible report count, but likely KYC/payment/phone/banking gates."
+      ],
+      "bundle_fit": [
+        "preauth/public config only unless sandbox exists"
+      ],
+      "recommended_decision": "park_unless_low_friction_sandbox_or_preauth_lane_is_found"
+    },
+    {
+      "slug": "clear",
+      "platform": "<bug-bounty-platform>",
+      "program": "CLEAR",
+      "source": "logged-in H1 policy page",
+      "url": "https://<bug-bounty-platform>.com/clear?type=team",
+      "observed_at": "2026-05-29",
+      "status": "candidate_parked_identity_gate_risk",
+      "score": {
+        "total_0_23": 12
+      },
+      "signals": [
+        "High bounty identity platform, but requires bug-bounty header and likely identity/KYC/phone gates."
+      ],
+      "recommended_decision": "park_for_later_high_cost_sprint"
+    },
+    {
+      "slug": "<program-slug>",
+      "platform": "<bug-bounty-platform>",
+      "program": "<program-slug>",
+      "source": "passive platform policy normalization + optional public docs/disclosed reports",
+      "source_tool": "build_target_candidates.py",
+      "url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+      "observed_at": "2026-05-29",
+      "status": "candidate_passive_intake",
+      "score": {
+        "freshness_0_3": 2,
+        "self_signup_0_2": 2,
+        "free_plan_0_2": 2,
+        "low_priv_control_0_3": 2,
+        "owned_object_0_3": 3,
+        "scope_clarity_0_2": 2,
+        "operator_cost_low_0_3": 2,
+        "access_control_surface_0_3": 3,
+        "api_or_direct_url_surface_0_2": 2,
+        "total_0_23": 20
+      },
+      "signals": [
+        "Passive policy normalization found 5 candidate scope asset entries.",
+        "Candidate-only classes: org_role_invite_authz, oauth_oidc, api_direct_object_authz, source_or_plugin_review",
+        "Observed human/operator gates: 2fa",
+        "<program-slug> Mesh executable; critical eligible; 0 resolved reports",
+        "<program-slug>-supported Gateway Plugins executable; critical eligible; 0 resolved reports",
+        "<program-slug> Gateway Enterprise executable; critical eligible; 0 resolved reports",
+        "Insomnia Desktop Client executable; critical eligible; 2 resolved reports"
+      ],
+      "candidate_assets": [
+        "us.identity.<program-redacted>.com",
+        "app.<program-redacted>",
+        "*.api.<program-redacted>.com",
+        "cloud.<program-redacted>.com",
+        "*.<program-redacted>.com"
+      ],
+      "candidate_classes": [
+        "org_role_invite_authz",
+        "oauth_oidc",
+        "api_direct_object_authz",
+        "source_or_plugin_review"
+      ],
+      "bundle_fit": [
+        "auth-role-separation",
+        "oauth-oidc-boundary",
+        "idor-bola-api-object-boundary",
+        "source-plugin-local-review",
+        "api-token-or-webhook-boundary"
+      ],
+      "blocked_before": [
+        "config/scope.txt change or programs/<slug>/scope.json creation/broadening",
+        "account signup/login/OTP/CAPTCHA/password/phone/payment/KYC",
+        "api token, OAuth app, webhook, integration, or scarce-resource creation",
+        "customer or non-owned data access",
+        "scanner_fuzzer_dast_or_large_scale_discovery",
+        "SSRF/OAST/callback/exploit attempts",
+        "any live target testing beyond passive policy/public-doc reading",
+        "operator approval for exact live scope entries"
+      ],
+      "recommended_decision": "passive_triage_then_operator_gate",
+      "recommended_next_step": "Review candidate assets/classes, then ask operator before any live scope addition or target contact."
+    }
+  ]
+}

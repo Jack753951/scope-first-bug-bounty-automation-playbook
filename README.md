@@ -1,58 +1,40 @@
-# Scope-First Bug Bounty Automation Playbook
+> Public sanitized edition: sensitive personal, target, path, IP, alias, advisory, and run-specific evidence fields are redacted. This repository does not authorize live testing.
 
-A public, sanitized methodology for building an agent-assisted security research
-workbench that turns local lab proofs and passive intelligence into bounded,
-authorized bug-bounty evidence packets.
+# Scope-First Bug Bounty Automation Platform — Public Sanitized Edition
 
-This repository is intentionally **methodology-only**:
+This repository is a broad public-clean export of an internal agent-assisted bug-bounty automation workspace.
+It keeps the project structure, scripts, schemas, templates, policies, lab modules, tests, and sanitized notes where possible.
 
-- no private program names, scope files, credentials, screenshots, or findings;
-- no exploit payload collections or target-touching automation;
-- no raw scan output, loot, cookies, tokens, OTPs, or account data;
-- no claim that any live target is authorized by these docs.
+Export policy used for this edition:
 
-The source project that inspired this public edition is private. The content here
-has been rewritten into reusable patterns: safety contracts, handoff structure,
-multi-agent routing, memory governance, proof-quality gates, and dry-run
-templates.
+- Source tracked files inspected: 1276
+- Meaningful non-runtime tracked candidates: 1136
+- Public text files exported after redaction: 1107
+- Skipped mainly binary/raw evidence files: 29
 
-## What this helps with
+Redacted or removed:
 
-1. Keep local lab learning fast without letting it leak into live targets.
-2. Separate "think like an attacker" from "execute only bounded, authorized proof".
-3. Make autonomous agents fail closed on scope, credentials, customer data, and
-   report submission.
-4. Preserve useful proof patterns as reusable capability bundles instead of
-   ad-hoc notes.
-5. Route project memory so future agents see the current truth without copying
-   secrets into global memory or public repos.
+- personal host paths and usernames;
+- exact target/program names and domains;
+- account aliases and credential-like material;
+- VM names and host-only lab IPs;
+- exact advisory IDs tied to private run history;
+- raw logs, scans, loot, screenshots, browser state, and local runtime caches.
 
-## Repository map
+Nothing here authorizes live testing. Fill placeholders such as `<program-slug>`, `<in-scope-host>`, `<lab-ip>`, and `<authorized-scope-file>` only inside your own authorized environment.
 
-```text
-docs/
-  01-safety-contract.md
-  02-agent-operating-model.md
-  03-memory-and-handoff-governance.md
-  04-local-lab-proof-library.md
-  05-authorized-live-target-dry-run.md
-  06-evidence-redaction-and-report-readiness.md
-  07-recon-and-intel-cadence.md
-  08-public-export-safety.md
-templates/
-  lane_state.template.json
-  evidence_packet.template.md
-  operator_gate_card.template.md
-scripts/
-  public_safety_scan.py
+## Entry points
+
+- `SAFETY.md`, `INDEX.md`, `HERMES_PROJECT_CONTEXT.md` — sanitized project contracts.
+- `orchestration/` and `hermes/` files — agent loop/policy material where retained.
+- `scripts/` — validators, offline pipelines, local-lab modules, tests.
+- `schemas/`, `fixtures/`, `templates/` — machine-readable contracts and sample data.
+- `modules/` — reusable bundle/check/profile structure, redacted.
+- `docs/`, `public_exports/`, `notes/` — sanitized methodology and project notes.
+
+## Verify before reusing
+
+```bash
+python scripts/public_safety_scan.py .
+python -m compileall scripts
 ```
-
-## Core boundary
-
-Local, disposable, owned lab targets may be used for fast proof learning.
-Real programs, production systems, third-party accounts, callbacks, account
-mutation, high-volume automation, and final submission require explicit scope,
-policy, operator approval, and evidence-minimization controls.
-
-If a document in this repo seems to authorize live testing by itself, read it as
-`blocked-awaiting-scope`. It is a planning artifact, not permission.

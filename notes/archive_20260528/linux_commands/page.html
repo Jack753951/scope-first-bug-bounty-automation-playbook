@@ -1,0 +1,278 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Linux commands</title>
+</head><body>開啟(關閉)SSH連結:<ul><li style="list-style-type: none">sudo systemctl start ssh &nbsp;</li>
+<li style="list-style-type: none">sudo systemctl stop ssh &nbsp;</li>
+</ul>
+顯示目前路徑:<ul><li style="list-style-type: none">pwd</li>
+</ul>
+查看檔案:<ul><li style="list-style-type: none">cat</li>
+</ul>
+更改路徑:<ul><li style="list-style-type: none">cd ..&#09;&#09;前一個路徑</li>
+<li style="list-style-type: none">cd /dir1/dir2</li>
+</ul>
+查看路徑檔案:<ul><li style="list-style-type: none">ls</li>
+</ul>
+查看路徑檔案(包含權限和隱藏路徑):<ul><li style="list-style-type: none">ls -la</li>
+</ul>
+創造路徑(當前路徑):<ul><li style="list-style-type: none">mkdir dirname</li>
+</ul>
+刪除路徑(當前路徑):<ul><li style="list-style-type: none">rmdir dirname</li>
+</ul>
+修改檔案、路徑權限:<ul><li style="list-style-type: none">chmod +x hack.py</li>
+</ul>
+只給自己 (User)：<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; chmod u+x hack.py<br/>
+只給群組 (Group)： &nbsp; &nbsp; &nbsp; &nbsp; <br/>
+&nbsp; &nbsp; &nbsp; &nbsp; chmod g+x hack.py <br/>
+只給其他人 (Others)：<br/>
+&nbsp; &nbsp; &nbsp; &nbsp; chmod o+x hack.py <br/>
+回聲:<ul><li style="list-style-type: none">1.新增內容進檔案:</li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">echo '內容' &gt; 檔案.py</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">2.追加內容進檔案(最後一行):</li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">echo '內容' &gt;&gt; 檔案.py</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">3.$系列:</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none">echo $USER</li>
+<li style="list-style-type: none">確認你現在是誰（例如：kali）</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none">echo $PATH</li>
+<li style="list-style-type: none">看系統去哪裡找執行檔（資安必看，防止劫持）</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">echo $SHELL</li>
+<li style="list-style-type: none">確認你目前用的是 zsh 還是 bash</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">4.字串處理:</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><b>換行顯示</b>：echo -e "第一段\n第二段"</li>
+<li style="list-style-type: none"><b>關鍵</b>：-e 是啟動開關，讓系統看得懂 \n（換行）或 \t（縮排）</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>密碼處理</b>：echo -n "admin"</li>
+<li style="list-style-type: none"><b>關鍵</b>：-n 會去掉結尾的換行符號。這在計算 <b>MD5</b>&nbsp;或 <b>Base64</b>&nbsp;雜湊值時非常重要，多一個換行符號結果就會完全不同</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">5.pipe &nbsp;|</li>
+</ul>
+<br/>
+&nbsp; &nbsp; &nbsp; &nbsp;&#09; &nbsp; &nbsp; &nbsp; <b>密碼/字串編碼</b>：<br/>
+&nbsp;<ul><li style="list-style-type: none"><ul><li style="list-style-type: none">echo -n "text" | base64 → 快速產生編碼</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">echo "base64_str" | base64 -d → 快速還原</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>安全雜湊計算</b>： </li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">echo -n "pass" | md5sum → 獲取 MD5 值</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><b>字串修改 (sed)</b>： </li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">echo "old text" | sed 's/old/new/' → 快速替換文字</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><b>自動化傳輸</b>： </li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">echo "command" | python3 → 不存檔直接跑 Python 代碼</li>
+</ul>
+</li>
+</ul>
+<br/>
+查找說明:<ul><li style="list-style-type: none">man commands</li>
+<li style="list-style-type: none">&nbsp;</li>
+</ul>
+<b>閱讀</b>和處理與串聯資料流：<br/>
+<ul><li style="list-style-type: none">cat (Concatenate)</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">1. 真正的核心功能：串聯檔案 (Concatenate)</li>
+<li style="list-style-type: none">這才是它名字的由來。如果你有三個碎掉的 Base64 檔案，你可以用 cat 把它們接成一個完整的檔案：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><b>指令</b>：cat part1.txt part2.txt part3.txt &gt; full_secret.txt</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>用途</b>：將多個小檔案合併成一個大檔案，這在處理被分割過的惡意程式或日誌檔（Log files）時非常有用。</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">&nbsp;2. 快速建立新檔案</li>
+<li style="list-style-type: none">不需要打開文字編輯器（如 Mousepad 或 Leafpad），你可以直接用 cat 寫入文字：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><b>指令</b>：cat &gt; note.txt</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>動作</b>：輸入指令後，螢幕會變空白，這時你可以開始打字。打完後按下 <b>Ctrl + D</b>&nbsp;儲存。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>用途</b>：在滲透測試中，當你拿到一個只有終端機的權限時，這是寫入 Payload 最快的方法。</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">3. 把內容「倒」進另一個指令（資料流處理）</li>
+<li style="list-style-type: none">這就是我們之前聊到的 <b>Pipe (|)</b>&nbsp;的好夥伴：</li>
+<li style="list-style-type: none"></li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><b>指令</b>：cat secret.b64 | base64 -d</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>原理</b>：cat 負責把二進位或文字流「噴」出來，再交給下一個工具處理。雖然直接用 base64 -d secret.b64 也可以，但用 cat 的寫法能讓你更容易串接多層過濾器。</li>
+<li style="list-style-type: none"></li>
+</ul>
+</li>
+<li style="list-style-type: none">&nbsp;4. 顯示隱形的「危險」符號</li>
+<li style="list-style-type: none">這是資安人員最愛的隱藏功能。有些惡意代碼會藏在大量的空格或換行符號裡，或者利用特殊字元讓 cat 顯示出來的結果騙過你的眼睛。</li>
+<li style="list-style-type: none"></li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><b>指令</b>：cat -A filename</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>效果</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">換行符號會顯示為 $。</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none">Tab 鍵會顯示為 ^I。</li>
+</ul>
+</li>
+</ul>
+<ul><li style="list-style-type: none"><ul><li style="list-style-type: none"><b>用途</b>：<b>辨識程式碼注入</b>。如果你發現檔案結尾出現一堆奇怪的 ^M 或空格，通常代表這份檔案被動過手腳。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">&nbsp;</li>
+</ul>
+</li>
+<li style="list-style-type: none">&nbsp;</li>
+</ul>
+<ul><li style="list-style-type: none"><b>常用參數</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">-n：顯示行號（找程式碼漏洞時好用）。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">-A：顯示所有隱形字元（包含換行、Tab）。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">-s：壓縮連續的空白行，讓畫面變整潔。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>經典組合</b>：</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">cat [檔案] | grep [關鍵字]：在檔案裡搜尋</li>
+<li style="list-style-type: none">cat &lt;&lt; EOF &gt; file.txt：在腳本中自動化產生檔案（進階用法）。</li>
+</ul>
+<br/>
+複製檔案:<ul><li style="list-style-type: none">cp filename</li>
+</ul>
+<br/>
+移動檔案:<ul><li style="list-style-type: none">mv filename directory/</li>
+<li style="list-style-type: none"></li>
+</ul>
+搜尋檔案:<ul><li style="list-style-type: none">locate filename</li>
+</ul>
+情報索引工具:<ul><li style="list-style-type: none">sudo updatedb &amp;&amp; locate filename &nbsp;(&amp;&amp;代表前一個成功再執行)</li>
+<li style="list-style-type: none"></li>
+</ul>
+指令組合技：Pipe vs Chain<br/>
+<ul><li style="list-style-type: none"><b>| (Pipe)</b>：<b>資料傳遞</b>。將 A 的輸出內容丟給 B 處理。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><i>範例</i>：cat file.txt | grep "secret"</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>&amp;&amp; (AND)</b>：<b>邏輯執行</b>。A 成功執行完成後，才執行 B。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><i>範例</i>：sudo updatedb &amp;&amp; locate my_payload</li>
+</ul>
+</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>|| (OR)</b>：<b>失敗備援</b>。A 執行失敗了，才執行 B。</li>
+<li style="list-style-type: none"></li>
+</ul>
+移動檔案:<ul><li style="list-style-type: none">mv filename directory/</li>
+</ul>
+<br/>
+&nbsp;指令：adduser<ul><li></li>
+<li><b>功能</b>：以互動方式新增系統使用者。</li>
+<li></li>
+<li></li>
+<li><b>常用流程</b>：</li>
+<li></li>
+<li style="list-style-type: none"><ul><li></li>
+<li>sudo adduser [username]：新增帳號。</li>
+<li></li>
+<li>sudo deluser --remove-home [username]：刪除帳號並移除家目錄。</li>
+<li></li>
+</ul>
+</li>
+<li><b>相關檔案</b>：</li>
+<li></li>
+<li style="list-style-type: none"><ul><li>/etc/passwd：使用者基本資訊。</li>
+<li></li>
+<li>/etc/shadow：加密後的密碼（只有 root 可讀）。</li>
+<li></li>
+<li>/etc/group：群組資訊。</li>
+<li></li>
+</ul>
+</li>
+</ul>
+grep<b>指令用法說明</b><ul><span style="font-family: Google Sans Text"><li style="list-style-type: none">grep "關鍵字" &#09;檔案在指定檔案中搜尋關鍵字。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">grep -i "abc"&#09; 檔案<b>忽略大小寫</b>（Ignore case），找 ABC 或 abc 都行。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">grep -r "密碼" &#09;/etc/<b>遞迴搜尋</b>（Recursive），搜尋 /etc/ 底下所有子資料夾的檔案。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">grep -n "root"&#09; 檔案顯示符合內容的<b>行號</b>（Line number）。</li>
+<li style="list-style-type: none"></li>
+</span><li style="list-style-type: none"><span style="font-family: Google Sans Text">grep -c "kali"&#09; 檔案計算出現次數（Count），不看內容只看次數。</span>&nbsp; </li>
+</ul>
+找ip對應的mac地址<ul><li style="list-style-type: none">arp </li>
+</ul>
+<br/>
+touch 核心指南 :<b>修改時間戳記</b>：存取 (atime) 與 修改 (mtime)。 &nbsp;<ul><li style="list-style-type: none">1.</li>
+<li style="list-style-type: none"># 1. 先看一個檔案的詳細時間資訊</li>
+<li style="list-style-type: none">stat /etc/passwd</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"># 2. 觸摸它</li>
+<li style="list-style-type: none">touch /etc/passwd</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"># 3. 再看一次，你會發現 Access 和 Modify 時間變成了「現在」</li>
+<li style="list-style-type: none">stat /etc/passwd</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none">2.</li>
+<li style="list-style-type: none">touch -t 來指定一個<b>過去或未來</b>的時間。</li>
+<li style="list-style-type: none"><ul><li style="list-style-type: none"><b>指令範例</b>：touch -t 202401011200 sample.txt</li>
+</ul>
+</li>
+<li style="list-style-type: none">3.</li>
+<li style="list-style-type: none"><b>想一次生出一堆測試檔案？</b>&nbsp;用 touch file{1..100}.txt &nbsp;</li>
+</ul>
+檔案修改器<ul><li style="list-style-type: none">1.<b><span style="font-family: Google Sans Text">Mousepad</span></b><span style="font-family: Google Sans Text">GUI有滑鼠、好操作、顏色清楚。只能在有桌面環境（GUI）時使用。</span></li>
+<span style="font-family: Google Sans Text"><li style="list-style-type: none"><b>2.Nano</b>CLI在終端機就能用，簡單好記。功能簡單，大檔案很難改。</li>
+</span><li style="list-style-type: none"><span style="font-family: Google Sans Text"><b>3.Vim / Vi</b>CLI強大到可以飛天，駭客標配。學習曲線極高（連怎麼關掉都要上網查）。</span>&nbsp;</li>
+</ul>
+<ul><li style="list-style-type: none"><b>一般模式 (Normal Mode)</b>：這是預設模式。按 d 是刪除，按 y 是複製。你不是在打字，是在「下指令」。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>插入模式 (Insert Mode)</b>：按 i 之後，才變成像記事本一樣可以打字。</li>
+<li style="list-style-type: none"></li>
+<li style="list-style-type: none"><b>指令列模式 (Command Mode)</b>：按 : 之後，可以存檔退出（:wq）或搜尋替換。</li>
+</ul>
+<ul><li style="list-style-type: none">&nbsp;</li>
+<li style="list-style-type: none"></li>
+</ul>
+<ul><li style="list-style-type: none">&nbsp;</li>
+</ul>
+<ul><li style="list-style-type: none"></li>
+</ul>
+<br/>
+</body></html>

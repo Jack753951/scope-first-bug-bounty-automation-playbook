@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0",
+  "updated_at": "2026-05-29",
+  "lanes": [
+    {
+      "program_slug": "<program-slug>",
+      "lane_id": "kong_source_policy_passive_intake",
+      "status": "blocked_operator_action",
+      "priority": "high",
+      "source": "H1 policy/scope page candidate after <program-redacted> auth unavailable",
+      "state_file": "programs/<program-slug>/lane_state.json",
+      "next_action": "Operator must verify the <program-slug> Konnect signup email for the owned H1 alias or continue manually in noVNC; Hermes stops at email verification/OTP/CAPTCHA gates and must not proof-test or create API-token/OAuth/webhook/integration resources."
+    }
+  ],
+  "last_removed_lane": {
+    "program_slug": "<program-slug>",
+    "lane_id": "braze_dedicated_api_dashboard_access_control",
+    "removed_at": "2026-05-29T13:35:00Z",
+    "reason": "PARK/auth unavailable: env-backed owned-account login returned invalid credentials and no self-signup verification-send path was available."
+  }
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "low",
+    "evidence": [
+      {
+        "id": "p3_1_curated.non_finding_control.candidate.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.non_finding_control.candidate",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: no remediation is required unless a human reviewer finds contradictory evidence.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.non_finding_control",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-non_finding_control"
+    },
+    "status": "candidate",
+    "summary": "Synthetic evidence shows expected benign behavior; low confidence keeps it out of downstream escalation as a control.",
+    "target": {
+      "type": "domain",
+      "value": "control.example.test"
+    },
+    "title": "P3.1 synthetic non-finding control candidate",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: confirm this remains a benign control observation and keep it out of reporting."
+  }
+]

@@ -1,0 +1,38 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "review_packet_self_test.invalid_finding.empty_remediation",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "self_test.candidate_review_packet",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "self-test.candidate-review-packet"
+    },
+    "status": "candidate",
+    "summary": "Self-test fixture asserting that findings missing required content fields are excluded from findings[] with FINDING_VALIDATION_FAILED.",
+    "target": {
+      "type": "domain",
+      "value": "selftest.example.test"
+    },
+    "title": "Self-test: invalid finding (empty remediation)",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Self-test fixture only: remediation is intentionally empty to trip validate_data."
+  }
+]

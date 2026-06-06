@@ -1,0 +1,74 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "review_packet_self_test.forbidden_status.confirmed",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Self-test fixture: never escalate status from candidate to confirmed in automated output.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "self_test.candidate_review_packet",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "self-test.candidate-review-packet"
+    },
+    "status": "confirmed",
+    "summary": "Self-test fixture asserting that the builder rejects findings whose status has already been promoted.",
+    "target": {
+      "type": "domain",
+      "value": "selftest.example.test"
+    },
+    "title": "Self-test: forbidden status confirmed",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Self-test fixture only: this finding intentionally violates the FORBIDDEN_STATUSES contract."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "review_packet_self_test.forbidden_status.candidate_companion",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Companion candidate that should survive when the sibling forbidden-status finding is rejected.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "self_test.candidate_review_packet",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "self-test.candidate-review-packet"
+    },
+    "status": "candidate",
+    "summary": "Self-test fixture providing a valid candidate sibling to ensure the builder excludes only the forbidden one.",
+    "target": {
+      "type": "domain",
+      "value": "selftest.example.test"
+    },
+    "title": "Self-test: forbidden status sibling",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Self-test fixture only: this candidate must validate cleanly and remain in findings[]."
+  }
+]

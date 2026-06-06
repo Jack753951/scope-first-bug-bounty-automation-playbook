@@ -1,0 +1,30 @@
+{
+  "verdict": "PASS_WITH_RECOMMENDATIONS",
+  "summary": "Claude Code reviewed P2-8 direction after reading .hermes.md and relevant module/profile files. The direction is sound for safe, extensible, policy-gated authorized bug bounty automation. Current validation already fails closed and remains offline-only, but profile/selection failures are still primarily free-form strings. Stable error codes and clearer profile contract documentation are the right next step before Hermes logs, reports, scheduling, or agent triage depend on these outputs.",
+  "recommendations": [
+    "Use additive structured issue payloads: keep existing errors/warnings list[str], add error_codes/warning_codes and error_details/warning_details.",
+    "Recommended issue shape: code, message, severity, component, path, field, profile_id, module_id, plus optional context fields.",
+    "Centralize stable constants; avoid scattered string literals and do not derive codes by parsing message text.",
+    "Treat loader failures distinctly: PROFILE_ID_INVALID, PROFILE_NOT_FOUND, PROFILE_PATH_INVALID, PROFILE_READ_ERROR, PROFILE_MALFORMED_JSON, PROFILE_SCHEMA_INVALID, PROFILE_ID_MISMATCH.",
+    "Treat selection/constraint failures distinctly: PROFILE_MEMBERSHIP_MISMATCH, PROFILE_CONSTRAINT_MODE, PROFILE_CONSTRAINT_RISK, PROFILE_CONSTRAINT_TARGET_TYPE, PROFILE_CONSTRAINT_TECHNIQUE_TAG, PROFILE_CONSTRAINT_EXECUTION, PROFILE_CONSTRAINT_OUTPUT, PROFILE_CONSTRAINT_SAFETY_GATE, PROFILE_EMPTY_SELECTION.",
+    "In discovery, non-member manifests should be structured exclusions/warnings rather than hard errors unless nothing remains selected.",
+    "Document audit-baseline as conservative offline dry-run semantics, not permanent product shape."
+  ],
+  "safety_assessment": {
+    "status": "SAFE_DIRECTION",
+    "reasoning": "P2-8 is offline schema/config/test/documentation work only and does not require live scans, external targets, scanner/module execution, subprocess launch, network clients, callbacks, fuzzing, brute force, credential handling, generated reports, scheduler/deployment changes, or config/scope.txt changes.",
+    "pitfalls_to_avoid": [
+      "Do not add tests that invoke real scanners, module code, network clients, subprocess execution, callbacks, or target-touching behavior.",
+      "Do not weaken audit-baseline constraints while adding error codes.",
+      "Do not change config/scope.txt or use live target examples in tests.",
+      "Do not silently convert non-member skips into hard discovery errors unless no module remains selected."
+    ]
+  },
+  "acceptance_criteria": [
+    "Documented stable profile-selection error-code vocabulary exists.",
+    "Runner/discovery JSON payloads expose deterministic codes while preserving human-readable messages.",
+    "Representative tests cover missing profile, malformed JSON, schema-invalid/unsafe profile, profile_id mismatch, risk/target/technique/execution violations, explicit membership mismatch, and empty discovery selection.",
+    "Docs explain module profile contract, audit-baseline semantics, safety envelope, and example failure codes.",
+    "All tests remain offline-only and no safety boundary files/settings are changed."
+  ]
+}

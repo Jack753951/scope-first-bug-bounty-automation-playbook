@@ -1,0 +1,9 @@
+{
+  "candidate_flag": "picoCTF{timeout_guess}",
+  "candidate_sources": [
+    "solver"
+  ],
+  "claimed_confidence": "medium",
+  "expected_format_regex": "^picoCTF\\{.+\\}$",
+  "solver_timed_out": true
+}

@@ -1,0 +1,79 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "braze_dedicated_api_dashboard_access_control",
+  "lane_title": "<program-redacted> dedicated bug-bounty dashboard/API access-control sprint",
+  "autonomy_level": "A2",
+  "operator_decision": "PARK",
+  "machine_state": "PARKED",
+  "state": "PARKED",
+  "status": "parked",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-slug>",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "global_scope_entries": [
+      "bug-bounty-rest.k8s.tools-001.d-use-1.<program-redacted>-dev.com",
+      "bug-bounty-dashboard.k8s.tools-001.d-use-1.<program-redacted>-dev.com",
+      "bug-bounty-api.k8s.tools-001.d-use-1.<program-redacted>-dev.com"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "passive_program_policy_and_scope_review",
+      "offline_dry_run_scope_gate",
+      "manual_low_speed_navigation_to_exact_in_scope_bug_bounty_hosts_after_dry_run",
+      "owned_account_signup_flow_until_email_otp_captcha_password_secret_gate",
+      "post_auth_owned_account_surface_map_only_after_operator_completes_auth_gate",
+      "bundle_precondition_review_for_auth_role_removed_user_api_ui_mismatch_owned_object_idor"
+    ],
+    "blocked_actions": [
+      "testing_any_non_listed_braze_domain",
+      "scanner_fuzzer_dast_or_large_scale_discovery",
+      "ssrf_testing",
+      "dos_or_resource_exhaustion",
+      "customer_employee_or_non_owned_data_access",
+      "api_token_creation_or_storage_without_explicit_operator_approval",
+      "webhook_integration_callback_oast_tunnel_activation",
+      "credential_cookie_token_otp_password_or_verification_link_storage",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "Use operator-owned H1 alias account pattern only. Hermes may fill non-secret fields when safe, but operator handles password/email confirmation/OTP/CAPTCHA and any secret. Do not store aliases, passwords, cookies, tokens, API keys, or verification links in repo artifacts."
+  },
+  "operator_gates": [
+    "operator completes H1 alias account email confirmation/password/OTP/CAPTCHA if required",
+    "any API-token creation or inspection beyond metadata",
+    "any webhook/integration/callback/OAST/tunnel activation",
+    "operator final approval before report promotion or submission"
+  ],
+  "stop_conditions": [
+    "dry_run_scope_gate_fails_or_policy_scope_ambiguity_appears",
+    "registration_requires_secret_email_otp_captcha_or_password_handling_by_agent",
+    "account_warning_bot_warning_rate_limit_or_anti_abuse_challenge_appears",
+    "customer_employee_confidential_or_non_owned_data_appears",
+    "token_cookie_api_key_or_verification_link_capture_would_be_needed",
+    "SSRF_or_scanner_or_resource_stress_would_be_needed",
+    "candidate_is_report_packet_ready_and_needs_operator_final_submission_approval"
+  ],
+  "next_autonomous_action": "<program-redacted> parked: exact in-scope hosts reached, but H1 alias/env-backed login attempts returned invalid credentials and no self-signup/verification-send path was available. Do not resume unless operator provides a working <program-redacted> bug-bounty account or signup/invite route. Next lane should use passive policy/scope intake first.",
+  "next_operator_action": "If <program-redacted> later becomes available, provide/complete a valid owned <program-redacted> bug-bounty account in Kali/noVNC; otherwise continue with the next lane.",
+  "artifacts": {
+    "dry_run_packet": "programs/<program-slug>/notes/dry_run_gate_20260529_clean/dry_run.log",
+    "evidence_dir": "programs/<program-slug>/notes/",
+    "latest_evidence": "programs/<program-slug>/notes/2026-05-29_dashboard_login_gate.md",
+    "latest_runtime_evidence": "<artifact-output-dir>/browser_state/h1-<program-redacted>-inc_20260529T132426Z.png"
+  },
+  "learning": {
+    "preview_references": [
+      "handoff/pending_intake.json",
+      "<artifact-output-dir>/browser_state/h1-<program-redacted>-inc_20260529T122616Z.png",
+      "programs/<program-slug>/notes/2026-05-29_dashboard_login_gate.md",
+      "programs/<program-slug>/notes/dry_run_gate_20260529_clean/dry_run.log",
+      "programs/<program-slug>/notes/policy_intake_20260529.json"
+    ],
+    "next_preview_seed": "<program-redacted> parked due account acquisition failure: env-backed email/password was accepted by helper but <program-redacted> returned Invalid email or password; REST/API exact hosts only redirect/suggest dashboard. Preserve auth-role/API/UI bundles for future if a valid account appears.",
+    "reusable_capability": "Dedicated bug-bounty SaaS API/dashboard target intake with exact-host scope gate."
+  },
+  "updated_at": "2026-05-29"
+}

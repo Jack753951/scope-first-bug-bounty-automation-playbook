@@ -1,0 +1,105 @@
+{
+  "entries": [
+    {
+      "allowed_response_postures": [
+        "needs_asset_reconciliation"
+      ],
+      "gap_code": "ASSET_ROLE_AMBIGUOUS",
+      "id": "p3_12_prompt_asset_role_ambiguous",
+      "prompt_text": "Which asset role (source, execution, target, affected, destination) is ambiguous at this stage, and what synthetic evidence would distinguish those roles?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_COMMAND_LINE",
+      "id": "p3_12_prompt_missing_command_line",
+      "prompt_text": "Is the command line evidence complete enough to attribute the process action to a specific synthetic user account or parent process at this stage?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_DESTINATION_PATH",
+      "id": "p3_12_prompt_missing_destination_path",
+      "prompt_text": "What synthetic destination path or share location would close the asset movement gap for this stage?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_second_pass_hunt",
+        "not_report_ready"
+      ],
+      "gap_code": "MISSING_FOLLOW_ON_IMPLICATION",
+      "id": "p3_12_prompt_missing_follow_on_implication",
+      "prompt_text": "Which follow-on hunt step would let a reviewer describe the next implication without overreaching the available synthetic evidence?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_HASH",
+      "id": "p3_12_prompt_missing_hash",
+      "prompt_text": "Is a synthetic file hash captured for the artifact involved at this stage, and does it follow the documented fixture-prefix convention?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_HOST_IOC",
+      "id": "p3_12_prompt_missing_host_ioc",
+      "prompt_text": "What host indicator is missing or under-specified for this stage, and would adding a reserved-namespace hostname close the evidence bucket?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_NETWORK_IOC",
+      "id": "p3_12_prompt_missing_network_ioc",
+      "prompt_text": "What network indicator is missing for this stage, and would a reserved-range address close the evidence bucket?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_more_evidence"
+      ],
+      "gap_code": "MISSING_SOURCE_URL",
+      "id": "p3_12_prompt_missing_source_url",
+      "prompt_text": "Which synthetic source location is missing for this stage, expressed as a scheme-less reserved-namespace hostname plus path?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_second_pass_hunt",
+        "not_report_ready"
+      ],
+      "gap_code": "NEEDS_SECOND_PASS_HUNT",
+      "id": "p3_12_prompt_needs_second_pass_hunt",
+      "prompt_text": "Which second-pass hunt question would let a reviewer revisit asset, timestamp, or hash buckets before any further reasoning is added?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_mapping_review"
+      ],
+      "gap_code": "PARENT_TECHNIQUE_TOO_BROAD",
+      "id": "p3_12_prompt_parent_technique_too_broad",
+      "prompt_text": "Does the current mapping name only a parent technique when the synthetic evidence already supports a more specific sub-technique label?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_mapping_review"
+      ],
+      "gap_code": "TACTIC_MISMATCH",
+      "id": "p3_12_prompt_tactic_mismatch",
+      "prompt_text": "Does the tactic label fit the timestamp role and asset interaction at this stage, or would a different tactic better describe the synthetic evidence?"
+    },
+    {
+      "allowed_response_postures": [
+        "needs_asset_reconciliation",
+        "needs_mapping_review"
+      ],
+      "gap_code": "TIMESTAMP_EVENT_ROLE_MISMATCH",
+      "id": "p3_12_prompt_timestamp_event_role_mismatch",
+      "prompt_text": "Does the event timestamp role label align with the asset interaction observed at this stage?"
+    }
+  ],
+  "schema_marker": "soc_reviewer_gap_catalog_v0_trial",
+  "version": 0
+}

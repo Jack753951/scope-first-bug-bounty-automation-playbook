@@ -1,0 +1,52 @@
+{
+  "schema_version": "module_manifest/1.0",
+  "module_id": "level1.robots_securitytxt_metadata",
+  "version": "0.1.0",
+  "name": "Level 1 Robots and Security.txt Metadata",
+  "description": "Offline manifest for bounded robots.txt and security.txt metadata observation. These files are expected public metadata and not findings by themselves.",
+  "risk_level": "low",
+  "target_types": [
+    "url",
+    "domain"
+  ],
+  "technique_tags": [
+    "passive.content_metadata"
+  ],
+  "execution": {
+    "supports_dry_run": true,
+    "requires_network": false,
+    "network_access": "none",
+    "target_touching": false,
+    "destructive": false,
+    "intrusive": false,
+    "default_profile": "audit-baseline"
+  },
+  "external_tools": [
+    {
+      "name": "python-stdlib",
+      "required": true,
+      "version_constraint": ">=3.11"
+    }
+  ],
+  "output_contracts": {
+    "run_schema": "run/1.0",
+    "finding_schema": "finding/1.0",
+    "evidence_schema": "evidence/1.0",
+    "emits_findings": false,
+    "emits_evidence": false
+  },
+  "safety_gates": {
+    "require_policy_decision": true,
+    "require_scope_match": true,
+    "manual_verification_required": true,
+    "scanner_output_only": true,
+    "store_redacted_evidence_only": true,
+    "stores_raw_secrets": false,
+    "writes_to_loot": false,
+    "allows_destructive_actions": false,
+    "allows_oast_callbacks": false
+  },
+  "references": [
+    "https://owasp.org/www-project-web-security-testing-guide/"
+  ]
+}

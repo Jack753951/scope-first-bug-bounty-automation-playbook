@@ -1,0 +1,28 @@
+# Trial verifier descriptor: oracle_replay_kali
+#
+# Status: TRIAL INPUT for P2.18 CTF verifier metadata trial. NON-BINDING.
+# Not a schema, not a registered contract, not consumed by any runtime.
+# Promotion to a versioned JSON Schema is deferred to P2.19+.
+#
+# Models the Clouds lesson: an active-service oracle replay verifier
+# that requires Kali-side execution against the lab's authorized
+# stateful oracle. The descriptor must NOT carry any host execution
+# affordance (no command, exec, callback_url, etc.) - the descriptor
+# only declares intent, not wiring.
+id: oracle-replay-kali
+category: web
+mode: active-service
+requires_scope: true
+destructive: false
+uses_external_service: true
+oracle_required: true
+kali_required: true
+confidence: candidate
+second_review_triggers:
+  - external_source_only
+  - solver_timeout
+  - ui_or_checker_only
+evidence_outputs:
+  - raw_artifact
+  - candidate
+  - verification_log

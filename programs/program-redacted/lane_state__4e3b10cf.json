@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-redacted>",
+  "lane_id": "campaign_core_teammate_auth_surface",
+  "lane_title": "<program-redacted> campaign Core teammate surface precondition review",
+  "autonomy_level": "A2",
+  "operator_decision": "KILL",
+  "machine_state": "NO_FINDING_CLOSEOUT",
+  "state": "NO_FINDING_CLOSEOUT",
+  "status": "no_finding",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/<program-redacted>",
+    "scope_file": "programs/<program-redacted>/scope.json",
+    "dry_run_gate": "passed",
+    "global_scope_entries": [
+      "*.indriverapp.com",
+      "*.indriver.io",
+      "cargo.<program-redacted>.com",
+      "couriers.<program-redacted>.com",
+      "<program-redacted>.com",
+      "intercity.<program-redacted>.com",
+      "teammate.indriver.io"
+    ],
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "h1_program_scope_review",
+      "single_low_speed_public_landing_page_checks_with_X_HackerOne_Research_header",
+      "passive_frontend_resource_review_without_opening_third_party_documents"
+    ],
+    "blocked_actions": [
+      "oauth_company_identity_login_without_operator_approval",
+      "support_or_employee_contact",
+      "opening_embedded_third_party_docs_or_non_owned_resources",
+      "customer_or_non_owned_data_access",
+      "scanner_fuzzer_dast_or_endpoint_bruteforce_without_explicit_approval_and_caps",
+      "dos_ddos_or_resource_exhaustion",
+      "credential_token_cookie_api_key_storage",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "official_self_serve_owned_account_or_operator_approved_google_oauth_required; do not use employee/customer identities or store secrets/tokens"
+  },
+  "operator_gates": [
+    "official_test_credentials_or_self_serve_owned_account_path",
+    "operator_approval_for_google_oauth_or_company_identity_setup_if_needed",
+    "operator_final_approval_before_report_submission"
+  ],
+  "stop_conditions": [
+    "auth_requires_company_google_oauth_without_official_test_identity",
+    "proof_requires_non_owned_employee_or_customer_data",
+    "proof_requires_opening_third_party_docs_or internal resources not needed for minimal proof",
+    "no_positive_negative_owned_controls"
+  ],
+  "next_autonomous_action": "Lane closed 2026-05-28 as KILL during single-agent restructure: teammate/Core surface requires high-operator-cost identity/OAuth setup, no owned controls, low first-bounty fit. Campaign-freshness signal preserved in learning.reusable_capability for future reference.",
+  "next_operator_action": "No action required. Lane closed. To reopen would require: operator-supplied official test identity/OAuth, plus a fresh lane plan with a specific bundle in mind.",
+  "artifacts": {
+    "run_card": "programs/<program-redacted>/run_card.md",
+    "scope_file": "programs/<program-redacted>/scope.json",
+    "dry_run_packet": "programs/<program-redacted>/run_card.md",
+    "evidence_dir": "programs/<program-redacted>"
+  },
+  "updated_at": "2026-05-28",
+  "learning": {
+    "preview_references": [
+      "programs/<program-redacted>/run_card.md",
+      "programs/<program-redacted>/scope.json"
+    ],
+    "next_preview_seed": "<program-redacted> lane is parked because teammate/core surfaces require high-operator-cost identity/OAuth controls before owned positive/negative controls exist.",
+    "reusable_capability": "Campaign freshness can raise priority, but live proof lanes still require self-serve owned controls before operator cost. Core services campaign, double payouts, ends in 30 days"
+  }
+}

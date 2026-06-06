@@ -1,0 +1,10 @@
+{
+  "slug": "old-writeup-reuse",
+  "candidate_flag": "picoCTF{from_old_writeup}",
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["external_writeup"],
+  "candidate_count": 1,
+  "solver_timed_out": false,
+  "checker_only_success": false,
+  "claimed_confidence": "medium"
+}

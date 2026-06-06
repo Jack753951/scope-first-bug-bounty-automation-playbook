@@ -1,0 +1,88 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "p3_1_curated.chained_precondition.missing_header.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.chained_precondition.missing_header",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.chained_precondition",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-chained_precondition"
+    },
+    "status": "candidate",
+    "summary": "Synthetic prerequisite observation: a defensive header is absent and may enable a later browser-side condition.",
+    "target": {
+      "type": "domain",
+      "value": "chain-app.example.test"
+    },
+    "title": "P3.1 synthetic chained precondition A",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: review whether this prerequisite is independently meaningful or only relevant when paired with the second candidate."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [
+      {
+        "id": "p3_1_curated.chained_precondition.browser_condition.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.chained_precondition.browser_condition",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.chained_precondition",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-chained_precondition"
+    },
+    "status": "candidate",
+    "summary": "Synthetic follow-on observation depends on candidate A being exploitable; the current chain should not model that dependency.",
+    "target": {
+      "type": "domain",
+      "value": "chain-app.example.test"
+    },
+    "title": "P3.1 synthetic chained precondition B",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: this candidate depends on the missing-header prerequisite; human review must decide whether the chain is actionable."
+  }
+]

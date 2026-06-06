@@ -1,0 +1,9 @@
+{
+  "fixture_version": "security_headers_baseline_input/1",
+  "target": {
+    "type": "url",
+    "value": "https://lab.local/redirect"
+  },
+  "status_code": 301,
+  "headers": []
+}

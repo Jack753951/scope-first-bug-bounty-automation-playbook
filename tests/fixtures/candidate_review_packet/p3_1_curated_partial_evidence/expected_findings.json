@@ -1,0 +1,45 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "low",
+    "evidence": [
+      {
+        "id": "p3_1_curated.partial_evidence.candidate.redacted_http_exchange",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789"
+      }
+    ],
+    "id": "p3_1_curated.partial_evidence.candidate",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/"
+    ],
+    "remediation": "Synthetic fixture only: add a human-authored remediation note after authorized manual review; do not draft a submission from this candidate.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "p3_1_curated.partial_evidence",
+      "policy_decision_sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "run_id": "p3-1-curated-partial_evidence"
+    },
+    "status": "candidate",
+    "summary": "Synthetic redacted exchange is attached, but the narrative says canonical request metadata is incomplete; confidence intentionally remains low.",
+    "target": {
+      "type": "domain",
+      "value": "partial-evidence.example.test"
+    },
+    "title": "P3.1 synthetic partial evidence candidate",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Synthetic fixture only: redacted exchange exists, but canonical request metadata is incomplete; collect authorized manual notes before escalation."
+  }
+]

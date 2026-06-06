@@ -1,0 +1,4 @@
+date,program,platform,target,cve,severity,status,bounty_usd,notes
+# status options: submitted | triaged | accepted | duplicate | informational | resolved | paid | n/a
+# example row (delete after first real submission):
+2026-05-15,Example Co.,<bug-bounty-platform>,api.example.com,<specific-cve-id>,Critical,submitted,,first-to-report attempt; nginx 1.24.0 fingerprint

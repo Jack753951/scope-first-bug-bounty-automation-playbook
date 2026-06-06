@@ -1,0 +1,135 @@
+{
+  "case_id": "P3.11-SYNTHETIC-SOC-001",
+  "description": "Synthetic offline incident timeline for evidence-bucket completeness review. This is fixture-only data, not a finding and not an IOC feed.",
+  "stages": [
+    {
+      "stage_index": 1,
+      "stage_label": "Initial download clue",
+      "timestamps": {
+        "event_observed": "2026-05-20T09:10:00Z",
+        "event_role": "download"
+      },
+      "assets": {
+        "source_asset": "mail-gateway.example",
+        "execution_asset": "workstation-01.example",
+        "target_asset": "workstation-01.example",
+        "affected_asset": "workstation-01.example",
+        "destination_asset": "fileshare-01.example"
+      },
+      "user_account": "synthetic.user01",
+      "process_image": "C:\\Example\\Browser\\browser.exe",
+      "command_line": "browser.exe --profile synthetic-profile --download sample-note.txt",
+      "host_ioc": ["workstation-01.example"],
+      "network_ioc": ["192.0.2.10", "2001:db8::10"],
+      "file_hashes": ["0000aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"],
+      "source_uri": "download.example/path/sample-note.txt",
+      "destination_path": "C:\\Example\\Downloads\\sample-note.txt",
+      "attack_tactic": "Initial Access",
+      "attack_technique": "Phishing",
+      "attack_subtechnique": "Spearphishing Link",
+      "evidence_confidence": "medium",
+      "description": "Reviewer can see a plausible download event, but the chain still needs stronger source and host evidence before any conclusion is promoted.",
+      "gap_codes": ["MISSING_HOST_IOC", "MISSING_SOURCE_URL"],
+      "status": "needs_more_evidence",
+      "next_pivot_query": "Human reviewer prompt: find adjacent synthetic proxy and endpoint events around the observed download timestamp."
+    },
+    {
+      "stage_index": 2,
+      "stage_label": "Execution context ambiguity",
+      "timestamps": {
+        "event_observed": "2026-05-20T09:13:22Z",
+        "event_role": "execution"
+      },
+      "assets": {
+        "source_asset": "workstation-01.example",
+        "execution_asset": "workstation-01.example",
+        "target_asset": "workstation-01.example",
+        "affected_asset": "workstation-01.example",
+        "destination_asset": null
+      },
+      "user_account": "synthetic.user01",
+      "process_image": "C:\\Example\\Tools\\sample-runner.exe",
+      "command_line": "sample-runner.exe --input C:\\Example\\Downloads\\sample-note.txt",
+      "host_ioc": ["workstation-01.example"],
+      "network_ioc": ["198.51.100.22"],
+      "file_hashes": ["deadbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"],
+      "source_uri": "",
+      "destination_path": "C:\\Example\\Tools\\sample-runner.exe",
+      "attack_tactic": "Execution",
+      "attack_technique": "Command and Scripting Interpreter",
+      "attack_subtechnique": "",
+      "evidence_confidence": "low",
+      "description": "The stage has process and command context but still lacks enough mapping precision to distinguish parent technique from a more specific sub-technique.",
+      "gap_codes": ["PARENT_TECHNIQUE_TOO_BROAD", "TACTIC_MISMATCH"],
+      "status": "needs_mapping_review",
+      "next_pivot_query": "Human reviewer prompt: compare synthetic process creation fields with the surrounding parent process and script interpreter clues."
+    },
+    {
+      "stage_index": 3,
+      "stage_label": "Asset role reconciliation",
+      "timestamps": {
+        "event_observed": "2026-05-20T09:16:40Z",
+        "event_role": "lateral_movement"
+      },
+      "assets": {
+        "source_asset": "workstation-01.example",
+        "execution_asset": "workstation-01.example",
+        "target_asset": "fileshare-01.example",
+        "affected_asset": "fileshare-01.example",
+        "destination_asset": "fileshare-01.example"
+      },
+      "user_account": "synthetic.svc.share",
+      "process_image": "C:\\Example\\Windows\\System32\\net.exe",
+      "command_line": "net.exe use \\\\fileshare-01.example\\archive /user:example\\synthetic.svc.share",
+      "host_ioc": ["workstation-01.example", "fileshare-01.example"],
+      "network_ioc": ["203.0.113.44"],
+      "file_hashes": ["0000cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"],
+      "source_uri": "",
+      "destination_path": "\\\\fileshare-01.example\\archive",
+      "attack_tactic": "Lateral Movement",
+      "attack_technique": "Remote Services",
+      "attack_subtechnique": "SMB Windows Admin Shares",
+      "evidence_confidence": "medium",
+      "description": "The event suggests movement between synthetic assets, but reviewer alignment depends on explicitly separating source, execution, target, affected, and destination roles.",
+      "gap_codes": ["ASSET_ROLE_AMBIGUOUS", "TIMESTAMP_EVENT_ROLE_MISMATCH"],
+      "status": "needs_asset_reconciliation",
+      "next_pivot_query": "Human reviewer prompt: reconcile source and destination asset roles before writing any implication statement."
+    },
+    {
+      "stage_index": 4,
+      "stage_label": "Follow-on implication still incomplete",
+      "timestamps": {
+        "event_observed": "2026-05-20T09:22:05Z",
+        "event_role": "impact"
+      },
+      "assets": {
+        "source_asset": "fileshare-01.example",
+        "execution_asset": "workstation-02.example",
+        "target_asset": "records-01.example",
+        "affected_asset": "records-01.example",
+        "destination_asset": "archive.example"
+      },
+      "user_account": "synthetic.analyst02",
+      "process_image": "C:\\Example\\Admin\\archive-tool.exe",
+      "command_line": "archive-tool.exe --copy example-records --destination \\\\archive.example\\review",
+      "host_ioc": ["workstation-02.example", "records-01.example", "archive.example"],
+      "network_ioc": ["192.0.2.55", "2001:db8::55"],
+      "file_hashes": ["deaddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"],
+      "source_uri": "records.example/export/example-records",
+      "destination_path": "\\\\archive.example\\review",
+      "attack_tactic": "Impact",
+      "attack_technique": "Data Manipulation",
+      "attack_subtechnique": "Stored Data Manipulation",
+      "evidence_confidence": "high",
+      "description": "The timeline has enough synthetic fields to discuss a follow-on implication, but it is intentionally kept out of report-ready posture until a second-pass hunt closes remaining evidence gaps.",
+      "gap_codes": ["MISSING_FOLLOW_ON_IMPLICATION", "NEEDS_SECOND_PASS_HUNT"],
+      "status": "needs_second_pass_hunt",
+      "next_pivot_query": "Human reviewer prompt: run a second-pass reasoning review over synthetic asset, timestamp, and file-hash buckets only."
+    }
+  ],
+  "notes": [
+    "Fixture values are synthetic and reserved for offline reviewer-alignment tests.",
+    "Gap codes and statuses are not promoted to any repository contract.",
+    "No scanner, SIEM, module, report, platform adapter, credential, or target interaction is represented by this data."
+  ]
+}

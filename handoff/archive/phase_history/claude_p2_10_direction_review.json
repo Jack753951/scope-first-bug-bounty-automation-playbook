@@ -1,0 +1,50 @@
+{
+  "phase": "P2-10",
+  "review_type": "third_party_direction_review",
+  "reviewed_at": "2026-05-16",
+  "verdict": "PASS_WITH_RECOMMENDATIONS",
+  "recommendation": "Implement a small, explicit, versioned, standard-library-only module I/O envelope contract layer before any real module execution.",
+  "rationale": [
+    "The module manifest already acts as the capability declaration layer, so a broad capability registry would duplicate manifest/profile semantics and risk drift.",
+    "The missing next contract is the normalized object future modules would receive and the constrained object they would eventually return.",
+    "This can be implemented fully offline without importing or executing module code."
+  ],
+  "recommended_files": [
+    "modules/_schema/module_input.schema.json",
+    "modules/_schema/module_result.schema.json",
+    "scripts/validate_module_io_contract.py",
+    "scripts/test_module_io_contract_schema.py",
+    "modules/_schema/README.md",
+    "scripts/README.md"
+  ],
+  "required_boundaries": {
+    "live_scans": false,
+    "external_target_interaction": false,
+    "real_module_execution": false,
+    "scanner_execution": false,
+    "module_subprocess_launch": false,
+    "network_clients_or_callbacks": false,
+    "exploit_fuzz_bruteforce_or_target_touching": false,
+    "non_empty_findings_or_evidence_emission": false,
+    "config_scope_txt_changes": false,
+    "credentials_loot_reports_scheduler_deployment_billing_or_production_changes": false
+  },
+  "acceptance_criteria": [
+    "Add versioned module_input/1.0 and module_result/1.0 contracts.",
+    "Validator is standard-library-only and fail-closed.",
+    "P2-10 allows only dry-run, non-target-touching, no-network, no-finding/evidence contracts.",
+    "Runner remains unable to execute or import module implementation code.",
+    "Tests reject malformed, non-dry-run, target-touching, network, unsafe output, path traversal, duplicate/unknown, and completed-result cases.",
+    "Docs explicitly state the safety boundary and non-goals.",
+    "Full scripts suite, Hermes review, and independent implementation review pass."
+  ],
+  "blocking_concerns": [],
+  "what_not_to_implement": [
+    "Do not implement real module execution or check.py loading/importing.",
+    "Do not add subprocess execution for modules or scanners.",
+    "Do not add network probes, callbacks, target-touching behavior, or active/live profiles.",
+    "Do not emit real findings/evidence or generate reports.",
+    "Do not create a broad capability registry duplicating manifest/profile fields.",
+    "Do not loosen existing manifest/profile/run validators."
+  ]
+}

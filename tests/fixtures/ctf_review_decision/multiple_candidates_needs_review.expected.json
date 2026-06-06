@@ -1,0 +1,15 @@
+{
+  "confidence": "low",
+  "ignored_fields": [],
+  "input_hash": "8b60f9e293eeedf6a382bc912da030ea999fc5b06ecf5e8629d495b8470976fa",
+  "reasons": [
+    "candidate_count > 1",
+    "confidence capped at low because status is needs_second_review",
+    "multiple_candidates list has more than one entry"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "needs_second_review",
+  "triggers": [
+    "multiple_candidates"
+  ]
+}

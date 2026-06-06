@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "syfe_bbp",
+  "lane_id": "syfe_bbp_candidate_passive_intake",
+  "lane_title": "<program-slug> passive candidate promotion draft",
+  "autonomy_level": "A0",
+  "operator_decision": "PASSIVE_ONLY",
+  "machine_state": "POLICY_INTAKE",
+  "state": "POLICY_INTAKE",
+  "status": "blocked_awaiting_scope",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/syfe_bbp?type=team",
+    "scope_file": "not_created_operator_gate",
+    "global_scope_entries": [],
+    "dry_run_gate": "not_run",
+    "out_of_scope_control": "not_applicable"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "passive_program_policy_and_scope_review",
+      "public_docs_reading",
+      "candidate_packet_drafting",
+      "scope_approval_packet_drafting"
+    ],
+    "blocked_actions": [
+      "scarce private-opportunity claim requires explicit operator approval",
+      "adding_or_broadening_config_scope_without_operator_approval",
+      "testing_live_assets",
+      "scanner_fuzzer_dast_or_large_scale_discovery",
+      "account_signup_login_OTP_CAPTCHA_password_phone_payment_KYC_without_operator_gate",
+      "api_token_oauth_webhook_integration_creation_or_storage",
+      "customer_or_non_owned_data_access",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "No account/auth flow is approved by this draft. Stop before signup/login/OTP/CAPTCHA/password/phone/payment/KYC unless separately approved."
+  },
+  "operator_gates": [
+    "operator exact-scope approval before config/scope.txt or programs/<slug>/scope.json changes",
+    "operator approval before live target first-contact",
+    "operator approval before account signup/login/surface mapping",
+    "separate approval for API-token/OAuth app/webhook/integration/payment/KYC/final submit"
+  ],
+  "stop_conditions": [
+    "scope_or_policy_ambiguity",
+    "auth_or_secret_gate_appears",
+    "live_target_contact_would_be_needed",
+    "candidate_requires_A3_or_A4_technique"
+  ],
+  "next_autonomous_action": "Build or review the exact-scope approval packet; do not contact live assets.",
+  "next_operator_action": "Approve/reject exact scope entries and lane boundary before promotion to live work.",
+  "artifacts": {
+    "dry_run_packet": "not_run",
+    "evidence_dir": "programs/syfe_bbp/notes/",
+    "candidate_source": "handoff/pending_intake.json"
+  },
+  "learning": {
+    "preview_references": [
+      "handoff/pending_intake.json"
+    ],
+    "next_preview_seed": "Candidate has no extracted assets yet."
+  },
+  "updated_at": "2026-05-29"
+}

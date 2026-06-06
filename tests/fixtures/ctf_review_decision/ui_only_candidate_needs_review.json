@@ -1,0 +1,8 @@
+{
+  "candidate_flag": "picoCTF{maybe}",
+  "candidate_sources": [
+    "checker"
+  ],
+  "claimed_confidence": "medium",
+  "expected_format_regex": "^picoCTF\\{.+\\}$"
+}

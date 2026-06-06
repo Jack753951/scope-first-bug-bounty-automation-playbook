@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/kali_readiness_state.schema.json",
+  "title": "Kali readiness state",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "profile", "checked_at", "readiness", "target_touching_allowed", "checks", "conditions", "blockers", "warnings", "next_action"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "profile": {"enum": ["windows-control", "<attacker-vm>", "<victim-vm>", "other"]},
+    "checked_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"},
+    "readiness": {"enum": ["ready", "degraded", "blocked", "unknown"]},
+    "target_touching_allowed": {"const": false},
+    "checks": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/check"}},
+    "conditions": {"type": "array", "items": {"$ref": "#/$defs/condition"}},
+    "blockers": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "warnings": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "next_action": {"enum": ["none", "operator_fix", "local_precheck", "open_temp_nat_for_install", "restore_snapshot", "do_not_use"]}
+  },
+  "$defs": {
+    "check": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "status", "evidence", "command_safe_to_rerun"],
+      "properties": {
+        "name": {"enum": ["ssh", "project_mount", "python", "docker", "browser", "host_only_network", "nat_closed", "disk_space", "tooling_baseline"]},
+        "status": {"enum": ["pass", "fail", "warn", "skip", "unknown"]},
+        "evidence": {"type": "string"},
+        "command_safe_to_rerun": {"type": "boolean"}
+      }
+    },
+    "condition": {
+      "type": "object", "additionalProperties": false,
+      "required": ["type", "status", "reason", "message", "last_transition_time"],
+      "properties": {
+        "type": {"type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_-]{1,63}$"},
+        "status": {"enum": ["True", "False", "Unknown"]},
+        "reason": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1},
+        "last_transition_time": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"}
+      }
+    }
+  }
+}

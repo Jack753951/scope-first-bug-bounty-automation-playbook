@@ -1,0 +1,17 @@
+{
+  "confidence": "medium",
+  "ignored_fields": [
+    "force_verified",
+    "scope_override",
+    "status",
+    "target_url"
+  ],
+  "input_hash": "3e9b99094410ba5951df02b24a61d45b8749905373e60719e1d468b471d82608",
+  "reasons": [
+    "high confidence not inferred without verified status; downgraded to medium",
+    "ignored override fields (no-op, no network action): force_verified, scope_override, status, target_url"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "candidate",
+  "triggers": []
+}

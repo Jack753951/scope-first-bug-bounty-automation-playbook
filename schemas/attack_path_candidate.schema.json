@@ -1,0 +1,360 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/attack_path_candidate.schema.json",
+  "title": "Attack path candidate packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "program_slug",
+    "packet_id",
+    "authorization_source",
+    "product_model",
+    "candidates",
+    "decision"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "program_slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"
+    },
+    "packet_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"
+    },
+    "authorization_source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "product_model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actors",
+        "tenants_or_workspaces",
+        "roles",
+        "objects",
+        "state_transitions"
+      ],
+      "properties": {
+        "actors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "tenants_or_workspaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "api_surfaces": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "state_transitions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "minItems": 5,
+      "items": {
+        "$ref": "#/$defs/candidate"
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "selected_candidate_id",
+        "decision",
+        "reason"
+      ],
+      "properties": {
+        "selected_candidate_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "decision": {
+          "enum": [
+            "select_bounded_lane",
+            "park_preserve",
+            "blocked_awaiting_scope",
+            "blocked_awaiting_operator",
+            "switch_target",
+            "needs_local_simulation"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "next_artifact": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidate_id",
+        "title",
+        "attacker_path",
+        "impact_hypothesis",
+        "required_prerequisites",
+        "proof_boundary",
+        "proof_surrogate",
+        "stop_before",
+        "evidence_requirements",
+        "execution_status",
+        "impact_potential",
+        "surrogate_feasibility",
+        "authorization_readiness"
+      ],
+      "properties": {
+        "candidate_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 3
+        },
+        "attacker_path": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "impact_hypothesis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required_prerequisites": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "proof_boundary": {
+          "$ref": "#/$defs/proof_boundary"
+        },
+        "proof_surrogate": {
+          "$ref": "#/$defs/proof_surrogate"
+        },
+        "stop_before": {
+          "$ref": "#/$defs/stop_before"
+        },
+        "evidence_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "execution_status": {
+          "enum": [
+            "bounded_executable",
+            "blocked_preserve",
+            "needs_scope",
+            "needs_operator_control",
+            "needs_local_simulation",
+            "reference_only"
+          ]
+        },
+        "notes": {
+          "type": "string"
+        },
+        "impact_potential": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "surrogate_feasibility": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "authorization_readiness": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        }
+      }
+    },
+    "proof_boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "in_scope_assets",
+        "owned_accounts_or_objects",
+        "request_budget",
+        "allowed_state_changes",
+        "blocked_state_changes",
+        "data_contact_boundary",
+        "callback_oast_tunnel_allowance"
+      ],
+      "properties": {
+        "in_scope_assets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "owned_accounts_or_objects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "request_budget": {
+          "type": "string",
+          "minLength": 1
+        },
+        "allowed_state_changes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "blocked_state_changes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1
+        },
+        "callback_oast_tunnel_allowance": {
+          "enum": [
+            "not_allowed",
+            "allowed_by_policy_with_operator_approval",
+            "local_lab_only"
+          ]
+        },
+        "data_contact_boundary": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "proof_surrogate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method",
+        "why_it_proves_impact_without_harm",
+        "positive_control",
+        "negative_control"
+      ],
+      "properties": {
+        "method": {
+          "type": "string",
+          "minLength": 1
+        },
+        "why_it_proves_impact_without_harm": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positive_control": {
+          "type": "string",
+          "minLength": 1
+        },
+        "negative_control": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "stop_before": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "unauthorized_access",
+        "non_owned_data",
+        "destructive_impact",
+        "dos_or_resource_exhaustion",
+        "credential_or_token_access",
+        "malware_persistence_evasion",
+        "scope_expansion",
+        "report_submission"
+      ],
+      "properties": {
+        "unauthorized_access": {
+          "type": "string",
+          "minLength": 1
+        },
+        "non_owned_data": {
+          "type": "string",
+          "minLength": 1
+        },
+        "destructive_impact": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dos_or_resource_exhaustion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "credential_or_token_access": {
+          "type": "string",
+          "minLength": 1
+        },
+        "malware_persistence_evasion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope_expansion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "report_submission": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

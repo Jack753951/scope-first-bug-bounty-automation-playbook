@@ -11,3 +11,4 @@ jobs:
         with:
           python-version: '3.x'
       - run: python scripts/public_safety_scan.py .
+      - run: python -m compileall scripts

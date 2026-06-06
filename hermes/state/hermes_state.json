@@ -1,0 +1,11 @@
+{
+  "schema_version": "1.0",
+  "started_at": "2026-05-28T09:19:08Z",
+  "loops": {
+    "minute_alerts": {"last_run_at": null, "last_status": null},
+    "hourly_diff":   {"last_run_at": null, "last_status": null},
+    "daily_sweep":   {"last_run_at": "2026-05-28T09:43:17Z", "last_status": "ok"}
+  },
+  "last_daily_sweep_at": "2026-05-28T09:43:17Z",
+  "daily_sweep_status": "ok"
+}

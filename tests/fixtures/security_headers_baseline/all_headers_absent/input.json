@@ -1,0 +1,9 @@
+{
+  "fixture_version": "security_headers_baseline_input/1",
+  "target": {
+    "type": "domain",
+    "value": "*.example.test"
+  },
+  "status_code": 200,
+  "headers": []
+}

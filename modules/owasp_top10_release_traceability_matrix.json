@@ -1,0 +1,1471 @@
+{
+  "schema_hint": "owasp_top10_release_traceability_matrix/0.1-catalog",
+  "status": "catalog_only",
+  "created": "2026-05-21",
+  "runtime_authorization": "none",
+  "current_project_runtime_taxonomy": "OWASP Top 10 2021",
+  "latest_release_observed": "OWASP Top 10 2025",
+  "official_release_years": [
+    2003,
+    2004,
+    2007,
+    2010,
+    2013,
+    2017,
+    2021,
+    2025
+  ],
+  "source_policy": {
+    "primary_sources": [
+      "https://github.com/OWASP/Top10",
+      "https://owasp.org/www-project-top-ten/"
+    ],
+    "note": "This matrix tracks official release editions, not calendar years. Historical mappings are planning aids and may be many-to-one, split, merged, or tentative. They do not authorize runtime testing."
+  },
+  "safety_boundary": {
+    "allowed": [
+      "offline traceability",
+      "taxonomy mapping",
+      "module/checklist planning",
+      "gap analysis"
+    ],
+    "not_authorized": [
+      "target interaction",
+      "scanner execution",
+      "Kali bridge execution",
+      "public or real bug-bounty target activation",
+      "exploit payloads",
+      "credential/brute-force/callback/pivot/destructive/loot workflows",
+      "automatic confirmed-finding promotion",
+      "2025 runtime migration without review"
+    ]
+  },
+  "editions": [
+    {
+      "release_year": 2003,
+      "official_edition_label": "OWASP Top 10 2003",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2003",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2003",
+          "category_name": "Unvalidated Input",
+          "maps_to_current_2021_categories": [
+            "A03:2021",
+            "A01:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Input validation failures later split across Injection and access-control/design concerns.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "reflected_input_candidate",
+            "route_auth_matrix",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains; T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2003",
+          "category_name": "Broken Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Broken Access Control.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2003",
+          "category_name": "Broken Authentication and Session Management",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Authentication/session category renamed in later releases.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2003",
+          "category_name": "Cross Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is treated as an injection class in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2003",
+          "category_name": "Buffer Overflows",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Memory corruption is not a web-app Top 10 category in 2021 but remains input-handling/injection-adjacent for lab planning.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2003",
+          "category_name": "Injection Flaws",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Injection.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2003",
+          "category_name": "Improper Error Handling",
+          "maps_to_current_2021_categories": [
+            "A05:2021",
+            "A09:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Later split across misconfiguration and logging/monitoring/error handling concerns.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "logging_observability_checklist",
+            "report_evidence_completeness",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only; T0/T1 evidence/logging checklist",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2003",
+          "category_name": "Insecure Storage",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to cryptographic/sensitive data failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2003",
+          "category_name": "Denial of Service",
+          "maps_to_current_2021_categories": [],
+          "mapping_confidence": "low",
+          "mapping_note": "Not a current 2021 web-app Top 10 runtime lane in this project; DoS testing remains blocked.",
+          "project_module_implications": [],
+          "runtime_tier": "blocked/not mapped to an authorized current runtime lane",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2003",
+          "category_name": "Insecure Configuration Management",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Security Misconfiguration.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2004,
+      "official_edition_label": "OWASP Top 10 2004",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2004",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2004",
+          "category_name": "Unvalidated Input",
+          "maps_to_current_2021_categories": [
+            "A03:2021",
+            "A01:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Historical input-validation umbrella split across later categories.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "reflected_input_candidate",
+            "route_auth_matrix",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains; T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2004",
+          "category_name": "Broken Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Broken Access Control.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2004",
+          "category_name": "Broken Authentication and Session Management",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Authentication/session category renamed in later releases.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2004",
+          "category_name": "Cross Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is treated as an injection class in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2004",
+          "category_name": "Buffer Overflows",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Memory/input flaw retained only as historical traceability; no DoS/exploit runtime.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2004",
+          "category_name": "Injection Flaws",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Injection.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2004",
+          "category_name": "Improper Error Handling",
+          "maps_to_current_2021_categories": [
+            "A05:2021",
+            "A09:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Later split across misconfiguration and logging/error handling concerns.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "logging_observability_checklist",
+            "report_evidence_completeness",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only; T0/T1 evidence/logging checklist",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2004",
+          "category_name": "Insecure Storage",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to cryptographic failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2004",
+          "category_name": "Denial of Service",
+          "maps_to_current_2021_categories": [],
+          "mapping_confidence": "low",
+          "mapping_note": "Not mapped to an authorized runtime lane; DoS remains blocked.",
+          "project_module_implications": [],
+          "runtime_tier": "blocked/not mapped to an authorized current runtime lane",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2004",
+          "category_name": "Insecure Configuration Management",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Security Misconfiguration.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2007,
+      "official_edition_label": "OWASP Top 10 2007",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2007",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2007",
+          "category_name": "Cross Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is Injection in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2007",
+          "category_name": "Injection Flaws",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to Injection.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2007",
+          "category_name": "Malicious File Execution",
+          "maps_to_current_2021_categories": [
+            "A05:2021",
+            "A08:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Partly configuration/unsafe execution and integrity-chain concern; active exploit runtime blocked.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "integrity_header_metadata",
+            "lockfile_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only; T1/T2 metadata/checklist only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2007",
+          "category_name": "Insecure Direct Object Reference",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "IDOR is now under Broken Access Control.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2007",
+          "category_name": "Cross Site Request Forgery (CSRF)",
+          "maps_to_current_2021_categories": [
+            "A01:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "CSRF is not a standalone 2021 category; access-control/design mapping is context-dependent.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "idor_manual_checklist",
+            "route_auth_matrix",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow; T0/T1 checklist/reporting",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2007",
+          "category_name": "Information Leakage and Improper Error Handling",
+          "maps_to_current_2021_categories": [
+            "A05:2021",
+            "A09:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Maps to misconfiguration and logging/error handling concerns.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "logging_observability_checklist",
+            "report_evidence_completeness",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only; T0/T1 evidence/logging checklist",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2007",
+          "category_name": "Broken Authentication and Session Management",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to authentication failures.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2007",
+          "category_name": "Insecure Cryptographic Storage",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage to cryptographic failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2007",
+          "category_name": "Insecure Communications",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Transport/data protection belongs under cryptographic failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2007",
+          "category_name": "Failure to Restrict URL Access",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Access-control subcase.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2010,
+      "official_edition_label": "OWASP Top 10 2010",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2010",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2010",
+          "category_name": "Injection",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2010",
+          "category_name": "Cross-Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is Injection in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2010",
+          "category_name": "Broken Authentication and Session Management",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2010",
+          "category_name": "Insecure Direct Object References",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "IDOR is now under Broken Access Control.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2010",
+          "category_name": "Cross-Site Request Forgery (CSRF)",
+          "maps_to_current_2021_categories": [
+            "A01:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Context-dependent access-control/design mapping.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "idor_manual_checklist",
+            "route_auth_matrix",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow; T0/T1 checklist/reporting",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2010",
+          "category_name": "Security Misconfiguration",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2010",
+          "category_name": "Insecure Cryptographic Storage",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2010",
+          "category_name": "Failure to Restrict URL Access",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Access-control subcase.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2010",
+          "category_name": "Insufficient Transport Layer Protection",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Transport protection belongs under cryptographic failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2010",
+          "category_name": "Unvalidated Redirects and Forwards",
+          "maps_to_current_2021_categories": [
+            "A01:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Not standalone in 2021; retained as checklist/manual item.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "idor_manual_checklist",
+            "route_auth_matrix",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow; T0/T1 checklist/reporting",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2013,
+      "official_edition_label": "OWASP Top 10 2013",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2013",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2013",
+          "category_name": "Injection",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2013",
+          "category_name": "Broken Authentication and Session Management",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2013",
+          "category_name": "Cross-Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is Injection in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2013",
+          "category_name": "Insecure Direct Object References",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "IDOR is now under Broken Access Control.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2013",
+          "category_name": "Security Misconfiguration",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2013",
+          "category_name": "Sensitive Data Exposure",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Cryptographic Failures in 2021.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2013",
+          "category_name": "Missing Function Level Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Access-control subcase.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2013",
+          "category_name": "Cross-Site Request Forgery (CSRF)",
+          "maps_to_current_2021_categories": [
+            "A01:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Context-dependent access-control/design mapping.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "idor_manual_checklist",
+            "route_auth_matrix",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow; T0/T1 checklist/reporting",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2013",
+          "category_name": "Using Components with Known Vulnerabilities",
+          "maps_to_current_2021_categories": [
+            "A06:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Vulnerable and Outdated Components in 2021.",
+          "project_module_implications": [
+            "component_inventory_fixture_audit",
+            "dependency_manifest_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata-only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2013",
+          "category_name": "Unvalidated Redirects and Forwards",
+          "maps_to_current_2021_categories": [
+            "A01:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Not standalone in 2021; retained as checklist/manual item.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "idor_manual_checklist",
+            "route_auth_matrix",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow; T0/T1 checklist/reporting",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2017,
+      "official_edition_label": "OWASP Top 10 2017",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2017",
+        "https://github.com/OWASP/Top10/tree/master/2021-2003_Comparison"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2017",
+          "category_name": "Injection",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2017",
+          "category_name": "Broken Authentication",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Identification and Authentication Failures.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2017",
+          "category_name": "Sensitive Data Exposure",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Cryptographic Failures.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2017",
+          "category_name": "XML External Entities (XXE)",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Merged into Security Misconfiguration in 2021; active XXE remains blocked unless separately reviewed.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2017",
+          "category_name": "Broken Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2017",
+          "category_name": "Security Misconfiguration",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Direct lineage.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2017",
+          "category_name": "Cross-Site Scripting (XSS)",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "XSS is Injection in 2021.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2017",
+          "category_name": "Insecure Deserialization",
+          "maps_to_current_2021_categories": [
+            "A08:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed/merged into Software and Data Integrity Failures.",
+          "project_module_implications": [
+            "integrity_header_metadata",
+            "lockfile_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata/checklist only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2017",
+          "category_name": "Using Components with Known Vulnerabilities",
+          "maps_to_current_2021_categories": [
+            "A06:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Vulnerable and Outdated Components.",
+          "project_module_implications": [
+            "component_inventory_fixture_audit",
+            "dependency_manifest_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata-only",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2017",
+          "category_name": "Insufficient Logging & Monitoring",
+          "maps_to_current_2021_categories": [
+            "A09:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed to Security Logging and Monitoring Failures.",
+          "project_module_implications": [
+            "logging_observability_checklist",
+            "report_evidence_completeness"
+          ],
+          "runtime_tier": "T0/T1 evidence/logging checklist",
+          "implementation_status": "historical_traceability",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2021,
+      "official_edition_label": "OWASP Top 10 2021",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2021/docs/en"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2021",
+          "category_name": "Broken Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2021",
+          "category_name": "Cryptographic Failures",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2021",
+          "category_name": "Injection",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2021",
+          "category_name": "Insecure Design",
+          "maps_to_current_2021_categories": [
+            "A04:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T1 checklist/reporting",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2021",
+          "category_name": "Security Misconfiguration",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2021",
+          "category_name": "Vulnerable and Outdated Components",
+          "maps_to_current_2021_categories": [
+            "A06:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "component_inventory_fixture_audit",
+            "dependency_manifest_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata-only",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2021",
+          "category_name": "Identification and Authentication Failures",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2021",
+          "category_name": "Software and Data Integrity Failures",
+          "maps_to_current_2021_categories": [
+            "A08:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "integrity_header_metadata",
+            "lockfile_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata/checklist only",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2021",
+          "category_name": "Security Logging and Monitoring Failures",
+          "maps_to_current_2021_categories": [
+            "A09:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy.",
+          "project_module_implications": [
+            "logging_observability_checklist",
+            "report_evidence_completeness"
+          ],
+          "runtime_tier": "T0/T1 evidence/logging checklist",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2021",
+          "category_name": "Server-Side Request Forgery (SSRF)",
+          "maps_to_current_2021_categories": [
+            "A10:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Current implemented taxonomy; active callbacks/network pivots blocked.",
+          "project_module_implications": [
+            "callback_risk_gate",
+            "ssrf_sink_inventory"
+          ],
+          "runtime_tier": "T3 planned only; T4/T5 for callbacks/pivots if ever proposed",
+          "implementation_status": "current taxonomy",
+          "runtime_authorization": false
+        }
+      ]
+    },
+    {
+      "release_year": 2025,
+      "official_edition_label": "OWASP Top 10 2025",
+      "official_source_refs": [
+        "https://github.com/OWASP/Top10/tree/master/2025/docs/en"
+      ],
+      "categories": [
+        {
+          "category_id": "A01:2025",
+          "category_name": "Broken Access Control",
+          "maps_to_current_2021_categories": [
+            "A01:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Same top-level category name as 2021.",
+          "project_module_implications": [
+            "idor_manual_checklist",
+            "route_auth_matrix"
+          ],
+          "runtime_tier": "T0/T3 planned; T4 only for approved local-lab workflow",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A02:2025",
+          "category_name": "Security Misconfiguration",
+          "maps_to_current_2021_categories": [
+            "A05:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Same concept, changed rank.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "robots_securitytxt_metadata"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A03:2025",
+          "category_name": "Software Supply Chain Failures",
+          "maps_to_current_2021_categories": [
+            "A06:2021",
+            "A08:2021"
+          ],
+          "mapping_confidence": "medium",
+          "mapping_note": "Supply-chain emphasis spans components and integrity; migration needs review.",
+          "project_module_implications": [
+            "component_inventory_fixture_audit",
+            "dependency_manifest_metadata",
+            "integrity_header_metadata",
+            "lockfile_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata-only; T1/T2 metadata/checklist only",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A04:2025",
+          "category_name": "Cryptographic Failures",
+          "maps_to_current_2021_categories": [
+            "A02:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Same concept, changed rank.",
+          "project_module_implications": [
+            "cookie_flag_metadata",
+            "security_headers_baseline",
+            "tls_metadata_if_https"
+          ],
+          "runtime_tier": "T1/T2 passive metadata local-lab only",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A05:2025",
+          "category_name": "Injection",
+          "maps_to_current_2021_categories": [
+            "A03:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Same concept, changed rank.",
+          "project_module_implications": [
+            "reflected_input_candidate",
+            "sql_error_metadata_candidate"
+          ],
+          "runtime_tier": "T3/T4 benign-marker local-lab only; no exploit chains",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A06:2025",
+          "category_name": "Insecure Design",
+          "maps_to_current_2021_categories": [
+            "A04:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Same concept, changed rank.",
+          "project_module_implications": [
+            "design_smell_checklist",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T0/T1 checklist/reporting",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A07:2025",
+          "category_name": "Authentication Failures",
+          "maps_to_current_2021_categories": [
+            "A07:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Renamed/shortened from Identification and Authentication Failures.",
+          "project_module_implications": [
+            "auth_flow_checklist",
+            "session_cookie_metadata"
+          ],
+          "runtime_tier": "T0/T3 planned/manual; no brute force",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A08:2025",
+          "category_name": "Software or Data Integrity Failures",
+          "maps_to_current_2021_categories": [
+            "A08:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Minor wording change from 2021.",
+          "project_module_implications": [
+            "integrity_header_metadata",
+            "lockfile_metadata"
+          ],
+          "runtime_tier": "T1/T2 metadata/checklist only",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A09:2025",
+          "category_name": "Security Logging and Alerting Failures",
+          "maps_to_current_2021_categories": [
+            "A09:2021"
+          ],
+          "mapping_confidence": "high",
+          "mapping_note": "Alerting added/renamed from monitoring; migration needs wording review.",
+          "project_module_implications": [
+            "logging_observability_checklist",
+            "report_evidence_completeness"
+          ],
+          "runtime_tier": "T0/T1 evidence/logging checklist",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        },
+        {
+          "category_id": "A10:2025",
+          "category_name": "Mishandling of Exceptional Conditions",
+          "maps_to_current_2021_categories": [
+            "A05:2021",
+            "A09:2021",
+            "A04:2021"
+          ],
+          "mapping_confidence": "low",
+          "mapping_note": "New/changed 2025 category; project mapping is tentative until reviewed.",
+          "project_module_implications": [
+            "api_docs_metadata",
+            "design_smell_checklist",
+            "directory_listing_metadata",
+            "error_page_metadata",
+            "logging_observability_checklist",
+            "report_evidence_completeness",
+            "robots_securitytxt_metadata",
+            "threat_model_gap_notes"
+          ],
+          "runtime_tier": "T1/T2 bounded metadata local-lab only; T0/T1 evidence/logging checklist; T0/T1 checklist/reporting",
+          "implementation_status": "mapping_pending_review",
+          "runtime_authorization": false
+        }
+      ]
+    }
+  ]
+}

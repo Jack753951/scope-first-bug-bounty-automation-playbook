@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "auth_session_profile_empty_state",
+  "status": "blocked_operator_action",
+  "request_budget": {
+    "planned": 0,
+    "used": 0
+  },
+  "observations": [
+    {
+      "type": "authorization_gate",
+      "label": "in_scope_dry_run",
+      "value": "https://login.<program-redacted>.com/research/login passed initial safe_target in dry-run program policy mode",
+      "sensitive": false
+    },
+    {
+      "type": "authorization_gate",
+      "label": "out_of_scope_control",
+      "value": "https://example.org/ failed closed as not in scope",
+      "sensitive": false
+    },
+    {
+      "type": "operator_gate",
+      "label": "identity_strategy",
+      "value": "<program-redacted> policy requires <bug-bounty-platform> alias or X-<bug-bounty-platform>-Research header before target-touching account flow",
+      "sensitive": false
+    }
+  ],
+  "positive_evidence": [
+    "login.<program-redacted>.com is present in config/scope.txt after operator confirmation",
+    "<program-redacted> program scope artifact exists at programs/<program-slug>/scope.json",
+    "Dry-run authorization gate passed for selected login host"
+  ],
+  "negative_controls": [
+    "example.org dry-run failed closed as out of scope",
+    "no live target account creation/login has been performed in this seed state",
+    "scanner-like actions remain outside the current lane"
+  ],
+  "redactions": [
+    "no account identity, password, cookie, token, OTP, email address, or PII captured"
+  ],
+  "candidate_signals": [],
+  "blocked_states": [
+    "operator_identity_strategy_required",
+    "operator_local_signup_login_required_before_surface_map"
+  ],
+  "next_learning_seed": "Use this seed as the machine-readable checkpoint for noVNC owned-account surface mapping after operator identity gate is complete.",
+  "updated_at": "2026-05-25"
+}

@@ -1,0 +1,38 @@
+{
+  "phase": "P2-13",
+  "topic": "offline preview bundle persistence / audit manifest implementation review",
+  "review_type": "implementation_safety_rereview",
+  "initial_verdict": "ROUTE_BACK",
+  "final_verdict": "PASS",
+  "initial_blockers_fixed": [
+    {
+      "blocker": "Symlinked parent path rejection was incomplete when runs_root was resolved before checking the original repo/runs path.",
+      "fix": "Added unresolved lexical parent symlink checks before resolving runs_root, rejected symlinked repo roots, and kept resolved containment/symlink checks. Added symlinked runs parent regression test, skipped only when OS symlink creation is unavailable."
+    },
+    {
+      "blocker": "Persistence filesystem failures could raise exceptions instead of returning structured deny, and could leave partial temp state.",
+      "fix": "Persistence now cleans .preview.tmp and empty run_dir on exception; build_dry_run_plan catches persistence exceptions and returns deny. Added simulated write-failure no-traceback/no-preview regression test."
+    }
+  ],
+  "final_safety_assessment": {
+    "live_scans": false,
+    "external_targets_touched": false,
+    "module_code_imported_or_executed": false,
+    "subprocess_or_scanner_execution_added": false,
+    "network_or_dns_added": false,
+    "findings_or_evidence_emitted": false,
+    "config_scope_changed": false,
+    "persistence_scope": "data-only JSON artifacts under repo-local runs/<run_id>/preview after all gates allow"
+  },
+  "validation_observed_by_review": [
+    "python -m unittest scripts.test_module_runner: 32 tests OK, 1 skipped",
+    "python -m unittest discover -s scripts: 150 tests OK, 3 skipped",
+    "py_compile for related scripts: OK",
+    "git diff --check: no whitespace errors; LF/CRLF warnings only"
+  ],
+  "remaining_blockers": [],
+  "non_blocking_notes": [
+    "LF/CRLF warnings are not a safety blocker.",
+    "On persistence failure, in-memory previews may still exist while verdict is deny and preview_manifest is absent; this is acceptable for the current safety goal."
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "lane_id": "syfe_signup_api_precondition_review",
+  "lane_title": "<program-slug> signup/API passive precondition review",
+  "autonomy_level": "A2",
+  "operator_decision": "KILL",
+  "machine_state": "NO_FINDING_CLOSEOUT",
+  "state": "NO_FINDING_CLOSEOUT",
+  "status": "no_finding",
+  "authorization": {
+    "program_url": "https://<bug-bounty-platform>.com/syfe_bbp",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "global_scope_entries": [
+      "www.<program-slug>.com",
+      "uat-bugbounty.nonprod.<program-slug>.com",
+      "api.<program-slug>.com",
+      "api-uat-bugbounty.nonprod.<program-slug>.com",
+      "mark8.<program-slug>.com",
+      "alfred.<program-slug>.com",
+      "alfred-uat-31.nonprod.<program-slug>.com",
+      "com.<program-slug>",
+      "iOS App Store id 1497156434"
+    ],
+    "dry_run_gate": "passed",
+    "out_of_scope_control": "failed_closed"
+  },
+  "lane_boundary": {
+    "allowed_actions": [
+      "manual_low_speed_navigation_to_in_scope_program_pages_and_signup_pages",
+      "passive_frontend_resource_review_for_routes_and_api_host_config",
+      "fixed_path_low_rate_header_checks_on_in_scope_api_roots_with_X_HackerOne_Research_header",
+      "owned_account_signup_flow_until_operator_secret_otp_captcha_phone_payment_kyc_gate",
+      "post_auth_owned_object_surface_map_after_operator_completes_auth_gate"
+    ],
+    "blocked_actions": [
+      "scanner_fuzzer_dast_or_endpoint_bruteforce",
+      "production_automation_or_rate_limit_testing",
+      "dos_ddos_or_resource_exhaustion",
+      "customer_or_non_owned_data_access",
+      "support_team_contact_or_social_engineering",
+      "third_party_integrations_callbacks_oast_tunnels_webhooks",
+      "credential_token_cookie_api_key_storage",
+      "phone_payment_kyc_or_billing_flows_without_operator_action",
+      "report_submission_without_operator_final_approval"
+    ],
+    "identity_strategy": "Production signup must use a @researcher-alias.example address. Do not store email/password/OTP/cookies/tokens/phone/verification links in repo artifacts. Production requests should include X-<bug-bounty-platform>-Research header."
+  },
+  "operator_gates": [
+    "operator_create_or_authenticate_syfe_owned_account_using_wearehackerone_alias_if_continuing",
+    "password_otp_captcha_email_phone_verification_or_session_switch_if_needed",
+    "provided_test_credentials_claim_if_H1_requires_human_or_secret_handling",
+    "operator_final_approval_before_report_submission"
+  ],
+  "stop_conditions": [
+    "signup_requires_phone_payment_kyc_or_support_contact_before_owned_object_surface_exists",
+    "policy_or_scope_ambiguity_appears",
+    "account_warning_bot_warning_rate_limit_or_anti_abuse_challenge_appears",
+    "non_owned_customer_data_or_real_customer_interaction_appears",
+    "secret_cookie_token_api_key_otp_password_or_phone_capture_would_be_needed",
+    "destructive_impact_dos_or_rate_limit_stress_would_be_needed",
+    "candidate_is_report_packet_ready_and_needs_operator_final_submission_approval"
+  ],
+  "next_autonomous_action": "Lane closed 2026-05-28 as KILL during single-agent restructure: production signup blocked by browser CORS misconfig on https://api.<program-slug>.com/auth/signup, no owned account, no UAT/provided credentials available, owned-account precondition unmet for any access-control bundle. Candidate signal (multi-origin CORS header on signup) preserved in evidence_index/signup_blocked_checkpoint for future reference.",
+  "next_operator_action": "No action required. Lane closed. To reopen would require: operator-supplied UAT/provided test credentials, or a fresh signup attempt with successful verification email path. The CORS observation itself is not reportable without an owned account context.",
+  "artifacts": {
+    "run_card": "programs/<program-slug>/run_card.md",
+    "scope_file": "programs/<program-slug>/scope.json",
+    "candidate_packet": "programs/<program-slug>/candidate_packet_20260527.md",
+    "evidence_index": "programs/<program-slug>/evidence_index.json",
+    "signup_blocked_checkpoint": "programs/<program-slug>/signup_blocked_cors_checkpoint_20260527.md",
+    "dry_run_packet": "programs/<program-slug>/candidate_packet_20260527.md",
+    "evidence_dir": "programs/<program-slug>"
+  },
+  "learning": {
+    "preview_references": [
+      "programs/<program-slug>/candidate_packet_20260527.md",
+      "programs/<program-slug>/evidence_index.json",
+      "programs/<program-slug>/scope.json"
+    ],
+    "next_preview_seed": "<program-slug> has clear in-scope web/API assets and a UAT/prod split, but production signup is currently blocked after submit by a browser-enforced CORS failure on https://api.<program-slug>.com/auth/signup?locale=en-sg: the API returned HTTP 200 at network layer while the browser rejected the XHR due to multiple Access-Control-Allow-Origin values. Without an owned account, no practiced access-control bundle can run. Prefer parking unless operator finds verification email or official UAT/provided credentials are available.",
+    "reusable_capability": "For <program-slug>-like fintech targets, do H1 scope/policy capture, signup field map, frontend API config extraction, and a tiny fixed-path API root check before spending operator cost; park if phone/KYC/payment appears before owned-object controls."
+  },
+  "updated_at": "2026-05-28"
+}

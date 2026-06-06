@@ -1,0 +1,210 @@
+{
+  "catalog_version": "owasp_lab_module_catalog/0.1",
+  "created": "2026-05-21",
+  "scope_boundary": {
+    "authorized_runtime_scope": "local lab / intentionally vulnerable app only",
+    "current_lab_target": "http://<lab-ip>:3000/",
+    "network": "VirtualBox host-only lab",
+    "not_authorized": [
+      "public targets",
+      "real bug bounty targets",
+      "client targets",
+      "credential attacks",
+      "brute force",
+      "OAST/callbacks",
+      "reverse shells",
+      "persistence",
+      "stealth",
+      "malware",
+      "destructive actions",
+      "recursive downloads",
+      "loot collection",
+      "automatic confirmed finding promotion"
+    ]
+  },
+  "owasp_reference": {
+    "project": "OWASP Top 10 Web Application Security Risks",
+    "source_repo": "https://github.com/OWASP/Top10",
+    "source_docs_path": "2025/docs and 2021/docs/zh-TW where available",
+    "release_cadence_note": "OWASP Top 10 is not published every calendar year; testing-plan coverage tracks every official release edition instead of nonexistent annual lists.",
+    "latest_released_version_observed": "2025"
+  },
+  "oss_recon_references": [
+    {
+      "name": "OWASP Top 10 / WSTG",
+      "decision": "adapt",
+      "useful_pattern": "Taxonomy, testing objectives, and verification checklists",
+      "safety_note": "Checklist items are not confirmed vulnerabilities without manual verification"
+    },
+    {
+      "name": "OWASP ZAP baseline/passive alert model",
+      "decision": "adapt",
+      "useful_pattern": "Risk/confidence/evidence and passive-vs-active distinction",
+      "safety_note": "Do not copy active scan defaults or scanner-confirmed semantics"
+    },
+    {
+      "name": "Nuclei templates",
+      "decision": "adapt",
+      "useful_pattern": "Template ID, severity, tags, references, matcher/extractor concept",
+      "safety_note": "Do not execute templates directly without scope, tag allowlist, and T4 review"
+    },
+    {
+      "name": "ProjectDiscovery httpx/katana",
+      "decision": "adapt",
+      "useful_pattern": "Structured JSONL observations and composable tool boundaries",
+      "safety_note": "Do not enable uncontrolled crawling/enumeration"
+    },
+    {
+      "name": "SARIF / DefectDojo concepts",
+      "decision": "adapt",
+      "useful_pattern": "Run/result/lifecycle/retest separation",
+      "safety_note": "Do not overfit or auto-promote triage observations"
+    }
+  ],
+  "categories": [
+    {
+      "owasp_id": "A01:2021",
+      "name": "Broken Access Control",
+      "safe_start": "offline/planned auth and route matrix from fixtures",
+      "runtime_posture": "T4 only for narrow approved local-lab workflows; no auth bypass automation by default",
+      "module_candidates": [
+        "route_auth_matrix",
+        "idor_manual_checklist"
+      ]
+    },
+    {
+      "owasp_id": "A02:2021",
+      "name": "Cryptographic Failures",
+      "safe_start": "passive metadata and header/cookie flag observation",
+      "runtime_posture": "T1/T2 low-volume local-lab only",
+      "module_candidates": [
+        "security_headers_baseline",
+        "cookie_flag_metadata",
+        "tls_metadata_if_https"
+      ]
+    },
+    {
+      "owasp_id": "A03:2021",
+      "name": "Injection",
+      "safe_start": "planned workflow and fixture-only parser tests",
+      "runtime_posture": "T4 for benign-marker local-lab checks; no exploit payload chains",
+      "module_candidates": [
+        "reflected_input_candidate",
+        "sql_error_metadata_candidate"
+      ]
+    },
+    {
+      "owasp_id": "A04:2021",
+      "name": "Insecure Design",
+      "safe_start": "checklist and report-readiness mapping",
+      "runtime_posture": "T0/T1; mostly non-target-touching",
+      "module_candidates": [
+        "design_smell_checklist",
+        "threat_model_gap_notes"
+      ]
+    },
+    {
+      "owasp_id": "A05:2021",
+      "name": "Security Misconfiguration",
+      "safe_start": "headers, directory listing metadata, robots/security.txt, API docs metadata",
+      "runtime_posture": "T1/T2 bounded local-lab metadata checks",
+      "module_candidates": [
+        "directory_listing_metadata",
+        "robots_securitytxt_metadata",
+        "api_docs_metadata",
+        "error_page_metadata"
+      ]
+    },
+    {
+      "owasp_id": "A06:2021",
+      "name": "Vulnerable and Outdated Components",
+      "safe_start": "package/dependency manifest presence and version metadata only",
+      "runtime_posture": "T1/T2; no recursive downloads or private artifact collection",
+      "module_candidates": [
+        "dependency_manifest_metadata",
+        "component_inventory_fixture_audit"
+      ]
+    },
+    {
+      "owasp_id": "A07:2021",
+      "name": "Identification and Authentication Failures",
+      "safe_start": "manual checklist for login/reset/session flows",
+      "runtime_posture": "T0/T3 planned first; no brute force or credential stuffing",
+      "module_candidates": [
+        "auth_flow_checklist",
+        "session_cookie_metadata"
+      ]
+    },
+    {
+      "owasp_id": "A08:2021",
+      "name": "Software and Data Integrity Failures",
+      "safe_start": "dependency lockfile and update-chain checklist",
+      "runtime_posture": "T1/T2 metadata-only",
+      "module_candidates": [
+        "lockfile_metadata",
+        "integrity_header_metadata"
+      ]
+    },
+    {
+      "owasp_id": "A09:2021",
+      "name": "Security Logging and Monitoring Failures",
+      "safe_start": "lab report/evidence checklist and defensive observation notes",
+      "runtime_posture": "T0/T1; no attack required",
+      "module_candidates": [
+        "logging_observability_checklist",
+        "report_evidence_completeness"
+      ]
+    },
+    {
+      "owasp_id": "A10:2021",
+      "name": "Server-Side Request Forgery (SSRF)",
+      "safe_start": "sink inventory and planned-only workflow",
+      "runtime_posture": "T3 planned only; T4/T5 if callbacks or network pivots are ever proposed",
+      "module_candidates": [
+        "ssrf_sink_inventory",
+        "callback_risk_gate"
+      ]
+    }
+  ],
+  "first_lab_trial_sequence": [
+    "directory_listing_metadata",
+    "robots_securitytxt_metadata",
+    "api_docs_metadata",
+    "dependency_manifest_metadata",
+    "security_headers_baseline"
+  ],
+  "candidate_output_policy": {
+    "allowed_states": [
+      "observation",
+      "candidate",
+      "needs_verification",
+      "lab_report_draft_ready"
+    ],
+    "disallowed_states": [
+      "confirmed",
+      "exploited",
+      "submitted"
+    ],
+    "evidence_policy": "metadata, hashes, headers, status, short redacted snippets only; no raw secrets or loot"
+  },
+  "official_release_coverage": {
+    "coverage_policy": "Include every official OWASP Top 10 web-application release edition in the test-plan traceability matrix; do not invent per-calendar-year Top 10 lists.",
+    "official_release_years": [
+      2003,
+      2004,
+      2007,
+      2010,
+      2013,
+      2017,
+      2021,
+      2025
+    ],
+    "primary_runtime_taxonomy": "2025 latest release once local category mapping is added; keep 2021 mapping until migration is reviewed.",
+    "historical_release_usage": "Use historical editions for regression/traceability, renamed/merged-risk mapping, and missed-class gap analysis; runtime modules still require their own safety tier and run card.",
+    "not_in_scope": [
+      "creating fake yearly OWASP lists for years without an official release",
+      "auto-running tests solely because a historical category exists",
+      "public or real bug-bounty target execution without separate scope/rules approval"
+    ]
+  }
+}

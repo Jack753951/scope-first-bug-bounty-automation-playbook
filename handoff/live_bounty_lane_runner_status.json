@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0",
+  "runner": "live-bounty-lane-runner",
+  "runner_mode": "local_orchestration_only",
+  "target_touching": false,
+  "decision": "blocked_operator_action",
+  "exit_code": 10,
+  "errors": [],
+  "queue_path": "handoff/live_bounty_lane_queue.json",
+  "generated_at": "2026-05-28T04:02:31+00:00",
+  "queue_entry": {
+    "program_slug": "<program-redacted>",
+    "lane_id": "trial_portal_ab_control_gate",
+    "state_file": "programs/<program-redacted>/lane_state.json",
+    "priority": 1,
+    "status": "blocked_operator_action"
+  },
+  "program_slug": "<program-redacted>",
+  "lane_id": "trial_portal_ab_control_gate",
+  "lane_title": "<program-redacted> trial portal A/B control precondition gate",
+  "autonomy_level": "A2",
+  "state": "A2_PENDING_OPERATOR_AUTH",
+  "status": "blocked_operator_action",
+  "next_autonomous_action": "Paused at <program-redacted> signup human-check gate. Email alias was filled via env-backed bridge and Verify email was clicked. <program-redacted> advanced to step=code_verification but shows 'Are you a human or a robot?' with a visible Continue/reCAPTCHA human check. Do not bypass. After operator completes the human check, continue toward dashboard/object/role control gate.",
+  "next_operator_action": "Open noVNC, complete the <program-redacted> human/robot check only. Stop and tell Hermes if it asks for OTP/email code, phone, payment, KYC, or if dashboard opens.",
+  "operator_gates": [
+    "captcha",
+    "OTP_or_email_verification",
+    "phone_or_payment_or_KYC",
+    "control_setup_if_Hermes_cannot_complete_safely",
+    "final_report_submit"
+  ],
+  "stop_conditions": [
+    "captcha_or_human_robot_check_requires_operator",
+    "otp_email_verification_phone_payment_kyc_or_company_oauth_required",
+    "no_owned_dashboard_object_role_or_negative_control_after_operator_gate",
+    "customer_or_non_owned_data_appears",
+    "candidate_could_be_report_ready_and_needs_operator_final_submission_approval"
+  ],
+  "allowed_actions": [
+    "h1_program_scope_review",
+    "official_self_serve_trial_signup_with_h1_alias_until_human_gate",
+    "owned_workspace_portal_object_creation_if_dashboard_accessible",
+    "owned_second_user_role_or_invite_setup_if_no_human_gate",
+    "low_speed_browser_api_observation_for_owned_objects_only"
+  ],
+  "blocked_actions": [
+    "captcha_otp_email_verification_bypass",
+    "phone_payment_kyc_or_company_oauth_without_operator",
+    "support_or_sales_contact",
+    "email_send_to_non_owned_addresses_or_customer_interaction",
+    "third_party_integration_connection_or_real_api_secret_use",
+    "customer_or_non_owned_data_access",
+    "scanner_fuzzer_dast_or_endpoint_bruteforce_without_explicit_approval",
+    "report_submission_without_operator_final_approval"
+  ],
+  "dry_run_gate": "not_applicable",
+  "out_of_scope_control": "not_applicable",
+  "artifacts": {
+    "dry_run_packet": "programs/<program-redacted>/run_card.md",
+    "evidence_dir": "programs/<program-redacted>",
+    "scope_file": "programs/<program-redacted>/scope.json"
+  },
+  "next_preview_seed": "<program-redacted> is parked at a human/robot check before dashboard/object/role controls. Candidate bundles require owned admin/dashboard access plus a clean second user, role, removal, or object negative control before proof."
+}

@@ -1,0 +1,13 @@
+{
+  "name": "hacking",
+  "version": "1.0.0",
+  "description": "這個專案是你的 cybersecurity 專家工作台：把學習、實驗、滲透測試、防禦工程、漏洞情報、報告產出與自動化腳本放在同一個可持續演進的系統裡。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

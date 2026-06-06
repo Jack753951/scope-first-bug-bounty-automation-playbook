@@ -1,0 +1,14 @@
+{
+  "confidence": "low",
+  "ignored_fields": [],
+  "input_hash": "8818d8c16d6e83f9d75e06291fdb38e5da7326cb68abc2dfbb45392888b10818",
+  "reasons": [
+    "candidate_flag did not match expected_format_regex",
+    "confidence capped at low because status is needs_second_review"
+  ],
+  "schema_hint": "ctf_review_decision/0.1-unversioned",
+  "status": "needs_second_review",
+  "triggers": [
+    "abnormal_format"
+  ]
+}

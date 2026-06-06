@@ -1,0 +1,99 @@
+{
+  "schema_version": "candidate_review_packet/0.1-trial",
+  "status": "ok",
+  "errors": [],
+  "summary": {
+    "candidate_count": 2,
+    "input_count": 2,
+    "modules": [
+      "phase4a.lab_manual_triage"
+    ],
+    "targets": [
+      "http://<lab-ip>:3000"
+    ]
+  },
+  "findings": [
+    {
+      "id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+      "title": "Lab candidate: /ftp/ directory listing exposed on Juice Shop",
+      "summary": "Nikto and a bounded metadata-only verifier identified /ftp/ as an actual directory listing route. robots.txt also disallows /ftp. This is an intentionally vulnerable Juice Shop training route and remains lab-only candidate evidence, not a confirmed real-program finding.",
+      "target": {
+        "type": "url",
+        "value": "http://<lab-ip>:3000/ftp/"
+      },
+      "source": {
+        "module_id": "phase4a.lab_manual_triage",
+        "run_id": "phase4a-juice-shop-20260520",
+        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "severity_hint": "low",
+      "confidence": "medium",
+      "status": "candidate",
+      "scanner_output_only": false,
+      "manual_verification_required": true,
+      "evidence_ref_count": 3,
+      "report_readiness": "reviewer_decision_required",
+      "classifications": {
+        "cwe": [
+          "CWE-548"
+        ],
+        "owasp": [
+          "OWASP Top 10 A05:2021 Security Misconfiguration"
+        ],
+        "cvss_vector": null
+      },
+      "references": [
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+      ],
+      "remediation": "Restrict directory listing and remove sensitive or unnecessary downloadable files from public web roots. For this lab, verify whether /ftp/ is intentionally exposed by design.",
+      "verification_guidance": "Manual lab-only verification: confirm /ftp/ returns a directory index, record filenames/sizes only, do not recursively download, and do not handle secrets/loot.",
+      "review_questions": [
+        {
+          "key": "scope_in_authorized_scope",
+          "text": "Confirm this is the local Juice Shop lab at <lab-ip> and not a public target."
+        }
+      ]
+    },
+    {
+      "id": "phase4a.juiceshop.security_headers_missing.candidate",
+      "title": "Lab candidate: multiple recommended security headers missing on Juice Shop root",
+      "summary": "Headers audit scored root 2/9: CSP, Referrer-Policy, Permissions-Policy, COOP, COEP, and HSTS were missing while X-Content-Type-Options and X-Frame-Options were present. This is low/informational unless chained with a concrete exploit.",
+      "target": {
+        "type": "url",
+        "value": "http://<lab-ip>:3000/"
+      },
+      "source": {
+        "module_id": "phase4a.headers_audit",
+        "run_id": "phase4a-juice-shop-20260520",
+        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "severity_hint": "info",
+      "confidence": "high",
+      "status": "candidate",
+      "scanner_output_only": false,
+      "manual_verification_required": true,
+      "evidence_ref_count": 2,
+      "report_readiness": "reviewer_decision_required",
+      "classifications": {
+        "cwe": [
+          "CWE-693"
+        ],
+        "owasp": [
+          "OWASP ASVS V14.4"
+        ],
+        "cvss_vector": null
+      },
+      "references": [
+        "https://owasp.org/www-project-secure-headers/"
+      ],
+      "remediation": "Add a context-appropriate CSP, Referrer-Policy, Permissions-Policy, COOP/COEP where applicable, and HSTS only when HTTPS is enabled.",
+      "verification_guidance": "Review headers across representative paths and only escalate if the missing header enables a demonstrated impact chain.",
+      "review_questions": [
+        {
+          "key": "scope_in_authorized_scope",
+          "text": "Confirm this is the local Juice Shop lab at <lab-ip> and not a public target."
+        }
+      ]
+    }
+  ]
+}

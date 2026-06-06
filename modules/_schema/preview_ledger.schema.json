@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/hacklab/preview_ledger.schema.json",
+  "title": "Hacklab Preview Ledger",
+  "description": "P2-15 offline-only manifest-of-manifests index for preview_manifest/1.0 files. This contract binds each persisted preview_manifest.json by exact repo-relative path, SHA-256, byte size, and observed schema version; it does not authorize scanning, module execution, target interaction, findings, evidence, reports, callbacks, uploads, repairs, or filesystem writes.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "ledger_id",
+    "created_at_utc",
+    "producer",
+    "entry_count",
+    "entries"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "preview_ledger/1.0" },
+    "ledger_id": { "$ref": "#/$defs/safe_id" },
+    "created_at_utc": { "$ref": "#/$defs/utc_timestamp" },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version"],
+      "properties": {
+        "name": { "type": "string", "const": "preview_ledger" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:[-+][A-Za-z0-9._-]+)?$" }
+      }
+    },
+    "entry_count": { "type": "integer", "minimum": 0 },
+    "entries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/entry" }
+    }
+  },
+  "$defs": {
+    "safe_id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{2,127}$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "utc_timestamp": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$" },
+    "preview_manifest_path": {
+      "type": "string",
+      "pattern": "^runs/[A-Za-z0-9][A-Za-z0-9._-]{2,127}/preview/preview_manifest\\.json$",
+      "not": { "pattern": "(^|/)\\.\\.(/|$)|(^|/)\\.(/|$)|//|\\\\" }
+    },
+    "redaction_safe_note": {
+      "type": "string",
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9 .,;:_()\\[\\]+='\\\"!?-]*$",
+      "not": {
+        "pattern": "(?:/|\\\\|@|https?://|\\b\\d{1,3}(?:\\.\\d{1,3}){3}\\b|\\b[A-Za-z0-9-]+(?:\\.[A-Za-z0-9-]+)+\\b)"
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "run_id",
+        "preview_manifest_relative_path",
+        "preview_manifest_sha256",
+        "preview_manifest_size_bytes",
+        "schema_version_observed",
+        "observed_at_utc"
+      ],
+      "properties": {
+        "run_id": { "$ref": "#/$defs/safe_id" },
+        "preview_manifest_relative_path": { "$ref": "#/$defs/preview_manifest_path" },
+        "preview_manifest_sha256": { "$ref": "#/$defs/sha256" },
+        "preview_manifest_size_bytes": { "type": "integer", "minimum": 0 },
+        "schema_version_observed": { "type": "string", "const": "preview_manifest/1.0" },
+        "observed_at_utc": { "$ref": "#/$defs/utc_timestamp" },
+        "notes": { "$ref": "#/$defs/redaction_safe_note" }
+      }
+    }
+  }
+}

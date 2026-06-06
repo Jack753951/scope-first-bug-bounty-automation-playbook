@@ -1,0 +1,192 @@
+[
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.csp.missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Add the Content-Security-Policy header using the application-approved baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.csp.missing observed that the fixture lacks the Content-Security-Policy header. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://lab.local/redirect"
+    },
+    "title": "Content-Security-Policy header is missing",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Content-Security-Policy behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.x_frame_options.missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Add the X-Frame-Options header using the application-approved baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.x_frame_options.missing observed that the fixture lacks the X-Frame-Options header. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://lab.local/redirect"
+    },
+    "title": "X-Frame-Options header is missing",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the X-Frame-Options behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.x_content_type_options.missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Add the X-Content-Type-Options header using the application-approved baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.x_content_type_options.missing observed that the fixture lacks the X-Content-Type-Options header. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://lab.local/redirect"
+    },
+    "title": "X-Content-Type-Options header is missing",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the X-Content-Type-Options behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.hsts.missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Add the Strict-Transport-Security header using the application-approved baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "medium",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.hsts.missing observed that the fixture lacks the Strict-Transport-Security header. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://lab.local/redirect"
+    },
+    "title": "Strict-Transport-Security header is missing",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Strict-Transport-Security behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  },
+  {
+    "classifications": {
+      "cwe": [
+        "CWE-693"
+      ],
+      "owasp": [
+        "OWASP Secure Headers Project",
+        "OWASP ASVS V14.4"
+      ]
+    },
+    "confidence": "high",
+    "evidence": [],
+    "id": "security_headers_baseline.referrer_policy.missing",
+    "references": [
+      "https://owasp.org/www-project-secure-headers/",
+      "https://owasp.org/www-project-application-security-verification-standard/"
+    ],
+    "remediation": "Add the Referrer-Policy header using the application-approved baseline. Review compatibility and deployment scope before promoting this candidate to a report finding.",
+    "schema_version": "finding/1.0",
+    "severity_hint": "low",
+    "source": {
+      "module_id": "level1.security_headers_baseline",
+      "policy_decision_sha256": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+      "run_id": "p2-16.fixture"
+    },
+    "status": "candidate",
+    "summary": "Rule security_headers_baseline.referrer_policy.missing observed that the fixture lacks the Referrer-Policy header. This is a candidate observation only and requires manual verification.",
+    "target": {
+      "type": "url",
+      "value": "https://lab.local/redirect"
+    },
+    "title": "Referrer-Policy header is missing",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "verification_guidance": "Manually inspect an authorized response and confirm the Referrer-Policy behavior against OWASP Secure Headers Project and ASVS V14.4 before reporting."
+  }
+]

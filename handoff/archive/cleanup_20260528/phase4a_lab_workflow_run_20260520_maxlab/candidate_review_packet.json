@@ -1,0 +1,149 @@
+{
+  "errors": [],
+  "findings": [
+    {
+      "classifications": {
+        "cvss_vector": null,
+        "cwe": [
+          "CWE-548"
+        ],
+        "owasp": [
+          "OWASP Top 10 A05:2021 Security Misconfiguration"
+        ]
+      },
+      "confidence": "medium",
+      "evidence_ref_count": 2,
+      "id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+      "manual_verification_required": true,
+      "references": [
+        "https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"
+      ],
+      "remediation": "Disable public directory listings and remove internal artifacts from public web roots. For this lab, confirm the exposure is intentional Juice Shop training behavior.",
+      "report_readiness": "reviewer_decision_required",
+      "review_questions": [
+        {
+          "key": "cwe_classification_check",
+          "text": "Confirm CWE classifications CWE-548 accurately describe the observed condition."
+        },
+        {
+          "key": "evidence_sufficiency",
+          "text": "Confirm the 2 attached evidence refs are redacted and sufficient for the report kind."
+        },
+        {
+          "key": "manual_verification_executed",
+          "text": "Confirm an authorized response has been manually inspected per verification_guidance before drafting."
+        },
+        {
+          "key": "policy_decision_freshness",
+          "text": "Confirm source.policy_decision_sha256 '0000000000000000000000000000000000000000000000000000000000000000' is still the current allow artifact for module_id 'phase4a.lab_manual_triage'."
+        },
+        {
+          "key": "scope_in_authorized_scope",
+          "text": "Confirm target.value 'http://<lab-ip>:3000/ftp/' (type=url) is within the program's authorized scope at the run window."
+        },
+        {
+          "key": "severity_calibration",
+          "text": "Compare severity_hint='low' against the program's severity rubric (program-specific, not platform-defined)."
+        },
+        {
+          "key": "status_guardrail",
+          "text": "This packet does NOT promote status from 'candidate'. Promotion to confirmed/verified is a separate human step."
+        }
+      ],
+      "scanner_output_only": true,
+      "severity_hint": "low",
+      "source": {
+        "module_id": "phase4a.lab_manual_triage",
+        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "run_id": "phase4a-juice-shop-20260520"
+      },
+      "status": "candidate",
+      "summary": "Nikto and bounded metadata-only verification identified /ftp/ as a real directory listing route. robots.txt disallows /ftp. This remains lab-only candidate evidence, not a real-program confirmed finding.",
+      "target": {
+        "type": "url",
+        "value": "http://<lab-ip>:3000/ftp/"
+      },
+      "title": "Lab candidate: /ftp/ directory listing exposed on Juice Shop",
+      "verification_guidance": "Manual lab-only verification: confirm /ftp/ returns a directory index, record filenames/sizes only, do not recursively download, and do not handle secrets/loot."
+    },
+    {
+      "classifications": {
+        "cvss_vector": null,
+        "cwe": [
+          "CWE-693"
+        ],
+        "owasp": [
+          "OWASP ASVS V14.4"
+        ]
+      },
+      "confidence": "high",
+      "evidence_ref_count": 1,
+      "id": "phase4a.juiceshop.security_headers_missing.candidate",
+      "manual_verification_required": true,
+      "references": [
+        "https://owasp.org/www-project-secure-headers/"
+      ],
+      "remediation": "Add context-appropriate browser security headers. Enable HSTS only after HTTPS is correctly deployed.",
+      "report_readiness": "not_ready",
+      "review_questions": [
+        {
+          "key": "cwe_classification_check",
+          "text": "Confirm CWE classifications CWE-693 accurately describe the observed condition."
+        },
+        {
+          "key": "evidence_sufficiency",
+          "text": "Confirm the 1 attached evidence refs are redacted and sufficient for the report kind."
+        },
+        {
+          "key": "manual_verification_executed",
+          "text": "Confirm an authorized response has been manually inspected per verification_guidance before drafting."
+        },
+        {
+          "key": "policy_decision_freshness",
+          "text": "Confirm source.policy_decision_sha256 '0000000000000000000000000000000000000000000000000000000000000000' is still the current allow artifact for module_id 'phase4a.headers_audit'."
+        },
+        {
+          "key": "scope_in_authorized_scope",
+          "text": "Confirm target.value 'http://<lab-ip>:3000/' (type=url) is within the program's authorized scope at the run window."
+        },
+        {
+          "key": "severity_calibration",
+          "text": "Compare severity_hint='info' against the program's severity rubric (program-specific, not platform-defined)."
+        },
+        {
+          "key": "status_guardrail",
+          "text": "This packet does NOT promote status from 'candidate'. Promotion to confirmed/verified is a separate human step."
+        }
+      ],
+      "scanner_output_only": true,
+      "severity_hint": "info",
+      "source": {
+        "module_id": "phase4a.headers_audit",
+        "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "run_id": "phase4a-juice-shop-20260520"
+      },
+      "status": "candidate",
+      "summary": "Headers audit observed missing CSP, Referrer-Policy, Permissions-Policy, COOP, COEP, and HSTS while X-Content-Type-Options and X-Frame-Options were present. This is informational unless chained to concrete impact.",
+      "target": {
+        "type": "url",
+        "value": "http://<lab-ip>:3000/"
+      },
+      "title": "Lab candidate: multiple recommended security headers missing on Juice Shop root",
+      "verification_guidance": "Review headers across representative paths and only escalate if the missing header enables a demonstrated impact chain."
+    }
+  ],
+  "schema_version": "candidate_review_packet/0.1-trial",
+  "status": "ok",
+  "summary": {
+    "candidate_count": 2,
+    "input_count": 1,
+    "modules": [
+      "phase4a.headers_audit",
+      "phase4a.lab_manual_triage"
+    ],
+    "targets": [
+      "http://<lab-ip>:3000/",
+      "http://<lab-ip>:3000/ftp/"
+    ]
+  }
+}

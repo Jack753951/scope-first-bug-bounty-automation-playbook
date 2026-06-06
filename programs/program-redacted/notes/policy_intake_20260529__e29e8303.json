@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "program_slug": "<program-slug>",
+  "observed_at": "2026-05-29",
+  "source": "H1 policy/scope page via Kali/noVNC CDP visible text",
+  "url": "https://<bug-bounty-platform>.com/<program-slug>/policy_scopes?type=team",
+  "status": "passive_policy_captured_needs_normalization",
+  "high_value_in_scope_signals": [
+    "<program-slug> Mesh executable; critical eligible; 0 resolved reports",
+    "<program-slug>-supported Gateway Plugins executable; critical eligible; 0 resolved reports",
+    "<program-slug> Gateway Enterprise executable; critical eligible; 0 resolved reports",
+    "Insomnia Desktop Client executable; critical eligible; 2 resolved reports",
+    "Insomnia CLI/inso executable; critical eligible; 0 resolved reports",
+    "us.identity.<program-redacted>.com OAuth/OIDC endpoints; critical eligible; 0 resolved reports",
+    "app.<program-redacted> web app; critical eligible; 15 resolved reports",
+    "*.api.<program-redacted>.com Konnect APIs; critical eligible; 0 resolved reports",
+    "cloud.<program-redacted>.com Konnect management console; critical eligible; 4 resolved reports",
+    "subdomain takeover on *.<program-redacted>.com; high eligible but requires successful control and explicit boundary"
+  ],
+  "notable_policy_focus": [
+    "Multi-tenancy and authorization: cross-tenant config access, IDOR on services/routes/plugins/certs/runtime_groups, read-only to admin privilege escalation",
+    "Identity/session: SSO/MFA/OAuth/OIDC flaws, state/redirect/token leakage",
+    "Stored XSS in developer portal/shared fields",
+    "Sensitive data exposure: client secrets/API keys/RBAC tokens; cross-organization PII only",
+    "SQL injection is qualifying, but live login/API probing is not authorized until exact scope and proof boundary are approved"
+  ],
+  "out_of_scope_or_high_risk": [
+    "Customer data planes such as *.edge.gateways.<program-redacted>.com, *.kongcloud.io, customer proxy instances",
+    "Marketing/docs/support limits and conflicting <program-redacted>.com entries require careful exact asset normalization before any live action",
+    "DoS/volumetric/rate-limit/bruteforce/social engineering",
+    "Non-<program-slug> plugins and non-<program-slug> GitHub repositories",
+    "Sandbox functionality listed out of scope",
+    "kuma.io out of scope"
+  ],
+  "candidate_lane_split": [
+    {
+      "id": "local_source_gateway_plugins",
+      "mode": "local/source",
+      "why": "Executable/source-like components can be reviewed or locally reproduced without live target contact first."
+    },
+    {
+      "id": "insomnia_desktop_cli_local",
+      "mode": "local/source",
+      "why": "Electron/Node CLI surfaces may allow dependency/source review and local marker proofs."
+    },
+    {
+      "id": "konnect_api_access_control",
+      "mode": "future_live_owned_account",
+      "why": "High bounty SaaS access-control target, but requires exact scope approval, account boundary, and no token generation without approval."
+    },
+    {
+      "id": "identity_oidc_passive_then_bounded",
+      "mode": "future_live_owned_account",
+      "why": "OIDC/OAuth focus is high-value but must stop before auth abuse/token handling."
+    }
+  ],
+  "next_step": "Normalize exact assets and pick a local/source-first candidate, or ask operator for exact live scope approval if pursuing Konnect/API owned-account testing."
+}

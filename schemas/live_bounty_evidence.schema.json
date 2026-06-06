@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/live_bounty_evidence.schema.json",
+  "title": "Live bounty evidence summary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "program_slug",
+    "lane_id",
+    "status",
+    "request_budget",
+    "observations",
+    "positive_evidence",
+    "negative_controls",
+    "redactions",
+    "candidate_signals",
+    "blocked_states",
+    "next_learning_seed",
+    "updated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "program_slug": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,63}$"},
+    "lane_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_-]{1,96}$"},
+    "status": {
+      "enum": [
+        "no_finding",
+        "candidate",
+        "needs_manual_review",
+        "blocked",
+        "blocked_operator_action",
+        "blocked_awaiting_scope",
+        "surface_only",
+        "not_report_ready",
+        "report_ready"
+      ]
+    },
+    "request_budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planned", "used"],
+      "properties": {
+        "planned": {"type": "integer", "minimum": 0},
+        "used": {"type": "integer", "minimum": 0}
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "label", "value", "sensitive"],
+        "properties": {
+          "type": {"type": "string", "minLength": 1},
+          "label": {"type": "string", "minLength": 1},
+          "value": {"type": "string"},
+          "sensitive": {"type": "boolean"}
+        }
+      }
+    },
+    "positive_evidence": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "negative_controls": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "redactions": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+    "candidate_signals": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "blocked_states": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "next_learning_seed": {"type": "string", "minLength": 1},
+    "updated_at": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}"}
+  }
+}

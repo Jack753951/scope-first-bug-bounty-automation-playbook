@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0",
+  "billing_model": "subscription",
+  "daily_token_soft_cap": 500000,
+  "claude_call_cap_per_day": 12,
+  "codex_call_cap_per_day": 12,
+  "current_day": "2026-05-28",
+  "tokens_used_today": 0,
+  "claude_calls_today": 0,
+  "codex_calls_today": 0,
+  "notes": "Subscription model. Caps are behavior gates against runaway loops, not billing controls. Trip a stop condition if exceeded."
+}

@@ -1,0 +1,2 @@
+{"timestamp":"2026-05-20T11:45:00Z","request":{"endpoint":"http://<lab-ip>:3000/","method":"GET"},"response":{"status_code":200,"content_length":9903},"source":"http://<lab-ip>:3000"}
+{"timestamp":"2026-05-20T11:45:01Z","request":{"endpoint":"http://<lab-ip>:3000/ftp/","method":"GET"},"response":{"status_code":200,"content_length":11334},"source":"http://<lab-ip>:3000"}

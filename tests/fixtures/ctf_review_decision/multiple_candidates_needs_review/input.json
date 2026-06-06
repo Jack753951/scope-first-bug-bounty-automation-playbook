@@ -1,0 +1,14 @@
+{
+  "slug": "forensics-collisions",
+  "candidate_flag": "picoCTF{first_candidate}",
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["solver"],
+  "candidate_count": 3,
+  "multiple_candidates": [
+    "picoCTF{first_candidate}",
+    "picoCTF{second_candidate}",
+    "picoCTF{third_candidate}"
+  ],
+  "solver_timed_out": false,
+  "checker_only_success": false
+}

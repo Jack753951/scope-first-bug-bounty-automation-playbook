@@ -1,0 +1,123 @@
+{
+  "phase": "P2-14 preview_manifest schema and validator",
+  "verdict": "ACCEPT_FOR_IMPLEMENTATION",
+  "review_tier": "T3",
+  "milestone_boundary": "Contract/schema only: introduce versioned preview_manifest/1.0 JSON Schema and an offline, stdlib-only semantic validator for already-persisted dry-run preview bundles. No consumers (ledger, archive, agent-review), no execution, no module invocation, no scanner/network/subprocess, no findings/evidence, no scope/config writes.",
+  "oss_recon_gate": {
+    "applied": true,
+    "references": [
+      {
+        "name": "OSV schema (schema_version literal + strict typed JSON)",
+        "decision": "adopt",
+        "reason": "OSV's pattern of a required literal schema_version string plus closed, typed fields is a clean fit for a small, stable contract.",
+        "safety_notes": "Adopt only the versioning/strictness style; do not import OSV semantics (advisory/vuln content) or any network fetch behavior."
+      },
+      {
+        "name": "CycloneDX metadata + component hashes (alg+content+path)",
+        "decision": "adapt",
+        "reason": "The {algorithm, content, name, size} per-artifact shape maps well to binding persisted preview files to their digests.",
+        "safety_notes": "Adapt only the descriptor shape; do not adopt full BOM scope, supplier/license fields, or any external resolution."
+      },
+      {
+        "name": "SARIF run/tool/result metadata",
+        "decision": "adapt",
+        "reason": "Borrow the idea of a versioned tool/producer block (name + version + run identifier) bound to the artifacts.",
+        "safety_notes": "Do not adopt SARIF's result/finding lifecycle, taxonomies, or any importer assumptions; this manifest is not a findings format."
+      },
+      {
+        "name": "DefectDojo importer/test metadata",
+        "decision": "ignore",
+        "reason": "Tightly coupled to a service, engagement/test lifecycle, and finding ingestion; out of scope for an offline preview contract.",
+        "safety_notes": "Avoid any field semantics that imply upload, triage state, or remote tracking."
+      },
+      {
+        "name": "Nuclei result/template metadata",
+        "decision": "ignore",
+        "reason": "Conventions are driven by live scanning output and template fetching; embedding them risks normalizing target-touching defaults.",
+        "safety_notes": "Do not import live-scan field semantics, severity heuristics, or template-source assumptions."
+      }
+    ]
+  },
+  "recommended_contract": {
+    "schema_path": "contracts/preview_manifest/1.0/schema.json",
+    "validator_path": "scripts/contracts/preview_manifest_validator.py",
+    "required_fields": [
+      "schema_version (const: \"preview_manifest/1.0\")",
+      "run_id (matches existing safe-run-id regex used by module_runner)",
+      "created_at (RFC3339/ISO-8601 UTC, Z-suffixed)",
+      "producer.name (const: \"module_runner\")",
+      "producer.version (semver string)",
+      "preview_mode.persist_preview_bundle (bool, must be true)",
+      "preview_mode.include_module_io_preview (bool, must be true)",
+      "preview_mode.dry_run (bool, must be true)",
+      "bundle_consistency.status (enum: [\"ok\"])",
+      "bundle_consistency.digest (sha256 hex)",
+      "artifacts (closed list of fixed allowlist entries)",
+      "artifacts[].name (enum: run.json, module_inputs.json, module_results.json, bundle_consistency.json)",
+      "artifacts[].relative_path (POSIX, anchored under preview/, no '..', no leading '/')",
+      "artifacts[].sha256 (64 lowercase hex)",
+      "artifacts[].size_bytes (non-negative int)",
+      "artifacts[].content_type (const: \"application/json\")"
+    ],
+    "semantic_checks": [
+      "schema_version is the exact literal preview_manifest/1.0",
+      "run_id matches the same safe-run-id regex enforced by P2-13 persistence",
+      "artifacts set equals the fixed allowlist exactly (no extras, no omissions); preview_manifest.json itself is NOT listed",
+      "each relative_path resolves inside runs/<run_id>/preview/ with no symlink, no '..', no absolute path, no Windows drive prefix",
+      "each artifact file exists, is a regular file (not symlink/dir/device), and stat size equals size_bytes",
+      "recomputed sha256 of each artifact equals the manifest sha256",
+      "bundle_consistency.status == \"ok\" and bundle_consistency.digest matches the digest field inside the persisted bundle_consistency.json",
+      "created_at is not in the future and not earlier than run.json's recorded run start",
+      "producer.name/version are consistent with the module_runner version that wrote the bundle",
+      "no field contains absolute paths, host names, secrets, target identifiers, or environment values",
+      "manifest JSON parses with no trailing data and no duplicate keys"
+    ],
+    "failure_mode": "Fail-closed: raise a typed PreviewManifestValidationError with a short, redacted reason and the failing field path. Never mutate, repair, rename, move, or delete the bundle. Never write new files. Never execute modules or network calls. Validator is a pure read-only function returning (ok, errors[]) or raising on hard violations; caller decides logging."
+  },
+  "implementation_constraints": [
+    "Offline, data-only, stdlib only (json, re, hashlib, pathlib, datetime); no third-party schema libs, no network, no subprocess, no threads.",
+    "Validator must be a pure function over a path; it reads the bundle directory but never writes, deletes, or creates files.",
+    "No module execution, no scanner adapters, no findings/evidence/report code, no callbacks, no scope/config writes, no loot/secret access.",
+    "Reject symlinks anywhere in the bundle path chain (reuse the symlink-rejection helper used by P2-13).",
+    "All paths recorded and validated as POSIX-relative under runs/<run_id>/preview/; absolute paths are a hard error.",
+    "Schema is closed (additionalProperties: false at every object) so unknown fields fail loudly; forward compatibility is opt-in via a future preview_manifest/1.1.",
+    "Version negotiation is strict-equal for 1.0; no silent upgrades or downgrades.",
+    "Validator is not wired into module_runner write-path in P2-14; it is a standalone consumer-side check with its own CLI entrypoint that takes a bundle directory.",
+    "No new persistence surface, no new artifact types, no generic write/output hook; the artifact allowlist is hard-coded.",
+    "Errors must be redaction-safe (no echoing of raw file contents, target identifiers, or environment values)."
+  ],
+  "tests_required": [
+    "Golden valid fixture: full preview bundle passes validator.",
+    "Each required field missing -> rejection with field path.",
+    "additionalProperties: unknown top-level and nested field -> rejection.",
+    "schema_version != \"preview_manifest/1.0\" -> rejection (including 1.0.0, 1.1, 2.0).",
+    "Unsafe run_id (path chars, spaces, traversal, empty) -> rejection.",
+    "Artifact allowlist drift: extra artifact entry -> rejection; missing required artifact -> rejection; manifest listing itself -> rejection.",
+    "relative_path with '..', leading '/', backslash, or drive letter -> rejection.",
+    "Symlinked artifact, symlinked preview dir, symlinked run dir -> rejection.",
+    "sha256 mismatch (tampered file) -> rejection; size_bytes mismatch -> rejection.",
+    "bundle_consistency.status != \"ok\" -> rejection; bundle_consistency.digest mismatch vs file -> rejection.",
+    "created_at in the future or before run start -> rejection; non-UTC or non-RFC3339 timestamp -> rejection.",
+    "Duplicate JSON keys / trailing data / non-UTF-8 -> rejection with typed error.",
+    "Pure-function guarantee: validator run leaves filesystem mtimes and contents unchanged (assert via snapshot).",
+    "No-network / no-subprocess assertion: validator module imports do not reference socket/urllib/subprocess (static import test)."
+  ],
+  "blocking_issues": [],
+  "non_blocking_recommendations": [
+    "Add a contracts/CHANGELOG.md entry policy so any future preview_manifest/1.x bump is reviewed as its own T3 change.",
+    "Reserve (but do not implement in P2-14) a top-level manifest_digest field plan for a later preview-ledger phase; document the deferral rather than adding it now.",
+    "Document a one-paragraph compatibility rule: 1.0 is strict-equal; additive optional fields require a new minor version and a new schema file.",
+    "Co-locate fixtures under tests/fixtures/preview_manifest/1.0/{valid,invalid_*}/ so future ledger/agent-review consumers can reuse them without re-deriving.",
+    "Keep the validator CLI output machine-readable (single-line JSON result) so future tooling can consume it without re-parsing prose."
+  ],
+  "safety_boundary": [
+    "No scans, probes, callbacks, exploit/fuzz/brute-force, or target-touching behavior introduced.",
+    "No module execution, no subprocess, no network, no scanner adapters, no template fetching.",
+    "No changes to config/scope.txt, program scope, safe_target, dry-run gates, or live-mode toggles.",
+    "No findings, evidence, reports, notifications, or publishing surfaces added.",
+    "No loot/secret access; validator errors are redaction-safe.",
+    "Validator is read-only: never writes, repairs, deletes, or moves bundle files.",
+    "Manifest is a closed contract with a fixed artifact allowlist; it is not a generic file-write or output mechanism.",
+    "Stricter rule wins: if this contract conflicts with .hermes.md, scope, or the OSS Recon Gate, defer to the stricter constraint."
+  ]
+}

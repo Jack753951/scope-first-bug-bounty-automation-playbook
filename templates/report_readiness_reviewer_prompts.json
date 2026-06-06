@@ -1,0 +1,183 @@
+{
+  "entries": [
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_MISSING_EVIDENCE"
+        ],
+        "check_codes": [
+          "CHECK_MISSING_EVIDENCE"
+        ],
+        "gate_actions": [
+          "GATE_COLLECT_EVIDENCE"
+        ]
+      },
+      "id": "p3_5_prompt_evidence_sufficiency",
+      "prompt_text": "Review the evidence records already attached to the candidate. Decide whether the records are enough for human assessment, or whether the candidate should stay blocked until more redacted evidence is added."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "defer"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_INFO_SEVERITY"
+        ],
+        "check_codes": [
+          "CHECK_INFO_SEVERITY_RATIONALE"
+        ],
+        "gate_actions": [
+          "GATE_KEEP_OUT_OF_REPORT"
+        ]
+      },
+      "id": "p3_5_prompt_info_signal_disposition",
+      "prompt_text": "Review whether the candidate is only an informational signal. Decide whether it should remain outside report preparation, stay queued for manual review, or be deferred until stronger context exists."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "defer"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_LOW_CONFIDENCE"
+        ],
+        "check_codes": [
+          "CHECK_LOW_CONFIDENCE"
+        ],
+        "gate_actions": [
+          "GATE_COMPLETE_MANUAL_CHECKS"
+        ]
+      },
+      "id": "p3_5_prompt_low_confidence_review",
+      "prompt_text": "Review the stated confidence and supporting context. Decide whether manual checks are still needed, whether the candidate remains blocked, or whether the item should be deferred."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_MANUAL_VERIFICATION_REQUIRED"
+        ],
+        "check_codes": [
+          "CHECK_MANUAL_VERIFICATION_NOTES"
+        ],
+        "gate_actions": [
+          "GATE_COMPLETE_MANUAL_CHECKS"
+        ]
+      },
+      "id": "p3_5_prompt_manual_review_notes",
+      "prompt_text": "Review the manual-review notes for missing assumptions, unresolved questions, and reviewer uncertainty. Decide whether the item still needs manual review, remains blocked, or needs more evidence."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_MISSING_REMEDIATION"
+        ],
+        "check_codes": [
+          "CHECK_HUMAN_REMEDIATION_GUIDANCE"
+        ],
+        "gate_actions": [
+          "GATE_ADD_REMEDIATION_GUIDANCE"
+        ]
+      },
+      "id": "p3_5_prompt_remediation_guidance",
+      "prompt_text": "Review whether reviewer-side remediation guidance is specific enough for later human discussion. Do not draft prose; decide whether guidance remains missing, needs manual review, or needs more evidence."
+    },
+    {
+      "allowed_response_postures": [
+        "still_needs_manual_review",
+        "defer"
+      ],
+      "applies_to": {
+        "block_reasons": [],
+        "check_codes": [
+          "CHECK_REVIEWER_DECISION"
+        ],
+        "gate_actions": [
+          "GATE_ADD_HUMAN_REVIEW_DECISION"
+        ]
+      },
+      "id": "p3_5_prompt_reviewer_decision",
+      "prompt_text": "Review the accumulated gate actions and decide whether a human review decision is still needed now or whether the item should be deferred without any status promotion."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_MISSING_SCOPE_REVIEW_QUESTION"
+        ],
+        "check_codes": [
+          "CHECK_SCOPE_REVIEW_QUESTION"
+        ],
+        "gate_actions": [
+          "GATE_ADD_SCOPE_REVIEW"
+        ]
+      },
+      "id": "p3_5_prompt_scope_question",
+      "prompt_text": "Review whether the candidate clearly states the in-bounds reasoning and any ambiguity that a human must resolve. Decide whether the item still needs scope review, remains blocked, or needs more evidence."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_SCANNER_OUTPUT_ONLY"
+        ],
+        "check_codes": [
+          "CHECK_NON_SCANNER_CORROBORATION"
+        ],
+        "gate_actions": [
+          "GATE_COMPLETE_MANUAL_CHECKS"
+        ]
+      },
+      "id": "p3_5_prompt_source_corroboration",
+      "prompt_text": "Review whether the candidate relies only on automated output or has separate human-readable context. Decide whether it remains blocked, still needs manual review, or needs more evidence."
+    },
+    {
+      "allowed_response_postures": [
+        "still_blocked",
+        "still_needs_manual_review",
+        "needs_more_evidence"
+      ],
+      "applies_to": {
+        "block_reasons": [
+          "BLOCK_MISSING_VERIFICATION_GUIDANCE"
+        ],
+        "check_codes": [
+          "CHECK_SAFE_MANUAL_CHECKLIST"
+        ],
+        "gate_actions": [
+          "GATE_ADD_VERIFICATION_GUIDANCE"
+        ]
+      },
+      "id": "p3_5_prompt_verification_guidance",
+      "prompt_text": "Review whether safe manual checklist guidance exists for later human assessment. Do not provide run steps; decide whether guidance is missing, needs more evidence, or still needs manual review."
+    }
+  ],
+  "notes": "Data-only reviewer prompt catalog for P3.5. It is deliberately not a slash-shaped trial schema, is not read by chain consumers, and does not create reviewer notes, drafting, rendering, platform, network, or runtime behavior.",
+  "schema_marker": "report_readiness_reviewer_prompts_v0_trial",
+  "version": 0
+}

@@ -1,0 +1,14 @@
+{
+  "slug": "easy-crypto-1",
+  "candidate_flag": "picoCTF{normal_flag_value}",
+  "expected_format_regex": "^picoCTF\\{[^}]+\\}$",
+  "candidate_sources": ["solver"],
+  "candidate_count": 1,
+  "solver_timed_out": false,
+  "checker_only_success": false,
+  "verifier": {
+    "kind": "deterministic_replay",
+    "evidence_ref": "local/replay_log.txt"
+  },
+  "claimed_confidence": "medium"
+}

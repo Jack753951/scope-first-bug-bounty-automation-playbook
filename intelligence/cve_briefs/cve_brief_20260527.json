@@ -1,0 +1,20 @@
+[
+  {
+    "id": "<specific-cve-id>",
+    "published": "2026-04-14T00:00:00.000",
+    "modified": "2026-04-14T00:00:00.000",
+    "cvss": null,
+    "severity": "high (uncoreed; smuggling)",
+    "cvss_version": "v3.1",
+    "description": "HAProxy H3/QUIC standalone-FIN body validation bypass allows cross-user HTTP request smuggling via backend connection pool when http-reuse always is configured. One zero-byte QUIC packet desynchronises HAProxy's backend pool and smuggles requests across unrelated users — even users on a different frontend protocol.",
+    "references": [
+      "https://github.com/r3verii/<specific-cve-id>",
+      "https://r3verii.github.io/cve/2026/04/14/haproxy-h3-standalone-fin-smuggling.html"
+    ],
+    "keywords": ["haproxy"],
+    "preauth": true,
+    "default_config": false,
+    "pubic_poc": true,
+    "note": "Not new in the last 24h, but no genuinely new (>= CVSS 7) advisories surfaced in the watchlist window. Surfaced here because PoC + bug-bounty angle remain unexploited at scale."
+  }
+]

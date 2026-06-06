@@ -1,0 +1,270 @@
+[
+  {
+    "source": "CISA KEV",
+    "id": "<specific-cve-id>",
+    "published": "2021-11-03",
+    "vendor_project": "Zoho",
+    "product": "ManageEngine",
+    "title": "Zoho ManageEngine ADSelfService Plus Authentication Bypass Vulnerability",
+    "summary": "Zoho ManageEngine ADSelfService Plus contains an authentication bypass vulnerability affecting the REST API URLs which allow for remote code execution.",
+    "vuln_classes": [
+      "rce/command-execution",
+      "auth/access-control"
+    ],
+    "risk": "high",
+    "routing": "local_bootstrap_review",
+    "safe_proof_hint": "Use throwaway accounts, role/account matrix, positive + negative controls, and no real data retention.",
+    "references": "https://nvd.nist.gov/vuln/detail/<specific-cve-id>"
+  },
+  {
+    "source": "GitHub Advisory",
+    "id": "<specific-ghsa-id>",
+    "published": "2026-05-23T00:11:53Z",
+    "vendor_project": "",
+    "product": "",
+    "title": "aiograpi: Unsafe signup challenge path handling",
+    "summary": "aiograpi versions before 0.9.10 accepted server-supplied signup challenge paths and used them to build request URLs before validating that the paths were relative Instagram API paths. A malicious or tampered challenge payload could cause challenge handling requests to be sent outside the intended Instagram host with the client\\'s existing session headers. Version 0.9.10 validates challenge paths before building URLs,…",
+    "severity": "medium",
+    "vuln_classes": [
+      "unknown/review"
+    ],
+    "risk": "unknown",
+    "routing": "local_bootstrap_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": "https://github.com/advisories/<specific-ghsa-id>"
+  },
+  {
+    "source": "GitHub Advisory",
+    "id": "<specific-ghsa-id>",
+    "published": "2026-05-23T00:12:34Z",
+    "vendor_project": "",
+    "product": "",
+    "title": "instagrapi: Unsafe signup challenge path handling in instagrapi",
+    "summary": "instagrapi versions before 2.6.9 accepted server-supplied signup challenge paths and used them to build request URLs before validating that the paths were relative Instagram API paths. A malicious or tampered challenge payload could cause challenge handling requests to be sent outside the intended Instagram host with the client\\'s existing session headers. Version 2.6.9 validates challenge paths before building URLs,…",
+    "severity": "medium",
+    "vuln_classes": [
+      "unknown/review"
+    ],
+    "risk": "unknown",
+    "routing": "local_bootstrap_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": "https://github.com/advisories/<specific-ghsa-id>"
+  },
+  {
+    "source": "GitHub Advisory",
+    "id": "<specific-ghsa-id>",
+    "published": "2026-05-23T00:16:56Z",
+    "vendor_project": "",
+    "product": "",
+    "title": "Arcane: Missing admin authorization on global variables endpoint",
+    "summary": "## Summary The `PUT /api/environments/{id}/templates/variables` endpoint, which writes the system-wide `.env.global` file used for variable substitution in every project's compose file, is missing an admin authorization check. Any authenticated non-admin user can call this endpoint with their bearer token or API key and overwrite the global environment variables that are merged into every project deployment. By overr…",
+    "severity": "high",
+    "vuln_classes": [
+      "rce/command-execution",
+      "redirect"
+    ],
+    "risk": "high",
+    "routing": "local_bootstrap_review",
+    "safe_proof_hint": "Requires explicit authorization; use marker-only bounded action, pre/post health, and human confirmation gate.",
+    "references": "https://github.com/advisories/<specific-ghsa-id>"
+  },
+  {
+    "source": "GitHub Advisory",
+    "id": "<specific-ghsa-id>",
+    "published": "2026-05-23T00:18:33Z",
+    "vendor_project": "",
+    "product": "",
+    "title": "Nezha Monitoring: Nezha WebSocket server stream discloses cross-tenant server telemetry to authenticated members",
+    "summary": "### Summary Any authenticated non-admin member can connect to the server-status WebSocket and receive telemetry for all servers, including servers owned by other users. The normal server list API filters objects by `HasPermission`, but the WebSocket stream treats the presence of any authenticated user as authorization for the full unfiltered server list. ### Details The server WebSocket route is registered under the …",
+    "severity": "medium",
+    "vuln_classes": [
+      "unknown/review"
+    ],
+    "risk": "unknown",
+    "routing": "local_bootstrap_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": "https://github.com/advisories/<specific-ghsa-id>"
+  },
+  {
+    "source": "CISA KEV",
+    "id": "<specific-cve-id>",
+    "published": "2021-11-03",
+    "vendor_project": "Zoho",
+    "product": "ManageEngine",
+    "title": "Zoho ManageEngine Desktop Central File Upload Vulnerability",
+    "summary": "Zoho ManageEngine Desktop Central contains a file upload vulnerability that allows for unauthenticated remote code execution.",
+    "vuln_classes": [
+      "rce/command-execution",
+      "upload/archive"
+    ],
+    "risk": "high",
+    "routing": "local_or_live_review_high_impact",
+    "safe_proof_hint": "Requires explicit authorization; use marker-only bounded action, pre/post health, and human confirmation gate.",
+    "references": "https://nvd.nist.gov/vuln/detail/<specific-cve-id>"
+  },
+  {
+    "source": "CISA KEV",
+    "id": "<specific-cve-id>",
+    "published": "2021-11-03",
+    "vendor_project": "Yealink",
+    "product": "Device Management",
+    "title": "Yealink Device Management Server-Side Request Forgery (SSRF) Vulnerability",
+    "summary": "Yealink Device Management contains a server-side request forgery (SSRF) vulnerability that allows for unauthenticated remote code execution.",
+    "vuln_classes": [
+      "ssrf",
+      "rce/command-execution"
+    ],
+    "risk": "high",
+    "routing": "local_or_live_review_high_impact",
+    "safe_proof_hint": "Use callback/OAST only if explicitly allowed; prefer DNS-only marker; no metadata/internal scanning.",
+    "references": "https://nvd.nist.gov/vuln/detail/<specific-cve-id>"
+  },
+  {
+    "source": "GitHub Advisory",
+    "id": "<specific-ghsa-id>",
+    "published": "2026-05-23T00:17:58Z",
+    "vendor_project": "",
+    "product": "",
+    "title": "Nezha Monitoring: RoleMember can run shell on every server (cross-tenant RCE) via POST /api/v1/cron",
+    "summary": "## Summary `nezha`'s dashboard supports two user roles: `RoleAdmin` (Role==0) and `RoleMember` (Role==1). The cron routes `POST /api/v1/cron` and `PATCH /api/v1/cron/:id` are wired through `commonHandler` (any authenticated user) rather than `adminHandler`, and the per-server permission check on cron creation has a vacuous-true bypass. A `RoleMember` user can create a scheduled cron task with `Cover=CronCoverAll, Ser…",
+    "severity": "critical",
+    "vuln_classes": [
+      "ssrf",
+      "rce/command-execution"
+    ],
+    "risk": "high",
+    "routing": "needs_authorized_live_target",
+    "safe_proof_hint": "Use callback/OAST only if explicitly allowed; prefer DNS-only marker; no metadata/internal scanning.",
+    "references": "https://github.com/advisories/<specific-ghsa-id>"
+  },
+  {
+    "source": "CISA KEV",
+    "id": "<specific-cve-id>",
+    "published": "2021-11-03",
+    "vendor_project": "Zyxel",
+    "product": "Multiple Products",
+    "title": "Zyxel Multiple Products Use of Hard-Coded Credentials Vulnerability",
+    "summary": "Zyxel firewalls (ATP, USG, VM) and AP Controllers (NXC2500 and NXC5500) contain a use of hard-coded credentials vulnerability in an undocumented account (\"zyfwp\") with an unchangeable password.",
+    "vuln_classes": [
+      "unknown/review"
+    ],
+    "risk": "unknown",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": "https://nvd.nist.gov/vuln/detail/<specific-cve-id>"
+  },
+  {
+    "source": "CISA KEV",
+    "id": "<specific-cve-id>",
+    "published": "2021-11-03",
+    "vendor_project": "Zoho",
+    "product": "ManageEngine",
+    "title": "Zoho ManageEngine ServiceDesk Plus (SDP) File Upload Vulnerability",
+    "summary": "Zoho ManageEngine ServiceDesk Plus (SDP) contains an unspecified vulnerability that allows remote users to upload files via login page customization.",
+    "vuln_classes": [
+      "upload/archive"
+    ],
+    "risk": "medium",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": "https://nvd.nist.gov/vuln/detail/<specific-cve-id>"
+  },
+  {
+    "source": "NVD recent",
+    "id": "<specific-cve-id>",
+    "published": "2026-05-20T13:16:14.153",
+    "vendor_project": "",
+    "product": "",
+    "title": "Cross-Site request forgery (CSRF) vulnerability in Sitemio Information Technologies Trade Ltd. Co. WISECP allo…",
+    "summary": "Cross-Site request forgery (CSRF) vulnerability in Sitemio Information Technologies Trade Ltd. Co. WISECP allows Cross Site Request Forgery. This issue affects WISECP: through 20022026. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+    "cvss": 8.0,
+    "vuln_classes": [
+      "unknown/review"
+    ],
+    "risk": "unknown",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Review manually; do not touch targets until scope and safe proof plan are explicit.",
+    "references": [
+      "https://siberguvenlik.gov.tr/guvenlik-bildirimleri/detay/tr-26-0262"
+    ]
+  },
+  {
+    "source": "NVD recent",
+    "id": "<specific-cve-id>",
+    "published": "2026-05-20T13:16:16.253",
+    "vendor_project": "",
+    "product": "",
+    "title": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Themeisl…",
+    "summary": "Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting') vulnerability in Themeisle Visualizer allows Stored XSS. This issue affects Visualizer: from n/a before 4.0.0.",
+    "cvss": 6.5,
+    "vuln_classes": [
+      "xss"
+    ],
+    "risk": "medium",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Use browser/runtime safe marker only; no cookie theft, keylogging, or victim interaction.",
+    "references": [
+      "https://patchstack.com/database/wordpress/plugin/visualizer/vulnerability/wordpress-visualizer-plugin-4-0-0-cross-site-scripting-xss-vulnerability?_s_id=cve"
+    ]
+  },
+  {
+    "source": "NVD recent",
+    "id": "<specific-cve-id>",
+    "published": "2026-05-20T13:16:16.750",
+    "vendor_project": "",
+    "product": "",
+    "title": "Missing Authorization vulnerability in Magepeople inc. WpBookingly allows Exploiting Incorrectly Configured Ac…",
+    "summary": "Missing Authorization vulnerability in Magepeople inc. WpBookingly allows Exploiting Incorrectly Configured Access Control Security Levels. This issue affects WpBookingly: from n/a through 1.2.9.",
+    "cvss": 6.5,
+    "vuln_classes": [
+      "auth/access-control"
+    ],
+    "risk": "medium",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Use throwaway accounts, role/account matrix, positive + negative controls, and no real data retention.",
+    "references": [
+      "https://patchstack.com/database/wordpress/plugin/service-booking-manager/vulnerability/wordpress-wpbookingly-plugin-1-2-9-broken-access-control-vulnerability?_s_id=cve"
+    ]
+  },
+  {
+    "source": "NVD recent",
+    "id": "<specific-cve-id>",
+    "published": "2026-05-20T13:16:16.897",
+    "vendor_project": "",
+    "product": "",
+    "title": "Missing Authorization vulnerability in WP Chill Image Photo Gallery Final Tiles Grid allows Exploiting Incorre…",
+    "summary": "Missing Authorization vulnerability in WP Chill Image Photo Gallery Final Tiles Grid allows Exploiting Incorrectly Configured Access Control Security Levels. This issue affects Image Photo Gallery Final Tiles Grid: from n/a through 3.6.11.",
+    "cvss": 4.3,
+    "vuln_classes": [
+      "auth/access-control"
+    ],
+    "risk": "medium",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Use throwaway accounts, role/account matrix, positive + negative controls, and no real data retention.",
+    "references": [
+      "https://patchstack.com/database/wordpress/plugin/final-tiles-grid-gallery-lite/vulnerability/wordpress-image-photo-gallery-final-tiles-grid-plugin-3-6-11-broken-access-control-vulnerability?_s_id=cve"
+    ]
+  },
+  {
+    "source": "NVD recent",
+    "id": "<specific-cve-id>",
+    "published": "2026-05-20T13:16:17.040",
+    "vendor_project": "",
+    "product": "",
+    "title": "Rsync versions before 3.4.3 contain a time-of-check to time-of-use (TOCTOU) race condition in daemon file hand…",
+    "summary": "Rsync versions before 3.4.3 contain a time-of-check to time-of-use (TOCTOU) race condition in daemon file handling that allows attackers to redirect file writes outside intended directories by replacing parent directory components with symbolic links. Attackers with write access to a module path can exploit this race condition to create or overwrite arbitrary files, potentially modifying sensitive system files and ac…",
+    "cvss": 7.0,
+    "vuln_classes": [
+      "auth/access-control",
+      "redirect"
+    ],
+    "risk": "medium",
+    "routing": "reference_only_review",
+    "safe_proof_hint": "Use throwaway accounts, role/account matrix, positive + negative controls, and no real data retention.",
+    "references": [
+      "https://github.com/RsyncProject/rsync/pull/895/changes/8471fdd1561049ef5f58df44a1811a50bd9a531d",
+      "https://github.com/RsyncProject/rsync/releases/tag/v3.4.3",
+      "https://www.vulncheck.com/advisories/rsync-toctou-race-condition-allows-symlink-based-arbitrary-file-write"
+    ]
+  }
+]

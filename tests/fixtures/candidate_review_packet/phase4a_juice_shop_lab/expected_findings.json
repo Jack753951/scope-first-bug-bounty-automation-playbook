@@ -1,0 +1,82 @@
+[
+  {
+    "schema_version": "finding/1.0",
+    "id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+    "title": "Lab candidate: /ftp/ directory listing exposed on Juice Shop",
+    "summary": "Nikto and bounded metadata-only verification identified /ftp/ as a real directory listing route. robots.txt disallows /ftp. This remains lab-only candidate evidence, not a real-program confirmed finding.",
+    "target": {
+      "type": "url",
+      "value": "http://<lab-ip>:3000/ftp/"
+    },
+    "source": {
+      "module_id": "phase4a.lab_manual_triage",
+      "run_id": "phase4a-juice-shop-20260520",
+      "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "severity_hint": "low",
+    "confidence": "medium",
+    "status": "candidate",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "evidence": [
+      {
+        "id": "phase4a.juiceshop.ftp_directory_listing.http_status",
+        "kind": "http_exchange",
+        "redacted": true,
+        "sha256": "1111111111111111111111111111111111111111111111111111111111111111"
+      },
+      {
+        "id": "phase4a.juiceshop.ftp_directory_listing.metadata_listing",
+        "kind": "metadata",
+        "redacted": true,
+        "sha256": "2222222222222222222222222222222222222222222222222222222222222222"
+      }
+    ],
+    "classifications": {
+      "cwe": ["CWE-548"],
+      "owasp": ["OWASP Top 10 A05:2021 Security Misconfiguration"]
+    },
+    "references": ["https://owasp.org/Top10/A05_2021-Security_Misconfiguration/"],
+    "remediation": "Disable public directory listings and remove internal artifacts from public web roots. For this lab, confirm the exposure is intentional Juice Shop training behavior.",
+    "verification_guidance": "Manual lab-only verification: confirm /ftp/ returns a directory index, record filenames/sizes only, do not recursively download, and do not handle secrets/loot."
+  },
+  {
+    "schema_version": "finding/1.0",
+    "id": "phase4a.juiceshop.security_headers_missing.candidate",
+    "title": "Lab candidate: multiple recommended security headers missing on Juice Shop root",
+    "summary": "Headers audit observed missing CSP, Referrer-Policy, Permissions-Policy, COOP, COEP, and HSTS while X-Content-Type-Options and X-Frame-Options were present. This is informational unless chained to concrete impact.",
+    "target": {
+      "type": "url",
+      "value": "http://<lab-ip>:3000/"
+    },
+    "source": {
+      "module_id": "phase4a.headers_audit",
+      "run_id": "phase4a-juice-shop-20260520",
+      "policy_decision_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "severity_hint": "info",
+    "confidence": "high",
+    "status": "candidate",
+    "triage": {
+      "manual_verification_required": true,
+      "scanner_output_only": true
+    },
+    "evidence": [
+      {
+        "id": "phase4a.juiceshop.security_headers_missing.headers_audit",
+        "kind": "metadata",
+        "redacted": true,
+        "sha256": "3333333333333333333333333333333333333333333333333333333333333333"
+      }
+    ],
+    "classifications": {
+      "cwe": ["CWE-693"],
+      "owasp": ["OWASP ASVS V14.4"]
+    },
+    "references": ["https://owasp.org/www-project-secure-headers/"],
+    "remediation": "Add context-appropriate browser security headers. Enable HSTS only after HTTPS is correctly deployed.",
+    "verification_guidance": "Review headers across representative paths and only escalate if the missing header enables a demonstrated impact chain."
+  }
+]

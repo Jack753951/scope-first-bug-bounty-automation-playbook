@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://local.cybersec-lab/schemas/operator_inbox_candidate.schema.json",
+  "title": "Operator inbox candidate batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "status", "mode", "target_touching", "candidate_count", "candidates"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "status": {"enum": ["ok", "error"]},
+    "mode": {"enum": ["dry_run_no_target"]},
+    "target_touching": {"const": false},
+    "candidate_count": {"type": "integer", "minimum": 0},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate_id",
+          "title",
+          "summary",
+          "source_kind",
+          "source_id",
+          "operator_decision",
+          "machine_state",
+          "recommended_next_step",
+          "references",
+          "safety"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9_.-]{1,128}$"},
+          "title": {"type": "string", "minLength": 3},
+          "summary": {"type": "string", "minLength": 10},
+          "source_kind": {"enum": ["offline_passive_intel", "detector_candidate", "scope_change", "ct_change"]},
+          "source_id": {"type": "string", "minLength": 1},
+          "affected_technology": {"type": "string"},
+          "operator_decision": {"enum": ["PASSIVE_ONLY", "PARK", "KILL"]},
+          "machine_state": {"enum": ["CANDIDATE_REVIEW", "PARKED", "NO_FINDING_CLOSEOUT"]},
+          "recommended_next_step": {"type": "string", "minLength": 1},
+          "references": {"type": "array", "items": {"type": "string", "minLength": 1}},
+          "safety": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["target_touching", "live_activation_allowed", "requires_policy_scope_gate", "blocked_actions"],
+            "properties": {
+              "target_touching": {"const": false},
+              "live_activation_allowed": {"const": false},
+              "requires_policy_scope_gate": {"const": true},
+              "blocked_actions": {"type": "array", "items": {"type": "string", "minLength": 1}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

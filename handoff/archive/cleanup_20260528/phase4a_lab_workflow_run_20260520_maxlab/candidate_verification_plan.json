@@ -1,0 +1,65 @@
+{
+  "errors": [],
+  "schema_version": "candidate_verification_plan/0.1-trial",
+  "source_schema_version": "candidate_review_gap_report/0.1-trial",
+  "status": "ok",
+  "summary": {
+    "blocked_count": 1,
+    "check_item_count": 5,
+    "finding_count": 2,
+    "needs_manual_review_count": 1,
+    "source_gap_code_counts": {
+      "INFO_SEVERITY_REPORT_BLOCKED": 1,
+      "MANUAL_VERIFICATION_REQUIRED": 2,
+      "SCANNER_OUTPUT_ONLY": 2
+    }
+  },
+  "verification_plans": [
+    {
+      "check_items": [
+        {
+          "action_kind": "manual_verification_notes",
+          "code": "CHECK_MANUAL_VERIFICATION_NOTES",
+          "prompt": "Record human verification notes from an authorized review before any downstream action.",
+          "source_gap_code": "MANUAL_VERIFICATION_REQUIRED"
+        },
+        {
+          "action_kind": "non_scanner_corroboration",
+          "code": "CHECK_NON_SCANNER_CORROBORATION",
+          "prompt": "Add non-scanner corroboration or explain why the scanner-only signal is insufficient.",
+          "source_gap_code": "SCANNER_OUTPUT_ONLY"
+        }
+      ],
+      "finding_id": "phase4a.juiceshop.ftp_directory_listing.candidate",
+      "module_id": "phase4a.lab_manual_triage",
+      "plan_state": "needs_manual_review",
+      "target_value": "http://<lab-ip>:3000/ftp/"
+    },
+    {
+      "check_items": [
+        {
+          "action_kind": "severity_rationale",
+          "code": "CHECK_INFO_SEVERITY_RATIONALE",
+          "prompt": "Document why this informational item matters, or keep it out of downstream escalation.",
+          "source_gap_code": "INFO_SEVERITY_REPORT_BLOCKED"
+        },
+        {
+          "action_kind": "manual_verification_notes",
+          "code": "CHECK_MANUAL_VERIFICATION_NOTES",
+          "prompt": "Record human verification notes from an authorized review before any downstream action.",
+          "source_gap_code": "MANUAL_VERIFICATION_REQUIRED"
+        },
+        {
+          "action_kind": "non_scanner_corroboration",
+          "code": "CHECK_NON_SCANNER_CORROBORATION",
+          "prompt": "Add non-scanner corroboration or explain why the scanner-only signal is insufficient.",
+          "source_gap_code": "SCANNER_OUTPUT_ONLY"
+        }
+      ],
+      "finding_id": "phase4a.juiceshop.security_headers_missing.candidate",
+      "module_id": "phase4a.headers_audit",
+      "plan_state": "blocked",
+      "target_value": "http://<lab-ip>:3000/"
+    }
+  ]
+}

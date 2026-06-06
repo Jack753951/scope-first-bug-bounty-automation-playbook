@@ -1,0 +1,11 @@
+{
+  "candidate_flag": "32379bc680e5b9a6",
+  "candidate_sources": [
+    "oracle"
+  ],
+  "claimed_confidence": "high",
+  "expected_format_regex": "^picoCTF\\{.+\\}$",
+  "verifier": {
+    "kind": "oracle_replay"
+  }
+}
