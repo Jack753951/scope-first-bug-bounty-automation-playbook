@@ -1,0 +1,22 @@
+{
+  "schema_version": "public-template-1.0",
+  "lane_id": "example_authorized_lane",
+  "status": "blocked_awaiting_scope",
+  "autonomy_level": "planning_only",
+  "authorization": {
+    "scope_reference": "<authorized-scope-file>",
+    "in_scope_assets": [],
+    "out_of_scope_assets": [],
+    "allowed_techniques": [],
+    "blocked_techniques": []
+  },
+  "operator_gates": [
+    "signup_or_login",
+    "verification_or_captcha",
+    "callback_or_oast",
+    "api_token_oauth_webhook_integration",
+    "customer_or_non_owned_data",
+    "report_submission"
+  ],
+  "next_action": "collect_or_confirm_scope_package_before_target_contact"
+}

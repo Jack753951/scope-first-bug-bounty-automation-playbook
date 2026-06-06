@@ -1,0 +1,17 @@
+# local/private runtime material
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.har
+*.sqlite
+*.db
+__pycache__/
+.pytest_cache/
+.artifacts/
+evidence/
+loot/
+scans/
+logs/
+tmp/
