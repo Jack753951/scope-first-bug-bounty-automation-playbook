@@ -1,9 +1,11 @@
 > Public sanitized edition: sensitive personal, target, path, IP, alias, advisory, and run-specific evidence fields are redacted. This repository does not authorize live testing.
 
-# Scope-First Bug Bounty Automation Platform — Public Sanitized Edition
+# Bounty Lane
+
+Scope-first, safety-gated bug bounty automation workspace for agentic recon, lab proofs, evidence workflows, and report readiness.
 
 This repository is a broad public-clean export of an internal agent-assisted bug-bounty automation workspace.
-It keeps the project structure, scripts, schemas, templates, policies, lab modules, tests, and sanitized notes where possible.
+It keeps the project structure, scripts, schemas, templates, policies, lab modules, tests, reusable Hermes skills, and sanitized notes where possible.
 
 Export policy used for this edition:
 
